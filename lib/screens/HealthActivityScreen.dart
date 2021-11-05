@@ -14,6 +14,7 @@ class HealthActivityScreen extends StatefulWidget {
 
 class _HealthActivityScreenState extends State<HealthActivityScreen> {
   late ThemeData themeData;
+  late CustomAppTheme customAppTheme;
 
 
   Color? color1, color2, color3;
@@ -27,165 +28,170 @@ class _HealthActivityScreenState extends State<HealthActivityScreen> {
 
   Widget build(BuildContext context) {
     themeData = Theme.of(context);
+    customAppTheme  = AppTheme.getCustomAppTheme(1);
 
-        return Scaffold(
-            body: Container(
-              color: Colors.green,
-              child: ListView(
-                padding: Spacing.fromLTRB(0,48,0,16),
-                children: [
-                  Container(
-                    margin: Spacing.fromLTRB(48, 24, 48, 0),
-                    child: Text(
-                      "Today you have consumed 150 cal",
-                      style: AppTheme.getTextStyle(
-                          themeData.textTheme.headline5,
-                          color: themeData.colorScheme.onBackground,
-                          fontWeight: 700),
-                      textAlign: TextAlign.center,
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          theme: AppTheme.getThemeFromThemeMode(1),
+          home: Scaffold(
+              body: Container(
+                color: customAppTheme.bgLayer1,
+                child: ListView(
+                  padding: Spacing.fromLTRB(0,48,0,16),
+                  children: [
+                    Container(
+                      margin: Spacing.fromLTRB(48, 24, 48, 0),
+                      child: Text(
+                        "Today you have consumed 150 cal",
+                        style: AppTheme.getTextStyle(
+                            themeData.textTheme.headline5,
+                            color: themeData.colorScheme.onBackground,
+                            fontWeight: 700),
+                        textAlign: TextAlign.center,
+                      ),
                     ),
-                  ),
-                  Container(
-                    margin: Spacing.top(36),
-                    child: Stack(
-                      alignment: Alignment.center,
-                      children: [
-                        Container(
-                          width: MySize.size140,
-                          height: MySize.size140,
-                          child: CircularProgressIndicator(
-                              backgroundColor: color1!.withAlpha(20),
-                              value: 0.3,
-                              valueColor: AlwaysStoppedAnimation<Color?>(color1),
-                              strokeWidth: 9),
-                        ),
-                        Container(
-                          width: MySize.getScaledSizeWidth(165),
-                          height: MySize.getScaledSizeWidth(165),
-                          child: CircularProgressIndicator(
-                              backgroundColor: color2!.withAlpha(20),
-                              value: 0.5,
-                              valueColor: AlwaysStoppedAnimation<Color?>(color2),
-                              strokeWidth: 9),
-                        ),
-                        Container(
-                          width: MySize.getScaledSizeWidth(190),
-                          height: MySize.getScaledSizeWidth(190),
-                          decoration: BoxDecoration(
-                              borderRadius:
-                              BorderRadius.all(Radius.circular(40))),
-                          child: CircularProgressIndicator(
-                              backgroundColor: color3!.withAlpha(20),
-                              value: 0.7,
-                              valueColor: AlwaysStoppedAnimation<Color?>(color3),
-                              strokeWidth: 9),
-                        ),
-                        Container(
-                          width: MySize.size120,
-                          height: MySize.getScaledSizeWidth(60),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Text(
-                                "50%",
-                                style: AppTheme.getTextStyle(
-                                    themeData.textTheme.headline5,
-                                    color: themeData.colorScheme.onBackground,
-                                    fontWeight: 700),
-                              ),
-                              Text(
-                                "of daily goals",
-                                style: AppTheme.getTextStyle(
-                                    themeData.textTheme.caption,
-                                    letterSpacing: -0.2,
-                                    color: themeData.colorScheme.onBackground,
-                                    xMuted: true,
-                                    fontWeight: 600),
-                              )
-                            ],
+                    Container(
+                      margin: Spacing.top(36),
+                      child: Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          Container(
+                            width: MySize.size140,
+                            height: MySize.size140,
+                            child: CircularProgressIndicator(
+                                backgroundColor: color1!.withAlpha(20),
+                                value: 0.3,
+                                valueColor: AlwaysStoppedAnimation<Color?>(color1),
+                                strokeWidth: 9),
                           ),
-                        )
-                      ],
+                          Container(
+                            width: MySize.getScaledSizeWidth(165),
+                            height: MySize.getScaledSizeWidth(165),
+                            child: CircularProgressIndicator(
+                                backgroundColor: color2!.withAlpha(20),
+                                value: 0.5,
+                                valueColor: AlwaysStoppedAnimation<Color?>(color2),
+                                strokeWidth: 9),
+                          ),
+                          Container(
+                            width: MySize.getScaledSizeWidth(190),
+                            height: MySize.getScaledSizeWidth(190),
+                            decoration: BoxDecoration(
+                                borderRadius:
+                                BorderRadius.all(Radius.circular(40))),
+                            child: CircularProgressIndicator(
+                                backgroundColor: color3!.withAlpha(20),
+                                value: 0.7,
+                                valueColor: AlwaysStoppedAnimation<Color?>(color3),
+                                strokeWidth: 9),
+                          ),
+                          Container(
+                            width: MySize.size120,
+                            height: MySize.getScaledSizeWidth(60),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(
+                                  "50%",
+                                  style: AppTheme.getTextStyle(
+                                      themeData.textTheme.headline5,
+                                      color: themeData.colorScheme.onBackground,
+                                      fontWeight: 700),
+                                ),
+                                Text(
+                                  "of daily goals",
+                                  style: AppTheme.getTextStyle(
+                                      themeData.textTheme.caption,
+                                      letterSpacing: -0.2,
+                                      color: themeData.colorScheme.onBackground,
+                                      xMuted: true,
+                                      fontWeight: 600),
+                                )
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
                     ),
-                  ),
-                  Container(
-                    margin: Spacing.fromLTRB(32, 48, 32, 0),
-                    child: Column(
-                      children: [
-                        singleElement(
-                            color: color1,
-                            type: "Carb",
-                            inGram: "150",
-                            inPercentage: "40"),
-                        Container(
-                          margin: Spacing.top(16),
-                          child: singleElement(
-                              color: color2,
-                              type: "Protein",
-                              inGram: "120",
-                              inPercentage: "34"),
-                        ),
-                        Container(
-                          margin: Spacing.top(16),
-                          child: singleElement(
-                              color: color3,
-                              type: "Fat",
-                              inGram: "40",
-                              inPercentage: "36"),
-                        ),
-                      ],
+                    Container(
+                      margin: Spacing.fromLTRB(32, 48, 32, 0),
+                      child: Column(
+                        children: [
+                          singleElement(
+                              color: color1,
+                              type: "Carb",
+                              inGram: "150",
+                              inPercentage: "40"),
+                          Container(
+                            margin: Spacing.top(16),
+                            child: singleElement(
+                                color: color2,
+                                type: "Protein",
+                                inGram: "120",
+                                inPercentage: "34"),
+                          ),
+                          Container(
+                            margin: Spacing.top(16),
+                            child: singleElement(
+                                color: color3,
+                                type: "Fat",
+                                inGram: "40",
+                                inPercentage: "36"),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  Container(
-                    margin: Spacing.fromLTRB(24, 32, 24, 0),
-                    child: Text(
-                      "Resume Activity".toUpperCase(),
-                      style: AppTheme.getTextStyle(themeData.textTheme.caption,fontSize: 11.8,
-                          muted: true,
-                          color: themeData.colorScheme.onBackground,
-                          fontWeight: 600),
+                    Container(
+                      margin: Spacing.fromLTRB(24, 32, 24, 0),
+                      child: Text(
+                        "Resume Activity".toUpperCase(),
+                        style: AppTheme.getTextStyle(themeData.textTheme.caption,fontSize: 11.8,
+                            muted: true,
+                            color: themeData.colorScheme.onBackground,
+                            fontWeight: 600),
+                      ),
                     ),
-                  ),
-                  Container(
-                    margin: Spacing.fromLTRB(24, 16, 24, 0),
-                    child: Column(
-                      children: [
-                        singleActivity(
-                            iconData: MdiIcons.run,
-                            color: color1!,
-                            type: "Run",
-                            time: "10 : 45"),
-                        Container(
-                          margin: Spacing.top(16),
-                          child: singleActivity(
-                              iconData: MdiIcons.weightLifter,
-                              color: color2!,
-                              type: "Weight Lifeting",
-                              time: "4 : 18"),
-                        ),
-                        Container(
-                          margin: Spacing.top(16),
-                          child: singleActivity(
-                              iconData: MdiIcons.swim,
-                              color: color3!,
-                              type: "Swimming",
-                              time: "10 : 00"),
-                        ),
-                        Container(
-                          margin: Spacing.top(16),
-                          child: singleActivity(
-                              iconData: MdiIcons.runFast,
-                              color: themeData.colorScheme.primary,
-                              type: "Fast Run",
-                              time: "0 : 00"),
-                        ),
+                    Container(
+                      margin: Spacing.fromLTRB(24, 16, 24, 0),
+                      child: Column(
+                        children: [
+                          singleActivity(
+                              iconData: MdiIcons.run,
+                              color: color1!,
+                              type: "Run",
+                              time: "10 : 45"),
+                          Container(
+                            margin: Spacing.top(16),
+                            child: singleActivity(
+                                iconData: MdiIcons.weightLifter,
+                                color: color2!,
+                                type: "Weight Lifeting",
+                                time: "4 : 18"),
+                          ),
+                          Container(
+                            margin: Spacing.top(16),
+                            child: singleActivity(
+                                iconData: MdiIcons.swim,
+                                color: color3!,
+                                type: "Swimming",
+                                time: "10 : 00"),
+                          ),
+                          Container(
+                            margin: Spacing.top(16),
+                            child: singleActivity(
+                                iconData: MdiIcons.runFast,
+                                color: themeData.colorScheme.primary,
+                                type: "Fast Run",
+                                time: "0 : 00"),
+                          ),
 
-                      ],
-                    ),
-                  )
-                ],
-              ),
-            )
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+              )
+          ),
         );
 
   }
@@ -255,8 +261,8 @@ class _HealthActivityScreenState extends State<HealthActivityScreen> {
     return Container(
       padding: Spacing.all(8),
       decoration: BoxDecoration(
-          color: Colors.green,
-          border: Border.all(color: Colors.grey, width: 1),
+          color: customAppTheme.bgLayer1,
+          border: Border.all(color: customAppTheme.bgLayer3, width: 1),
           borderRadius: BorderRadius.all(Radius.circular(MySize.size8!))),
       child: Row(
         children: [

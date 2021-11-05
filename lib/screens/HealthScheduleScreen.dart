@@ -15,129 +15,135 @@ class HealthScheduleScreen extends StatefulWidget {
 class _HealthScheduleScreenState extends State<HealthScheduleScreen> {
   late ThemeData themeData;
 
+  late CustomAppTheme customAppTheme;
+
 
   int selectedDate = 1;
 
   Widget build(BuildContext context) {
     themeData = Theme.of(context);
+    customAppTheme  = AppTheme.getCustomAppTheme(1);
 
-
-        return Scaffold(
-            floatingActionButton: FloatingActionButton(
-              onPressed: () {},
-              backgroundColor: themeData.colorScheme.primary,
-              child: Icon(
-                MdiIcons.plus,
-                color: themeData.colorScheme.onPrimary,
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          theme: AppTheme.getThemeFromThemeMode(1),
+          home: Scaffold(
+              floatingActionButton: FloatingActionButton(
+                onPressed: () {},
+                backgroundColor: themeData.colorScheme.primary,
+                child: Icon(
+                  MdiIcons.plus,
+                  color: themeData.colorScheme.onPrimary,
+                ),
               ),
-            ),
-            body: Container(
-              color: Colors.green,
-              child: ListView(
-                padding: Spacing.top(48),
-                children: [
-                  Container(
-                    margin: Spacing.fromLTRB(24, 0, 24, 0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "Today",
-                              style: AppTheme.getTextStyle(
-                                  themeData.textTheme.bodyText2,
-                                  letterSpacing: 0,
-                                  color: themeData.colorScheme.onBackground,
-                                  fontWeight: 500),
-                            ),
-                            Text(
-                              "13 Wed",
-                              style: AppTheme.getTextStyle(
-                                  themeData.textTheme.bodyText1,
-                                  color: themeData.colorScheme.onBackground,
-                                  fontWeight: 600),
-                            ),
-                          ],
-                        ),
-                        Container(
-                          child: Icon(
-                            MdiIcons.calendarOutline,
-                            size: MySize.size22,
-                            color: themeData.colorScheme.onBackground,
+              body: Container(
+                color: customAppTheme.bgLayer1,
+                child: ListView(
+                  padding: Spacing.top(48),
+                  children: [
+                    Container(
+                      margin: Spacing.fromLTRB(24, 0, 24, 0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Today",
+                                style: AppTheme.getTextStyle(
+                                    themeData.textTheme.bodyText2,
+                                    letterSpacing: 0,
+                                    color: themeData.colorScheme.onBackground,
+                                    fontWeight: 500),
+                              ),
+                              Text(
+                                "13 Wed",
+                                style: AppTheme.getTextStyle(
+                                    themeData.textTheme.bodyText1,
+                                    color: themeData.colorScheme.onBackground,
+                                    fontWeight: 600),
+                              ),
+                            ],
                           ),
-                        )
-                      ],
+                          Container(
+                            child: Icon(
+                              MdiIcons.calendarOutline,
+                              size: MySize.size22,
+                              color: themeData.colorScheme.onBackground,
+                            ),
+                          )
+                        ],
+                      ),
                     ),
-                  ),
-                  Container(
-                    margin: Spacing.top(12),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        singleDateWidget(date: "12\nTue", index: 0),
-                        singleDateWidget(date: "13\nWed", index: 1),
-                        singleDateWidget(date: "14\nThu", index: 2),
-                        singleDateWidget(date: "15\nFri", index: 3),
-                        singleDateWidget(date: "16\nSat", index: 4),
-                      ],
+                    Container(
+                      margin: Spacing.top(12),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          singleDateWidget(date: "12\nTue", index: 0),
+                          singleDateWidget(date: "13\nWed", index: 1),
+                          singleDateWidget(date: "14\nThu", index: 2),
+                          singleDateWidget(date: "15\nFri", index: 3),
+                          singleDateWidget(date: "16\nSat", index: 4),
+                        ],
+                      ),
                     ),
-                  ),
-                  Container(
-                    margin: Spacing.fromLTRB(24, 24, 24, 0),
-                    child: Text(
-                      "Activity",
-                      style: AppTheme.getTextStyle(
-                          themeData.textTheme.subtitle1,
-                          color: themeData.colorScheme.onBackground,
-                          muted: true,
-                          fontWeight: 600),
+                    Container(
+                      margin: Spacing.fromLTRB(24, 24, 24, 0),
+                      child: Text(
+                        "Activity",
+                        style: AppTheme.getTextStyle(
+                            themeData.textTheme.subtitle1,
+                            color: themeData.colorScheme.onBackground,
+                            muted: true,
+                            fontWeight: 600),
+                      ),
                     ),
-                  ),
-                  Container(
-                    margin: Spacing.fromLTRB(24, 24, 24, 0),
-                    child: Column(
-                      children: [
-                        singleActivityWidget(
-                            color: Colors.blue,
-                            iconData: MdiIcons.clock,
-                            time: "6:00 AM",
-                            title: "Wake up",
-                            description: "Alarm automatic set"),
-                        Container(
-                          margin: Spacing.top(24),
-                          child: singleActivityWidget(
-                              color: Colors.orange,
-                              iconData: MdiIcons.run,
-                              time: "7:00 AM",
-                              title: "Running",
-                              description: "3 KM at morning"),
-                        ),
-                        Container(
-                          margin: Spacing.top(24),
-                          child: singleActivityWidget(
-                              color: Colors.green,
-                              iconData: MdiIcons.pill,
-                              time: "8:00 AM",
-                              title: "Take Pill",
-                              description: "After walking"),
-                        ),
-                        Container(
-                          margin: Spacing.top(24),
-                          child: singleActivityWidget(
-                              color: Colors.purple,
-                              iconData: MdiIcons.doctor,
-                              time: "10:00 AM",
-                              title: "Appointment",
-                              description: "Dr. vivek "),
-                        ),
-                      ],
-                    ),
-                  )
-                ],
-              ),
-            ));
+                    Container(
+                      margin: Spacing.fromLTRB(24, 24, 24, 0),
+                      child: Column(
+                        children: [
+                          singleActivityWidget(
+                              color: Colors.blue,
+                              iconData: MdiIcons.clock,
+                              time: "6:00 AM",
+                              title: "Wake up",
+                              description: "Alarm automatic set"),
+                          Container(
+                            margin: Spacing.top(24),
+                            child: singleActivityWidget(
+                                color: Colors.orange,
+                                iconData: MdiIcons.run,
+                                time: "7:00 AM",
+                                title: "Running",
+                                description: "3 KM at morning"),
+                          ),
+                          Container(
+                            margin: Spacing.top(24),
+                            child: singleActivityWidget(
+                                color: Colors.green,
+                                iconData: MdiIcons.pill,
+                                time: "8:00 AM",
+                                title: "Take Pill",
+                                description: "After walking"),
+                          ),
+                          Container(
+                            margin: Spacing.top(24),
+                            child: singleActivityWidget(
+                                color: Colors.purple,
+                                iconData: MdiIcons.doctor,
+                                time: "10:00 AM",
+                                title: "Appointment",
+                                description: "Dr. vivek "),
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+              )),
+        );
 
   }
 
@@ -189,10 +195,10 @@ class _HealthScheduleScreenState extends State<HealthScheduleScreen> {
         width: 50,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(MySize.size6!)),
-            color: Colors.green,
+            color: customAppTheme.bgLayer1,
             boxShadow: [
               BoxShadow(
-                color: Colors.grey,
+                color: customAppTheme.shadowColor,
                 blurRadius: MySize.size10!,
                 spreadRadius: MySize.size2,
                 offset: Offset(0, MySize.size8!),
@@ -239,10 +245,10 @@ class _HealthScheduleScreenState extends State<HealthScheduleScreen> {
               padding: Spacing.all(12),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(MySize.size8!)),
-                  color: Colors.green,
+                  color: customAppTheme.bgLayer1,
                   boxShadow: [
                     BoxShadow(
-                        color: Colors.grey,
+                        color: customAppTheme.shadowColor,
                         blurRadius: MySize.size8!,
                         offset: Offset(0, MySize.size8!))
                   ]),
