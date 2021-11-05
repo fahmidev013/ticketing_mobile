@@ -190,7 +190,7 @@ class _HealthHomeScreenState extends State<HealthHomeScreen> {
                     Container(
                       margin: Spacing.fromLTRB(24, 24, 24, 0),
                       child: Text(
-                        "How we can help you?",
+                        "Apa yang inginkan?",
                         style: AppTheme.getTextStyle(
                             themeData.textTheme.subtitle1,
                             letterSpacing: -0.15,

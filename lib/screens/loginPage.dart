@@ -41,191 +41,195 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     themeData = Theme.of(context);
-    return Scaffold(
-        body: Stack(
-          children: <Widget>[
-            ClipPath(
-                clipper: _MyCustomClipper(context),
-                child: Container(
-                  alignment: Alignment.center,
-                  color: themeData.colorScheme.background,
-                )),
-            Positioned(
-              left: 30,
-              right: 30,
-              top: MediaQuery.of(context).size.height * 0.2,
-              child: ListView(
-                shrinkWrap: true,
-                children: <Widget>[
-                  Card(
-                    child: Container(
-                      padding: EdgeInsets.only(
-                          top: 16, bottom: 16),
-                      child: Column(
-                        children: <Widget>[
-                          Container(
-                            margin: EdgeInsets.only(
-                                bottom: 24, top: 8),
-                            child: Text(
-                              "LOGIN",
-                              style: AppTheme.getTextStyle(
-                                  themeData.textTheme.headline6,
-                                  fontWeight: 600),
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      theme: AppTheme.getThemeFromThemeMode(1),
+      home: Scaffold(
+          body: Stack(
+            children: <Widget>[
+              ClipPath(
+                  clipper: _MyCustomClipper(context),
+                  child: Container(
+                    alignment: Alignment.center,
+                    color: themeData.colorScheme.background,
+                  )),
+              Positioned(
+                left: 30,
+                right: 30,
+                top: MediaQuery.of(context).size.height * 0.2,
+                child: ListView(
+                  shrinkWrap: true,
+                  children: <Widget>[
+                    Card(
+                      child: Container(
+                        padding: EdgeInsets.only(
+                            top: 16, bottom: 16),
+                        child: Column(
+                          children: <Widget>[
+                            Container(
+                              margin: EdgeInsets.only(
+                                  bottom: 24, top: 8),
+                              child: Text(
+                                "LOGIN",
+                                style: AppTheme.getTextStyle(
+                                    themeData.textTheme.headline6,
+                                    fontWeight: 600),
+                              ),
                             ),
-                          ),
-                          Container(
-                            padding: EdgeInsets.only(
-                                left: 16,
-                                right: 16),
-                            child: Column(
-                              children: <Widget>[
-                                TextFormField(
-                                  controller: usernameController,
-                                  style: AppTheme.getTextStyle(
-                                      themeData.textTheme.bodyText1,
-                                      letterSpacing: 0.1,
-                                      color: Colors.black,
-                                      fontWeight: 500),
-                                  decoration: InputDecoration(
-                                    hintText: "Username",
-                                    hintStyle: AppTheme.getTextStyle(
-                                        themeData.textTheme.subtitle2,
-                                        letterSpacing: 0.1,
-                                        color: Colors.grey,
-                                        fontWeight: 500),
-                                    prefixIcon:
-                                    Icon(MdiIcons.account),
-                                  ),
-                                ),
-                                Container(
-                                  margin:
-                                  EdgeInsets.only(top: 16),
-                                  child: TextFormField(
-                                    controller: passwordController,
+                            Container(
+                              padding: EdgeInsets.only(
+                                  left: 16,
+                                  right: 16),
+                              child: Column(
+                                children: <Widget>[
+                                  TextFormField(
+                                    controller: usernameController,
                                     style: AppTheme.getTextStyle(
                                         themeData.textTheme.bodyText1,
                                         letterSpacing: 0.1,
                                         color: Colors.black,
                                         fontWeight: 500),
                                     decoration: InputDecoration(
-                                      hintText: "Password",
+                                      hintText: "Username",
                                       hintStyle: AppTheme.getTextStyle(
                                           themeData.textTheme.subtitle2,
                                           letterSpacing: 0.1,
                                           color: Colors.grey,
                                           fontWeight: 500),
                                       prefixIcon:
-                                      Icon(MdiIcons.lockOutline),
-                                      suffixIcon: IconButton(
-                                        icon: Icon(_passwordVisible!
-                                            ? MdiIcons.eyeOutline
-                                            : MdiIcons.eyeOffOutline),
-                                        onPressed: () {
-                                          setState(() {
-                                            _passwordVisible =
-                                            !_passwordVisible!;
-                                          });
-                                        },
-                                      ),
+                                      Icon(MdiIcons.account),
                                     ),
-                                    obscureText: _passwordVisible!,
                                   ),
-                                ),
-                                Container(
-                                  margin:
-                                  EdgeInsets.only(top: 16),
-                                  alignment: Alignment.centerRight,
-                                  child: Text("Forgot Password?",
+                                  Container(
+                                    margin:
+                                    EdgeInsets.only(top: 16),
+                                    child: TextFormField(
+                                      controller: passwordController,
                                       style: AppTheme.getTextStyle(
-                                          themeData.textTheme.bodyText2,
-                                          fontWeight: 500)),
-                                ),
-
-                                Container(
-                                  margin:
-                                  EdgeInsets.only(top: 16),
-                                  width:
-                                  MediaQuery.of(context).size.width,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.all(
-                                        Radius.circular(24)),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: themeData
-                                            .colorScheme.primary
-                                            .withAlpha(18),
-                                        blurRadius: 3,
-                                        offset: Offset(0, 1),
+                                          themeData.textTheme.bodyText1,
+                                          letterSpacing: 0.1,
+                                          color: Colors.black,
+                                          fontWeight: 500),
+                                      decoration: InputDecoration(
+                                        hintText: "Password",
+                                        hintStyle: AppTheme.getTextStyle(
+                                            themeData.textTheme.subtitle2,
+                                            letterSpacing: 0.1,
+                                            color: Colors.grey,
+                                            fontWeight: 500),
+                                        prefixIcon:
+                                        Icon(MdiIcons.lockOutline),
+                                        suffixIcon: IconButton(
+                                          icon: Icon(_passwordVisible!
+                                              ? MdiIcons.eyeOutline
+                                              : MdiIcons.eyeOffOutline),
+                                          onPressed: () {
+                                            setState(() {
+                                              _passwordVisible =
+                                              !_passwordVisible!;
+                                            });
+                                          },
+                                        ),
                                       ),
-                                    ],
+                                      obscureText: _passwordVisible!,
+                                    ),
                                   ),
-                                  child: ElevatedButton(
-                                      style: ButtonStyle(
-                                          padding: MaterialStateProperty.all(Spacing.xy(16, 0))
-                                      ),
-                                      onPressed: () async {
-                                        await clickLogin(usernameController, passwordController);
-                                        if (loginSuccess) {
-                                          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Login Berhasil!')));
-                                          Navigator.of(context)
-                                              .pushReplacement(MaterialPageRoute(builder: (_) => HealthFullApp()));
+                                  Container(
+                                    margin:
+                                    EdgeInsets.only(top: 16),
+                                    alignment: Alignment.centerRight,
+                                    child: Text("Forgot Password?",
+                                        style: AppTheme.getTextStyle(
+                                            themeData.textTheme.bodyText2,
+                                            fontWeight: 500)),
+                                  ),
 
-                                        } else  {
-                                          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Username dan Password Salah!')));
-                                        }
+                                  Container(
+                                    margin:
+                                    EdgeInsets.only(top: 16),
+                                    width:
+                                    MediaQuery.of(context).size.width,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(24)),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: themeData
+                                              .colorScheme.primary
+                                              .withAlpha(18),
+                                          blurRadius: 3,
+                                          offset: Offset(0, 1),
+                                        ),
+                                      ],
+                                    ),
+                                    child: ElevatedButton(
+                                        style: ButtonStyle(
+                                            padding: MaterialStateProperty.all(Spacing.xy(16, 0))
+                                        ),
+                                        onPressed: () async {
+                                          await clickLogin(usernameController, passwordController);
+                                          if (loginSuccess) {
+                                            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Login Berhasil!')));
+                                            Navigator.of(context)
+                                                .pushReplacement(MaterialPageRoute(builder: (_) => HealthFullApp()));
 
-                                      },
-                                      child: Text("LOGIN",
-                                          style: AppTheme.getTextStyle(
-                                              themeData.textTheme.button,
-                                              fontWeight: 600,
-                                              color: themeData
-                                                  .colorScheme.onPrimary,
-                                              letterSpacing: 0.5))),
-                                ),
+                                          } else  {
+                                            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Username dan Password Salah!')));
+                                          }
 
-                              ],
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => LoginScreen()));
-                    },
-                    child: Container(
-                      margin: EdgeInsets.only(top: 16),
-                      child: Center(
-                        child: RichText(
-                          text: TextSpan(children: <TextSpan>[
-                            TextSpan(
-                                text: "Don't have an Account? ",
-                                style: AppTheme.getTextStyle(
-                                    themeData.textTheme.bodyText2,
-                                    fontWeight: 500)),
-                            TextSpan(
-                                text: " Register",
-                                style: AppTheme.getTextStyle(
-                                    themeData.textTheme.bodyText2,
-                                    fontWeight: 600,
-                                    color:
-                                    themeData.colorScheme.primary)),
-                          ]),
+                                        },
+                                        child: Text("LOGIN",
+                                            style: AppTheme.getTextStyle(
+                                                themeData.textTheme.button,
+                                                fontWeight: 600,
+                                                color: themeData
+                                                    .colorScheme.onPrimary,
+                                                letterSpacing: 0.5))),
+                                  ),
+
+                                ],
+                              ),
+                            )
+                          ],
                         ),
                       ),
                     ),
-                  )
-                ],
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => LoginScreen()));
+                      },
+                      child: Container(
+                        margin: EdgeInsets.only(top: 16),
+                        child: Center(
+                          child: RichText(
+                            text: TextSpan(children: <TextSpan>[
+                              TextSpan(
+                                  text: "Don't have an Account? ",
+                                  style: AppTheme.getTextStyle(
+                                      themeData.textTheme.bodyText2,
+                                      fontWeight: 500)),
+                              TextSpan(
+                                  text: " Register",
+                                  style: AppTheme.getTextStyle(
+                                      themeData.textTheme.bodyText2,
+                                      fontWeight: 600,
+                                      color:
+                                      themeData.colorScheme.primary)),
+                            ]),
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
               ),
-            ),
 
-          ],
-        ));
+            ],
+          )),
+    );
   }
 }
 
