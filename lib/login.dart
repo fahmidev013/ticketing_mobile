@@ -5,7 +5,7 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:mobile_ticketing/home.dart';
+import 'package:mobile_ticketing/dashboard.dart';
 import 'package:mobile_ticketing/register.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
@@ -13,7 +13,7 @@ import 'package:http/http.dart' as http;
 import 'model/Album.dart';
 import 'model/User.dart';
 
-Future<User?> login(TextEditingController login, TextEditingController password) async {
+Future<String> login(TextEditingController login, TextEditingController password) async {
   final response = await http.post(
     Uri.parse('http://192.168.0.109:8080/login'),
     headers: <String, String>{
@@ -31,11 +31,16 @@ Future<User?> login(TextEditingController login, TextEditingController password)
   if (response.statusCode == 201) {
     // If the server did return a 201 CREATED response,
     // then parse the JSON.
-    User user = User.fromJson(jsonDecode(response.body));
+    Map<String, dynamic> decode_options = jsonDecode(response.body);
+    String user = jsonEncode(User.fromJson(decode_options));
+    return user;
+    // shared_User.setString('user', user);
+    //
+    // User user = User.fromJson(jsonDecode(response.body));
 
     return user;
   } else {
-    return null;
+    return '';
   }
 }
 
@@ -53,17 +58,14 @@ class _LoginPageScreenState extends State<LoginPage> {
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
-  _storeLoginInfo(User user) async {
+  _storeLoginInfo(String user) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('user', user);
     prefs.setInt('isLogin', 1);
-    prefs.setInt('id', user.id);
-    prefs.setString('name', user.name);
-    prefs.setString('login', user.login);
-    prefs.setString('email', user.email);
-    prefs.setString('picture', user.picture);
-    prefs.setString('active', user.active);
     print(prefs.toString());
   }
+
+
 
   bool _showPassword = false;
   void _togglevisibility() {
@@ -212,12 +214,12 @@ class _LoginPageScreenState extends State<LoginPage> {
                             ),
                             textColor: Colors.white,
                             onPressed: () async {
-                              User? userData = await login(usernameController, passwordController);
-                              if (userData != null) {
+                              String userData = await login(usernameController, passwordController);
+                              if (userData != '') {
                                 ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Login Berhasil!')));
                                 await _storeLoginInfo(userData);
-                                await Navigator.of(context)
-                                    .pushReplacement(MaterialPageRoute(builder: (_) => HomePage()));
+                                Navigator.of(context)
+                                    .pushReplacement(MaterialPageRoute(builder: (_) => Dashboard()));
 
                               } else  {
                                 ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Username dan Password Salah!')));

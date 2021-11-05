@@ -2,10 +2,14 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mobile_ticketing/home.dart';
+import 'package:mobile_ticketing/dashboard.dart';
 import 'package:mobile_ticketing/login.dart';
+import 'package:mobile_ticketing/screens/HealthFullApp.dart';
+import 'package:mobile_ticketing/screens/loginPage.dart';
+import 'package:mobile_ticketing/utils/SizeConfig.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
+
 
 class SplashScreenPage extends StatefulWidget {
   const SplashScreenPage({Key? key}) : super(key: key);
@@ -17,6 +21,10 @@ class SplashScreenPage extends StatefulWidget {
 class _SplashScreenPageState extends State<SplashScreenPage>{
 
   int? isLogin = 0;
+
+
+
+
   
   Future<void> _getLogin() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -25,13 +33,14 @@ class _SplashScreenPageState extends State<SplashScreenPage>{
 
   @override
   initState()  {
-    _getLogin();
-    Future.delayed(Duration(seconds: 3), () {
+
+    Future.delayed(Duration(seconds: 3), () async {
+      await _getLogin();
         isLogin == 1 ? 
         Navigator.of(context)
-            .pushReplacement(MaterialPageRoute(builder: (_) => HomePage())) :
+            .pushReplacement(MaterialPageRoute(builder: (_) => HealthFullApp())) :
         Navigator.of(context)
-            .pushReplacement(MaterialPageRoute(builder: (_) => LoginPage(title: "Login")));
+            .pushReplacement(MaterialPageRoute(builder: (_) => LoginScreen()));
 
       });
 
@@ -41,21 +50,21 @@ class _SplashScreenPageState extends State<SplashScreenPage>{
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: Colors.white,
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Center(
-              child: Image.asset(
-                'images/mx.png',
-                height: 35.h,
-                width: 80.w,
-              ),
+
+    MySize().init(context);
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Center(
+            child: Image.asset(
+              'assets/logo/logo.png',
+              height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width / 2,
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

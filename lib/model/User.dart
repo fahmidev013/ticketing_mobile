@@ -27,4 +27,15 @@ class User {
     );
   }
 
+  Map<String, dynamic> toJson() {
+    return {
+      "id": this.id,
+      "name": this.name,
+      "login": this.login,
+      "picture": this.picture,
+      "email": this.email,
+      "active": this.active
+    };
+  }
+
 }

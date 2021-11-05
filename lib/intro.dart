@@ -6,6 +6,7 @@ import 'package:mobile_ticketing/splash.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
 
+
 class IntroScreen extends StatefulWidget {
   const IntroScreen({Key? key}) : super(key: key);
 
@@ -14,6 +15,8 @@ class IntroScreen extends StatefulWidget {
 }
 
 class _IntroScreenState extends State<IntroScreen> {
+
+
 
   _storeOnboardInfo() async {
     int isViewed = 0;
