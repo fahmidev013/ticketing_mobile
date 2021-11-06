@@ -2,6 +2,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:mobile_ticketing/model/User.dart';
 import 'package:mobile_ticketing/utils/Generator.dart';
 import 'package:mobile_ticketing/utils/SizeConfig.dart';
 import 'package:provider/provider.dart';
@@ -10,6 +11,10 @@ import '../AppThemeNotifier.dart';
 import 'HealthNewActivityScreen.dart';
 
 class HealthHomeScreen extends StatefulWidget {
+  HealthHomeScreen({Key? key, required this.user}) : super(key: key);
+
+  final User? user;
+
   @override
   _HealthHomeScreenState createState() => _HealthHomeScreenState();
 }
@@ -83,7 +88,7 @@ class _HealthHomeScreenState extends State<HealthHomeScreen> {
                     Container(
                       margin: Spacing.left(24),
                       child: Text(
-                        "Seymour!",
+                        widget.user!.name,
                         style: AppTheme.getTextStyle(
                             themeData.textTheme.headline4,
                             letterSpacing: -0.5,

@@ -29,10 +29,10 @@ class _LoginScreenState extends State<LoginScreen> {
   late ThemeData themeData;
 
   Future clickLogin(TextEditingController login, TextEditingController password) {
-    Future<bool> futureUser = api.login(login, password);
+    Future<User?> futureUser = api.login(login, password);
     futureUser.then((payload) {
       setState(() {
-        this.loginSuccess = payload;
+        if(payload != null) this.loginSuccess = true;
       });
     });
     return futureUser;
@@ -167,11 +167,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                             padding: MaterialStateProperty.all(Spacing.xy(16, 0))
                                         ),
                                         onPressed: () async {
-                                          await clickLogin(usernameController, passwordController);
+                                          User? user = await clickLogin(usernameController, passwordController);
                                           if (loginSuccess) {
                                             ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Login Berhasil!')));
                                             Navigator.of(context)
-                                                .pushReplacement(MaterialPageRoute(builder: (_) => HealthFullApp()));
+                                                .pushReplacement(MaterialPageRoute(builder: (_) => HealthFullApp(user : user)));
 
                                           } else  {
                                             ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Username dan Password Salah!')));

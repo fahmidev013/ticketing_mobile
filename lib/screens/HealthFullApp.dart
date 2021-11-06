@@ -4,10 +4,14 @@
 * */
 
 
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutx/themes/app_theme.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:mobile_ticketing/model/User.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../AppTheme.dart';
 import 'HealthActivityScreen.dart';
@@ -16,6 +20,10 @@ import 'HealthProfileScreen.dart';
 import 'HealthScheduleScreen.dart';
 
 class HealthFullApp extends StatefulWidget {
+  HealthFullApp({Key? key, required this.user}) : super(key: key);
+
+  final User? user;
+
   @override
   _HealthFullAppState createState() => _HealthFullAppState();
 }
@@ -33,6 +41,7 @@ class _HealthFullAppState extends State<HealthFullApp>
       _currentIndex = _tabController!.index;
     });
   }
+
 
   @override
   void initState() {
@@ -197,7 +206,7 @@ class _HealthFullAppState extends State<HealthFullApp>
             body: TabBarView(
               controller: _tabController,
               children: <Widget>[
-                HealthHomeScreen(),
+                HealthHomeScreen(user: widget.user),
                 HealthActivityScreen(),
                 HealthScheduleScreen(),
                 HealthProfileScreen(),

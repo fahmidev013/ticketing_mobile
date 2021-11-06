@@ -22,7 +22,7 @@ class ApiService {
     }
   }
 
-  Future<bool>login(TextEditingController login, TextEditingController password) async {
+  Future<User?>login(TextEditingController login, TextEditingController password) async {
     Response res = await post(
       Uri.parse(apiUrl + '/login'),
       headers: <String, String>{
@@ -39,9 +39,11 @@ class ApiService {
       String user = jsonEncode(User.fromJson(decode_options));
       prefs = await SharedPreferences.getInstance();
       prefs!.setString('user', user);
-      return true;
+      prefs!.setInt('isLogin', 1);
+      return User.fromJson(decode_options);
+    } else {
+      return null;
     }
-    return false;
   }
 
   /*Future<Cases> getCaseById(String id) async {

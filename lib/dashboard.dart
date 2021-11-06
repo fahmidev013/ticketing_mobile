@@ -239,7 +239,7 @@ class _DashboardState extends State<Dashboard> with SingleTickerProviderStateMix
             body: TabBarView(
               controller: _tabController,
               children: <Widget>[
-                HealthHomeScreen(),
+                // HealthHomeScreen(name: 'Tes'),
                 HealthActivityScreen(),
                 HealthScheduleScreen(),
                 HealthProfileScreen(),

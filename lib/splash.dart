@@ -1,5 +1,7 @@
 
 
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_ticketing/dashboard.dart';
@@ -9,6 +11,8 @@ import 'package:mobile_ticketing/screens/loginPage.dart';
 import 'package:mobile_ticketing/utils/SizeConfig.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
+
+import 'model/User.dart';
 
 
 class SplashScreenPage extends StatefulWidget {
@@ -21,15 +25,18 @@ class SplashScreenPage extends StatefulWidget {
 class _SplashScreenPageState extends State<SplashScreenPage>{
 
   int? isLogin = 0;
-
-
-
+  late User user;
 
   
   Future<void> _getLogin() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     if (prefs.getInt('isLogin') != null)  isLogin = prefs.getInt('isLogin');
+    if (prefs.getString('user') != null) {
+      Map<String, dynamic> userMap = jsonDecode(prefs.getString('user')!);
+      user = User.fromJson(userMap);
+    }
   }
+
 
   @override
   initState()  {
@@ -38,7 +45,7 @@ class _SplashScreenPageState extends State<SplashScreenPage>{
       await _getLogin();
         isLogin == 1 ? 
         Navigator.of(context)
-            .pushReplacement(MaterialPageRoute(builder: (_) => HealthFullApp())) :
+            .pushReplacement(MaterialPageRoute(builder: (_) => HealthFullApp(user: user,))) :
         Navigator.of(context)
             .pushReplacement(MaterialPageRoute(builder: (_) => LoginScreen()));
 
