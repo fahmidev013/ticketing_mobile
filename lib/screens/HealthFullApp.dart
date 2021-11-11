@@ -10,6 +10,8 @@ import 'package:flutter/material.dart';
 import 'package:flutx/themes/app_theme.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:mobile_ticketing/model/User.dart';
+import 'package:mobile_ticketing/screens/AboutAppScreen.dart';
+import 'package:mobile_ticketing/screens/EventCreateScreen.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -134,7 +136,7 @@ class _HealthFullAppState extends State<HealthFullApp>
                                   mainAxisSize: MainAxisSize.min,
                                   children: <Widget>[
                                     Icon(
-                                      MdiIcons.runFast,
+                                      MdiIcons.chartBoxOutline,
                                       color: themeData.colorScheme.primary,
                                     ),
                                     Container(
@@ -149,7 +151,7 @@ class _HealthFullAppState extends State<HealthFullApp>
                                   ],
                                 )
                               : Icon(
-                                  MdiIcons.runFast,
+                                  MdiIcons.chartBoxOutline,
                                   color: themeData.colorScheme.onBackground,
                                 )),
                       Container(
@@ -206,10 +208,10 @@ class _HealthFullAppState extends State<HealthFullApp>
             body: TabBarView(
               controller: _tabController,
               children: <Widget>[
-                HealthHomeScreen(user: widget.user),
-                HealthActivityScreen(),
+                EventCreateScreen(),
+                HealthHomeScreen(user: widget.user, rootContext: context),
                 HealthScheduleScreen(),
-                HealthProfileScreen(),
+                AboutAppScreen(),
               ],
             ),
           ),

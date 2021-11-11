@@ -47,6 +47,8 @@ dependencies:
   flutter_feather_icons: ^2.0.0+1
   url_launcher: ^6.0.3
   charts_flutter: ^0.11.0
+  image_picker:
+
 
 dev_dependencies:
 

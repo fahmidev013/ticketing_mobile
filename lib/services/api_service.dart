@@ -3,22 +3,23 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart';
+import 'package:mobile_ticketing/model/Issue.dart';
 import 'package:mobile_ticketing/model/User.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ApiService {
-  final String apiUrl = "http://192.168.0.109:8080";
+  final String apiUrl = "http://192.168.0.109:8080/api/v1";
   SharedPreferences? prefs;
 
-  Future<List<User>> getCases() async {
-    Response res = await get(Uri.parse(apiUrl));
+  Future<List<Issue>> getIssues() async {
+    Response res = await get(Uri.parse(apiUrl +  '/issue?userid=30' ) );
 
     if (res.statusCode == 200) {
       List<dynamic> body = jsonDecode(res.body);
-      List<User> users = body.map((dynamic item) => User.fromJson(item)).toList();
-      return users;
+      List<Issue> issues = body.map((dynamic item) => Issue.fromJson(item)).toList();
+      return issues;
     } else {
-      throw "Failed to load cases list";
+      throw "Failed to load Issue list";
     }
   }
 
@@ -36,7 +37,8 @@ class ApiService {
 
     if (res.statusCode == 201) {
       Map<String, dynamic> decode_options = jsonDecode(res.body);
-      String user = jsonEncode(User.fromJson(decode_options));
+      User userModel = User.fromJson(decode_options);
+      String user = jsonEncode(userModel);
       prefs = await SharedPreferences.getInstance();
       prefs!.setString('user', user);
       prefs!.setInt('isLogin', 1);

@@ -6,8 +6,14 @@ import 'package:mobile_ticketing/utils/SizeConfig.dart';
 import 'package:provider/provider.dart';
 import '../../AppTheme.dart';
 import '../AppThemeNotifier.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:http/http.dart' as http;
 
+String url = 'http://192.168.0.109:8080/upload';
 class HealthScheduleScreen extends StatefulWidget {
+  HealthScheduleScreen({Key? key}) : super(key: key);
+
+
   @override
   _HealthScheduleScreenState createState() => _HealthScheduleScreenState();
 }
@@ -17,8 +23,15 @@ class _HealthScheduleScreenState extends State<HealthScheduleScreen> {
 
   late CustomAppTheme customAppTheme;
 
-
   int selectedDate = 1;
+
+  Future<String?> uploadImage(filename, url) async {
+    var request = http.MultipartRequest('POST', Uri.parse(url));
+    request.files.add(await http.MultipartFile.fromPath('picture', filename));
+    var res = await request.send();
+    return res.reasonPhrase;
+  }
+  String? state = "";
 
   Widget build(BuildContext context) {
     themeData = Theme.of(context);
@@ -29,7 +42,14 @@ class _HealthScheduleScreenState extends State<HealthScheduleScreen> {
           theme: AppTheme.getThemeFromThemeMode(1),
           home: Scaffold(
               floatingActionButton: FloatingActionButton(
-                onPressed: () {},
+                onPressed: () async {
+                  var file = await ImagePicker().pickImage(source: ImageSource.gallery);
+                  var res = await uploadImage(file?.path, url);
+                  setState(() {
+                    state = res;
+                    print(res);
+                  });
+                },
                 backgroundColor: themeData.colorScheme.primary,
                 child: Icon(
                   MdiIcons.plus,
@@ -50,7 +70,7 @@ class _HealthScheduleScreenState extends State<HealthScheduleScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                "Today",
+                                "Hari Ini",
                                 style: AppTheme.getTextStyle(
                                     themeData.textTheme.bodyText2,
                                     letterSpacing: 0,
@@ -58,7 +78,7 @@ class _HealthScheduleScreenState extends State<HealthScheduleScreen> {
                                     fontWeight: 500),
                               ),
                               Text(
-                                "13 Wed",
+                                "Minggu, 7 Nov",
                                 style: AppTheme.getTextStyle(
                                     themeData.textTheme.bodyText1,
                                     color: themeData.colorScheme.onBackground,
@@ -81,18 +101,18 @@ class _HealthScheduleScreenState extends State<HealthScheduleScreen> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          singleDateWidget(date: "12\nTue", index: 0),
-                          singleDateWidget(date: "13\nWed", index: 1),
-                          singleDateWidget(date: "14\nThu", index: 2),
-                          singleDateWidget(date: "15\nFri", index: 3),
-                          singleDateWidget(date: "16\nSat", index: 4),
+                          singleDateWidget(date: "06\nSat", index: 0),
+                          singleDateWidget(date: "07\nSun", index: 1),
+                          singleDateWidget(date: "08\nMon", index: 2),
+                          singleDateWidget(date: "09\nTue", index: 3),
+                          singleDateWidget(date: "10\nWed", index: 4),
                         ],
                       ),
                     ),
                     Container(
                       margin: Spacing.fromLTRB(24, 24, 24, 0),
                       child: Text(
-                        "Activity",
+                        "Aktivitas",
                         style: AppTheme.getTextStyle(
                             themeData.textTheme.subtitle1,
                             color: themeData.colorScheme.onBackground,
@@ -107,35 +127,35 @@ class _HealthScheduleScreenState extends State<HealthScheduleScreen> {
                           singleActivityWidget(
                               color: Colors.blue,
                               iconData: MdiIcons.clock,
-                              time: "6:00 AM",
-                              title: "Wake up",
-                              description: "Alarm automatic set"),
+                              time: "8:00 AM",
+                              title: "Input Ticket Issue : 7829",
+                              description: "Kerusakan Server x3650 Rack 2"),
                           Container(
                             margin: Spacing.top(24),
                             child: singleActivityWidget(
                                 color: Colors.orange,
                                 iconData: MdiIcons.run,
-                                time: "7:00 AM",
-                                title: "Running",
-                                description: "3 KM at morning"),
+                                time: "9:00 AM",
+                                title: "Input Ticket Issue : 7829",
+                                description: "Kerusakan Server x3650 Rack 2"),
                           ),
                           Container(
                             margin: Spacing.top(24),
                             child: singleActivityWidget(
                                 color: Colors.green,
                                 iconData: MdiIcons.pill,
-                                time: "8:00 AM",
-                                title: "Take Pill",
-                                description: "After walking"),
+                                time: "11:00 AM",
+                                title: "Input Ticket Issue : 7834",
+                                description: "Kerusakan Server x3650 Rack 2"),
                           ),
                           Container(
                             margin: Spacing.top(24),
                             child: singleActivityWidget(
                                 color: Colors.purple,
                                 iconData: MdiIcons.doctor,
-                                time: "10:00 AM",
-                                title: "Appointment",
-                                description: "Dr. vivek "),
+                                time: "02:00 PM",
+                                title: "Input Ticket Issue : 8100",
+                                description: "Kerusakan Server x3650 Rack 2"),
                           ),
                         ],
                       ),

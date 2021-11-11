@@ -42,7 +42,7 @@ class _HealthActivityScreenState extends State<HealthActivityScreen> {
                     Container(
                       margin: Spacing.fromLTRB(48, 24, 48, 0),
                       child: Text(
-                        "Today you have consumed 150 cal",
+                        "Grafik Penyelesaian Issue",
                         style: AppTheme.getTextStyle(
                             themeData.textTheme.headline5,
                             color: themeData.colorScheme.onBackground,
@@ -92,14 +92,14 @@ class _HealthActivityScreenState extends State<HealthActivityScreen> {
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 Text(
-                                  "50%",
+                                  "80%",
                                   style: AppTheme.getTextStyle(
                                       themeData.textTheme.headline5,
                                       color: themeData.colorScheme.onBackground,
                                       fontWeight: 700),
                                 ),
                                 Text(
-                                  "of daily goals",
+                                  "selesai",
                                   style: AppTheme.getTextStyle(
                                       themeData.textTheme.caption,
                                       letterSpacing: -0.2,
@@ -119,23 +119,23 @@ class _HealthActivityScreenState extends State<HealthActivityScreen> {
                         children: [
                           singleElement(
                               color: color1,
-                              type: "Carb",
-                              inGram: "150",
+                              type: "Server",
+                              inGram: "4",
                               inPercentage: "40"),
                           Container(
                             margin: Spacing.top(16),
                             child: singleElement(
                                 color: color2,
-                                type: "Protein",
-                                inGram: "120",
+                                type: "Laptop",
+                                inGram: "10",
                                 inPercentage: "34"),
                           ),
                           Container(
                             margin: Spacing.top(16),
                             child: singleElement(
                                 color: color3,
-                                type: "Fat",
-                                inGram: "40",
+                                type: "PC",
+                                inGram: "15",
                                 inPercentage: "36"),
                           ),
                         ],
@@ -144,7 +144,7 @@ class _HealthActivityScreenState extends State<HealthActivityScreen> {
                     Container(
                       margin: Spacing.fromLTRB(24, 32, 24, 0),
                       child: Text(
-                        "Resume Activity".toUpperCase(),
+                        "Issue Terbaru per Hari".toUpperCase(),
                         style: AppTheme.getTextStyle(themeData.textTheme.caption,fontSize: 11.8,
                             muted: true,
                             color: themeData.colorScheme.onBackground,
@@ -158,31 +158,31 @@ class _HealthActivityScreenState extends State<HealthActivityScreen> {
                           singleActivity(
                               iconData: MdiIcons.run,
                               color: color1!,
-                              type: "Run",
-                              time: "10 : 45"),
+                              type: "Server",
+                              time: "3 Unit"),
                           Container(
                             margin: Spacing.top(16),
                             child: singleActivity(
                                 iconData: MdiIcons.weightLifter,
                                 color: color2!,
-                                type: "Weight Lifeting",
-                                time: "4 : 18"),
+                                type: "Laptop",
+                                time: "2 Unit"),
                           ),
                           Container(
                             margin: Spacing.top(16),
                             child: singleActivity(
                                 iconData: MdiIcons.swim,
                                 color: color3!,
-                                type: "Swimming",
-                                time: "10 : 00"),
+                                type: "PC",
+                                time: "3 Unit"),
                           ),
                           Container(
                             margin: Spacing.top(16),
                             child: singleActivity(
                                 iconData: MdiIcons.runFast,
                                 color: themeData.colorScheme.primary,
-                                type: "Fast Run",
-                                time: "0 : 00"),
+                                type: "Network",
+                                time: "1 Unit"),
                           ),
 
                         ],
@@ -224,7 +224,7 @@ class _HealthActivityScreenState extends State<HealthActivityScreen> {
                   Expanded(
                     child: Center(
                       child: Text(
-                        inGram + " g",
+                        inGram + " unit",
                         style: AppTheme.getTextStyle(
                             themeData.textTheme.bodyText1,
                             color: themeData.colorScheme.onBackground),

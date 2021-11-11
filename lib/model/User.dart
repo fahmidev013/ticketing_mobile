@@ -1,40 +1,44 @@
 
+import 'package:mobile_ticketing/model/UserGroup.dart';
+import 'package:mobile_ticketing/model/UserGroupItem.dart';
+
 class User {
-  final int id;
-  final String name;
-  final String login;
-  final String picture;
-  final String email;
-  final String active;
+  final int user_id;
+  final String user_name;
+  final String user_login;
+  final String user_email;
+  final String user_picture;
+  final List<UserGroupItem> user_group;
 
   User({
-    required this.id,
-    required this.name,
-    required this.login,
-    required this.picture,
-    required this.email,
-    required this.active
+    required this.user_id,
+    required this.user_name,
+    required this.user_login,
+    required this.user_email,
+    required this.user_picture,
+    required this.user_group
   });
 
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
-      id: json['id'],
-      name: json['name'],
-      login: json['login'],
-      picture: json['picture'] == null ? '' : json['picture'],
-      email: json['email'],
-      active: json['active'],
+      user_id: json['user_id'],
+      user_name: json['user_name'],
+      user_login: json['user_login'],
+      user_picture: json['user_picture'] == null ? '' : json['user_picture'],
+      user_email: json['user_email'],
+      user_group: (json['user_group'] as List).map((x) => UserGroupItem.fromJson(x)).toList()
     );
   }
 
+
   Map<String, dynamic> toJson() {
     return {
-      "id": this.id,
-      "name": this.name,
-      "login": this.login,
-      "picture": this.picture,
-      "email": this.email,
-      "active": this.active
+      "user_id": this.user_id,
+      "user_name": this.user_name,
+      "user_login": this.user_login,
+      "user_picture": this.user_picture,
+      "user_email": this.user_email,
+      "user_group": this.user_group
     };
   }
 
