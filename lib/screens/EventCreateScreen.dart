@@ -342,9 +342,9 @@ class _EventCreateScreenState extends State<EventCreateScreen> {
                       color: customAppTheme.bgLayer1,
                       padding: Spacing.fromLTRB(24, 16, 24, 16),
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          RichText(
+                          /*RichText(
                             text: TextSpan(children: <TextSpan>[
                               TextSpan(
                                   text: "\$99",
@@ -363,7 +363,7 @@ class _EventCreateScreenState extends State<EventCreateScreen> {
                                     color: themeData
                                         .colorScheme.onBackground,)),
                             ]),
-                          ),
+                          ),*/
                           Container(
                             padding: Spacing.fromLTRB(8, 8, 8, 8),
                             decoration: BoxDecoration(

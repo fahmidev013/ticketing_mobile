@@ -27,6 +27,7 @@ Future<void> firstTimeVisit() async {
 }
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(MyApp());
 }
 

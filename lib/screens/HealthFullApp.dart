@@ -12,6 +12,7 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 import 'package:mobile_ticketing/model/User.dart';
 import 'package:mobile_ticketing/screens/AboutAppScreen.dart';
 import 'package:mobile_ticketing/screens/EventCreateScreen.dart';
+import 'package:mobile_ticketing/screens/HealthNewActivityScreen.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -162,7 +163,8 @@ class _HealthFullAppState extends State<HealthFullApp>
               controller: _tabController,
               children: <Widget>[
                 EventCreateScreen(user: widget.user, rootContext: context),
-                HealthHomeScreen(user: widget.user, rootContext: context),
+                // HealthHomeScreen(user: widget.user, rootContext: context),
+                HealthNewActivityScreen()
 
               ],
             ),

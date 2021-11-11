@@ -49,6 +49,7 @@ dependencies:
   charts_flutter: ^0.11.0
   image_picker: ^0.7.5
   flutter_local_notifications: ^1.4.4+1
+  flutter_inappwebview:
 
 
 dev_dependencies:
