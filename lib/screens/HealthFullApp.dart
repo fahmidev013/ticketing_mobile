@@ -47,7 +47,7 @@ class _HealthFullAppState extends State<HealthFullApp>
 
   @override
   void initState() {
-    _tabController = new TabController(length: 4, vsync: this, initialIndex: 0);
+    _tabController = new TabController(length: 2, vsync: this, initialIndex: 0);
     _tabController!.addListener(_handleTabSelection);
     _tabController!.animation!.addListener(() {
       final aniValue = _tabController!.animation!.value;
@@ -154,54 +154,7 @@ class _HealthFullAppState extends State<HealthFullApp>
                                   MdiIcons.chartBoxOutline,
                                   color: themeData.colorScheme.onBackground,
                                 )),
-                      Container(
-                          child: (_currentIndex == 2)
-                              ? Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: <Widget>[
-                                    Icon(
-                                      MdiIcons.calendar,
-                                      color: themeData.colorScheme.primary,
-                                    ),
-                                    Container(
-                                      margin: EdgeInsets.only(top: 4),
-                                      decoration: BoxDecoration(
-                                          color: themeData.primaryColor,
-                                          borderRadius: new BorderRadius.all(
-                                              Radius.circular(2.5))),
-                                      height: 5,
-                                      width: 5,
-                                    )
-                                  ],
-                                )
-                              : Icon(
-                                  MdiIcons.calendarOutline,
-                                  color: themeData.colorScheme.onBackground,
-                                )),
-                      Container(
-                          child: (_currentIndex == 3)
-                              ? Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: <Widget>[
-                                    Icon(
-                                      MdiIcons.account,
-                                      color: themeData.colorScheme.primary,
-                                    ),
-                                    Container(
-                                      margin: EdgeInsets.only(top: 4),
-                                      decoration: BoxDecoration(
-                                          color: themeData.primaryColor,
-                                          borderRadius: new BorderRadius.all(
-                                              Radius.circular(2.5))),
-                                      height: 5,
-                                      width: 5,
-                                    )
-                                  ],
-                                )
-                              : Icon(
-                                  MdiIcons.accountOutline,
-                                  color: themeData.colorScheme.onBackground,
-                                )),
+
                     ],
                   ),
                 )),
@@ -210,8 +163,7 @@ class _HealthFullAppState extends State<HealthFullApp>
               children: <Widget>[
                 EventCreateScreen(),
                 HealthHomeScreen(user: widget.user, rootContext: context),
-                HealthScheduleScreen(),
-                AboutAppScreen(),
+
               ],
             ),
           ),

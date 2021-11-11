@@ -1,12 +1,12 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:mobile_ticketing/utils/SizeConfig.dart';
 import 'package:provider/provider.dart';
 import '../../AppTheme.dart';
 import '../AppThemeNotifier.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
 
 String url = 'http://192.168.0.109:8080/upload';
@@ -43,7 +43,7 @@ class _HealthScheduleScreenState extends State<HealthScheduleScreen> {
           home: Scaffold(
               floatingActionButton: FloatingActionButton(
                 onPressed: () async {
-                  var file = await ImagePicker().pickImage(source: ImageSource.gallery);
+                  var file = await ImagePicker().getImage(source: ImageSource.gallery);
                   var res = await uploadImage(file?.path, url);
                   setState(() {
                     state = res;

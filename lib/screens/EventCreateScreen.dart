@@ -1,13 +1,19 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_feather_icons/flutter_feather_icons.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutx/widgets/text/text.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:mobile_ticketing/model/Issue.dart';
+import 'package:mobile_ticketing/screens/HealthActivityScreen.dart';
 import 'package:mobile_ticketing/services/api_service.dart';
 import 'package:mobile_ticketing/utils/SizeConfig.dart';
 import 'package:provider/provider.dart';
 import '../../AppTheme.dart';
 import '../AppThemeNotifier.dart';
+import 'grocery_notification_dialog.dart';
+import 'medicare_chat_screen.dart';
 
 class EventCreateScreen extends StatefulWidget {
   @override
@@ -20,6 +26,9 @@ class _EventCreateScreenState extends State<EventCreateScreen> {
   final ApiService api = ApiService();
   late List<Issue> tickets;
   bool isDone = false;
+
+  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+  FlutterLocalNotificationsPlugin();
 
 
 
@@ -35,10 +44,95 @@ class _EventCreateScreenState extends State<EventCreateScreen> {
   @override
   void initState() {
     super.initState();
+    var initializationSettingsAndroid =
+    AndroidInitializationSettings('mipmap/ic_launcher');
+    var initializationSettingsIOs = IOSInitializationSettings();
+    var initSetttings = InitializationSettings(
+        initializationSettingsAndroid, initializationSettingsIOs);
+
+    flutterLocalNotificationsPlugin.initialize(initSetttings,
+        onSelectNotification: onSelectNotification);
   }
 
 
+  Future onSelectNotification(String payload) {
+    Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+      return HealthActivityScreen();
+    }));
+    throw Exception("Error on server");
+  }
 
+  Future<void> showNotificationMediaStyle() async {
+    var androidPlatformChannelSpecifics = AndroidNotificationDetails(
+      'media channel id',
+      'media channel name',
+      'media channel description',
+      color: Colors.red,
+      enableLights: true,
+      largeIcon: DrawableResourceAndroidBitmap("mipmap/ic_launcher"),
+      styleInformation: MediaStyleInformation(),
+    );
+    var platformChannelSpecifics =
+    NotificationDetails(androidPlatformChannelSpecifics, null);
+    await flutterLocalNotificationsPlugin.show(
+        0, 'notification title', 'notification body', platformChannelSpecifics);
+  }
+
+  Future<void> showBigPictureNotification() async {
+    var bigPictureStyleInformation = BigPictureStyleInformation(
+        DrawableResourceAndroidBitmap("mipmap/ic_launcher"),
+        largeIcon: DrawableResourceAndroidBitmap("mipmap/ic_launcher"),
+        contentTitle: 'flutter devs',
+        htmlFormatContentTitle: true,
+        summaryText: 'summaryText',
+        htmlFormatSummaryText: true);
+    var androidPlatformChannelSpecifics = AndroidNotificationDetails(
+        'big text channel id',
+        'big text channel name',
+        'big text channel description',
+        styleInformation: bigPictureStyleInformation);
+    var platformChannelSpecifics =
+    NotificationDetails(androidPlatformChannelSpecifics, null);
+    await flutterLocalNotificationsPlugin.show(
+        0, 'big text title', 'silent body', platformChannelSpecifics,
+        payload: "big image notifications");
+  }
+
+  Future<void> scheduleNotification() async {
+    var scheduledNotificationDateTime =
+    DateTime.now().add(Duration(seconds: 5));
+    var androidPlatformChannelSpecifics = AndroidNotificationDetails(
+      'channel id',
+      'channel name',
+      'channel description',
+      icon: 'mipmap/ic_launcher',
+      largeIcon: DrawableResourceAndroidBitmap('mipmap/ic_launcher'),
+    );
+    var iOSPlatformChannelSpecifics = IOSNotificationDetails();
+    var platformChannelSpecifics = NotificationDetails(
+        androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
+    await flutterLocalNotificationsPlugin.schedule(
+        0,
+        'scheduled title',
+        'scheduled body',
+        scheduledNotificationDateTime,
+        platformChannelSpecifics);
+  }
+
+  Future<void> cancelNotification() async {
+    await flutterLocalNotificationsPlugin.cancel(0);
+  }
+
+  showNotification() async {
+    var android = new AndroidNotificationDetails(
+        'id', 'channel ', 'description',
+        priority: Priority.High, importance: Importance.Max);
+    var iOS = new IOSNotificationDetails();
+    var platform = new NotificationDetails(android, iOS);
+    await flutterLocalNotificationsPlugin.show(
+        0, 'Flutter devs', 'Flutter Local Notification Demo', platform,
+        payload: 'Welcome to the Local Notification demo ');
+  }
 
   Widget build(BuildContext context) {
     themeData = Theme.of(context);
@@ -59,44 +153,102 @@ class _EventCreateScreenState extends State<EventCreateScreen> {
                           Container(
                             margin: Spacing.fromLTRB(24, 24, 24, 0),
                             child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Container(
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.all(
-                                        Radius.circular(MySize.size8!)),
-                                    child: Image(
-                                      image: AssetImage(
-                                          './assets/images/avatar-4.jpg'),
-                                      width: MySize.size44,
-                                      height: MySize.size44,
-                                    ),
-                                  ),
-                                ),
-                                Container(
-                                  margin: Spacing.left(16),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                    CrossAxisAlignment.start,
+                                  child: Row(
                                     children: [
-                                      Text(
-                                        "Becky Parra",
-                                        style: AppTheme.getTextStyle(
-                                            themeData.textTheme.bodyText2,
-                                            color: themeData
-                                                .colorScheme.onBackground,
-                                            fontWeight: 600),
+                                      Column(
+                                        children: [
+                                          ClipRRect(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(MySize.size8!)),
+                                            child: Image(
+                                              image: AssetImage(
+                                                  './assets/images/avatar-4.jpg'),
+                                              width: MySize.size44,
+                                              height: MySize.size44,
+                                            ),
+                                          ),
+                                        ],
                                       ),
-                                      Text(
-                                        "Email at gmail.com",
-                                        style: AppTheme.getTextStyle(
-                                            themeData.textTheme.caption,
-                                            color:
-                                            customAppTheme.colorSuccess,
-                                            fontWeight: 500),
-                                      ),
+                                      SizedBox(width: 16),
+                                      Column(
+                                        crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            "Becky Parra",
+                                            style: AppTheme.getTextStyle(
+                                                themeData.textTheme.bodyText2,
+                                                color: themeData
+                                                    .colorScheme.onBackground,
+                                                fontWeight: 600),
+                                          ),
+                                          Text(
+                                            "Email at gmail.com",
+                                            style: AppTheme.getTextStyle(
+                                                themeData.textTheme.caption,
+                                                color:
+                                                customAppTheme.colorSuccess,
+                                                fontWeight: 500),
+                                          ),
+                                        ],
+                                      )
                                     ],
-                                  ),
-                                )
+                                  )
+                                ),
+
+
+                                Container(
+                                    child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.end,
+                                        children: [
+                                          InkWell(
+                                            onTap: () async {
+                                              await showNotification();
+                                              /*Navigator.of(context).push(new MaterialPageRoute<Null>(
+                                                  builder: (BuildContext context) {
+                                                    return NotificationDialog();
+                                                  },
+                                                  fullscreenDialog: true));*/
+                                            },
+                                            child: Stack(
+                                              clipBehavior: Clip.none,
+                                              children: <Widget>[
+                                                Icon(
+                                                  FeatherIcons.bell,
+                                                  size: 26,
+                                                  color: AppTheme.theme.colorScheme.onBackground
+                                                      .withAlpha(200),
+                                                ),
+                                                Positioned(
+                                                  right: 0,
+                                                  top: 0,
+                                                  child: Container(
+                                                    padding: Spacing.zero,
+                                                    height: 14,
+                                                    width: 14,
+                                                    decoration: BoxDecoration(
+                                                        color: AppTheme.customTheme.groceryPrimary,
+                                                        borderRadius:
+                                                        BorderRadius.all(Radius.circular(40))),
+                                                    child: Center(
+                                                      child: FxText.overline(
+                                                        "2",
+                                                        color: AppTheme.customTheme.groceryOnPrimary,
+                                                        fontSize: 9,
+                                                        fontWeight: 500,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                )
+                                              ],
+                                            ),
+                                          )
+                                        ]
+                                    )
+                                ),
                               ],
                             ),
                           ),
@@ -670,50 +822,67 @@ class _EventCreateScreenState extends State<EventCreateScreen> {
                         ],
                       ),
                     ),
-                    //-------------------------------
-                    Container(
-                      margin: Spacing.top(12),
-                      child: Row(
-                        children: [
-                          Container(
-                              width: MySize.size38,
-                              height: MySize.size38,
-                              decoration: BoxDecoration(
-                                  color: themeData.colorScheme.primary.withAlpha(32),
-                                  borderRadius:
-                                  BorderRadius.all(Radius.circular(MySize.size8!))),
-                              child: Center(
-                                child: Text(
-                                  '${ticketsClosed?.length ?? 0}',
-                                  style: AppTheme.getTextStyle(
-                                      themeData.textTheme.bodyText2,
-                                      color: themeData.colorScheme.primary,
-                                      fontWeight: 800),
+
+                    InkWell(
+                      onTap: () {
+                        print("Container clicked");
+                        Navigator.push(
+                            context, MaterialPageRoute(builder: (context) => MediCareChatScreen(issue: ticketsClosed, title: 'CLOSED TICKET',)));
+                      }, // Handle your callback
+                      child: Ink(
+                          color: Colors.red,
+                          child: Container(
+                            margin: Spacing.top(12),
+                            child: Row(
+                              children: [
+                                Container(
+                                    width: MySize.size38,
+                                    height: MySize.size38,
+                                    decoration: BoxDecoration(
+                                        color: themeData.colorScheme.primary.withAlpha(32),
+                                        borderRadius:
+                                        BorderRadius.all(Radius.circular(MySize.size8!))),
+                                    child: Center(
+                                      child: Text(
+                                        '${ticketsClosed?.length ?? 0}',
+                                        style: AppTheme.getTextStyle(
+                                            themeData.textTheme.bodyText2,
+                                            color: themeData.colorScheme.primary,
+                                            fontWeight: 800),
+                                      ),
+                                    )),
+                                Expanded(
+                                  child: Container(
+                                    margin: Spacing.left(16),
+                                    child: Text(
+                                      "Closed",
+                                      style: AppTheme.getTextStyle(
+                                          themeData.textTheme.bodyText2,
+                                          fontWeight: 600,
+                                          color: themeData.colorScheme.onBackground
+                                              .withAlpha(220)),
+                                    ),
+                                  ),
                                 ),
-                              )),
-                          Expanded(
-                            child: Container(
-                              margin: Spacing.left(16),
-                              child: Text(
-                                "Closed",
-                                style: AppTheme.getTextStyle(
-                                    themeData.textTheme.bodyText2,
-                                    fontWeight: 600,
-                                    color: themeData.colorScheme.onBackground
-                                        .withAlpha(220)),
-                              ),
+                                Container(
+                                  child: Icon(
+                                    MdiIcons.chevronRight,
+                                    size: MySize.size20,
+                                    color: themeData.colorScheme.onBackground.withAlpha(200),
+                                  ),
+                                )
+                              ],
                             ),
+
+
                           ),
-                          Container(
-                            child: Icon(
-                              MdiIcons.chevronRight,
-                              size: MySize.size20,
-                              color: themeData.colorScheme.onBackground.withAlpha(200),
-                            ),
-                          )
-                        ],
                       ),
                     ),
+
+
+
+                    //-------------------------------
+
                     //-------------------------------
                     Container(
                       margin: Spacing.top(12),
