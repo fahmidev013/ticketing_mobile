@@ -12,7 +12,7 @@ class ApiService {
   SharedPreferences? prefs;
 
   Future<List<Issue>> getIssues() async {
-    Response res = await get(Uri.parse(apiUrl +  '/issue?userid=30' ) );
+    Response res = await get(Uri.parse(apiUrl +  '/issue?userid=28' ) );
 
     if (res.statusCode == 200) {
       List<dynamic> body = jsonDecode(res.body);

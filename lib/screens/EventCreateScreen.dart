@@ -19,26 +19,844 @@ class _EventCreateScreenState extends State<EventCreateScreen> {
   late CustomAppTheme customAppTheme;
   final ApiService api = ApiService();
   late List<Issue> tickets;
+  bool isDone = false;
+
+
 
   List<String> _simpleChoice = ["Change place", "Add another", "Remove"];
   bool _switch = true;
 
-  void _getIssueData() async {
+  Future<List<Issue>> _getIssueData() async {
     tickets = await api.getIssues();
-    print(tickets.toString());
-    /*api.getIssues().then((value) => {
-      tickets = value
-    } ).then((value) => print(value.iterator));*/
+    return tickets;
   }
 
 
   @override
   void initState() {
     super.initState();
-    _getIssueData();
   }
 
+
+
+
   Widget build(BuildContext context) {
+    themeData = Theme.of(context);
+    customAppTheme = AppTheme.getCustomAppTheme(1);
+    return MaterialApp(
+        debugShowCheckedModeBanner: false,
+        theme: AppTheme.getThemeFromThemeMode(1),
+        home: Scaffold(
+            resizeToAvoidBottomInset: false,
+            body: Container(
+                color: customAppTheme.bgLayer2,
+                child: Column(
+                  children: [
+                    Expanded(
+                      child: ListView(
+                        padding: Spacing.vertical(16),
+                        children: [
+                          Container(
+                            margin: Spacing.fromLTRB(24, 24, 24, 0),
+                            child: Row(
+                              children: [
+                                Container(
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.all(
+                                        Radius.circular(MySize.size8!)),
+                                    child: Image(
+                                      image: AssetImage(
+                                          './assets/images/avatar-4.jpg'),
+                                      width: MySize.size44,
+                                      height: MySize.size44,
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  margin: Spacing.left(16),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                    CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        "Becky Parra",
+                                        style: AppTheme.getTextStyle(
+                                            themeData.textTheme.bodyText2,
+                                            color: themeData
+                                                .colorScheme.onBackground,
+                                            fontWeight: 600),
+                                      ),
+                                      Text(
+                                        "Email at gmail.com",
+                                        style: AppTheme.getTextStyle(
+                                            themeData.textTheme.caption,
+                                            color:
+                                            customAppTheme.colorSuccess,
+                                            fontWeight: 500),
+                                      ),
+                                    ],
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                          Container(
+                            margin: Spacing.fromLTRB(24, 8, 24, 0),
+                            child: TextFormField(
+                              style: AppTheme.getTextStyle(
+                                  themeData.textTheme.headline5,
+                                  color: themeData.colorScheme.onBackground,
+                                  letterSpacing: -0.4,
+                                  fontWeight: 800),
+                              decoration: InputDecoration(
+                                fillColor: themeData.colorScheme.background,
+                                hintStyle: AppTheme.getTextStyle(
+                                    themeData.textTheme.headline5,
+                                    color:
+                                    themeData.colorScheme.onBackground,
+                                    letterSpacing: -0.4,
+                                    fontWeight: 800),
+                                filled: false,
+                                hintText: "Mobile Helpdesk Ticket",
+                                border: InputBorder.none,
+                                enabledBorder: InputBorder.none,
+                                focusedBorder: InputBorder.none,
+                              ),
+                              autocorrect: false,
+
+                              textCapitalization:
+                              TextCapitalization.sentences,
+                            ),
+                          ),
+                          Container(
+                            margin: Spacing.fromLTRB(24, 0, 24, 0),
+                            child: TextFormField(
+                              style: AppTheme.getTextStyle(
+                                  themeData.textTheme.bodyText2,
+                                  color: themeData.colorScheme.onBackground,
+                                  fontWeight: 500,
+                                  letterSpacing: 0,
+                                  muted: true),
+                              decoration: InputDecoration(
+                                hintText: "Aplikasi untuk lorem ipsume Aplikasi untuk lorem ipsume Aplikasi untuk lorem ipsume Aplikasi untuk lorem ipsume Aplikasi untuk lorem ipsume Aplikasi untuk lorem ipsume",
+                                hintStyle: AppTheme.getTextStyle(
+                                    themeData.textTheme.bodyText2,
+                                    color:
+                                    themeData.colorScheme.onBackground,
+                                    fontWeight: 600,
+                                    letterSpacing: 0,
+                                    xMuted: true),
+                                border: UnderlineInputBorder(
+                                  borderSide: BorderSide(
+                                      width: 1.5,
+                                      color: themeData
+                                          .colorScheme.onBackground
+                                          .withAlpha(50)),
+                                ),
+                                enabledBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(
+                                      width: 1.4,
+                                      color: themeData
+                                          .colorScheme.onBackground
+                                          .withAlpha(50)),
+                                ),
+                                focusedBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(
+                                      width: 1.5,
+                                      color: themeData
+                                          .colorScheme.onBackground
+                                          .withAlpha(50)),
+                                ),
+                              ),
+                              maxLines: 6,
+                              minLines: 1,
+                              autofocus: false,
+                              textCapitalization:
+                              TextCapitalization.sentences,
+                            ),
+                          ),
+                          // locationWidget(),
+                          // eventTypeWidget(),
+                          inviteWidget()
+                        ],
+                      ),
+                    ),
+                    Container(
+                      color: customAppTheme.bgLayer1,
+                      padding: Spacing.fromLTRB(24, 16, 24, 16),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          RichText(
+                            text: TextSpan(children: <TextSpan>[
+                              TextSpan(
+                                  text: "\$99",
+                                  style: AppTheme.getTextStyle(
+                                      themeData.textTheme.bodyText1,
+                                      fontWeight: 700,
+                                      letterSpacing: 0,
+                                      color: themeData
+                                          .colorScheme.primary)),
+                              TextSpan(
+                                  text: " /per person",
+                                  style: AppTheme.getTextStyle(
+                                    themeData.textTheme.caption,
+                                    fontWeight: 600,
+                                    letterSpacing: 0,
+                                    color: themeData
+                                        .colorScheme.onBackground,)),
+                            ]),
+                          ),
+                          Container(
+                            padding: Spacing.fromLTRB(8, 8, 8, 8),
+                            decoration: BoxDecoration(
+                                color: themeData.colorScheme.primary,
+                                borderRadius: BorderRadius.all(
+                                    Radius.circular(MySize.size40!))),
+                            child: Row(
+                              children: [
+                                Container(
+                                  margin: Spacing.left(12),
+                                  child: Text(
+                                    "Create".toUpperCase(),
+                                    style: AppTheme.getTextStyle(
+                                        themeData.textTheme.caption,
+                                        fontSize: 12,
+                                        letterSpacing: 0.7,
+                                        color:
+                                        themeData.colorScheme.onPrimary,
+                                        fontWeight: 600),
+                                  ),
+                                ),
+                                Container(
+                                  margin: Spacing.left(16),
+                                  padding: Spacing.all(4),
+                                  decoration: BoxDecoration(
+                                      color:
+                                      themeData.colorScheme.onPrimary,
+                                      shape: BoxShape.circle),
+                                  child: Icon(
+                                    MdiIcons.chevronRight,
+                                    size: MySize.size20,
+                                    color: themeData.colorScheme.primary,
+                                  ),
+                                )
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                    )
+                  ],
+                ))));
+  }
+
+  Widget inviteWidget() {
+    List<Issue>? ticketsOpen;
+    List<Issue>? ticketsSubmitted;
+    List<Issue>? ticketsReview;
+    List<Issue>? ticketsPending;
+    List<Issue>? ticketsCustTest;
+    List<Issue>? ticketsLS;
+    List<Issue>? ticketsResolved;
+    List<Issue>? ticketsReopen;
+    List<Issue>? ticketsClosed;
+    List<Issue>? ticketsArchive;
+    List<Issue>? ticketsTodo;
+    List<Issue>? ticketsDone;
+    return  FutureBuilder(
+        future: _getIssueData(),
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          if( snapshot.connectionState == ConnectionState.waiting){
+            return  Center(child: Text('Please wait its loading...'));
+          }else{
+            if (snapshot.hasError)
+              return Center(child: Text('Error: ${snapshot.error}'));
+            else
+              ticketsOpen = [];
+            ticketsSubmitted = [];
+            ticketsReview = [];
+             ticketsPending = [];
+             ticketsCustTest =[];
+             ticketsLS =[];
+            ticketsResolved=[];
+            ticketsReopen=[];
+            ticketsClosed=[];
+            ticketsArchive=[];
+            ticketsTodo=[];
+            ticketsDone=[];
+              for (Issue val in snapshot.data){
+                if (val.issue_status == 'OPEN') ticketsOpen!.add(val);
+                if (val.issue_status == 'SUBMITTED') ticketsSubmitted!.add(val);
+                if (val.issue_status == 'NEEDS REVIEW') ticketsReview!.add(val);
+                if (val.issue_status == 'PENDING') ticketsPending!.add(val);
+                if (val.issue_status == 'CUSTOMER TESTING') ticketsCustTest!.add(val);
+                if (val.issue_status == 'LS ACTION') ticketsLS!.add(val);
+                if (val.issue_status == 'RESOLVED') ticketsResolved!.add(val);
+                if (val.issue_status == 'REOPENED') ticketsReopen!.add(val);
+                if (val.issue_status == 'CLOSED') ticketsClosed!.add(val);
+                if (val.issue_status == 'ARCHIVED') ticketsArchive!.add(val);
+                if (val.issue_status == 'TO DO') ticketsTodo!.add(val);
+                if (val.issue_status == 'DONE') ticketsDone!.add(val);
+              }
+              // return Center(child: new Text('${snapshot.data[1].issue_title}'));  // snapshot.data  :- get your object which is pass from your downloadData() function
+              return Container(
+                margin: Spacing.fromLTRB(24, 24, 24, 0),
+                padding: Spacing.all(16),
+                decoration: BoxDecoration(
+                    color: customAppTheme.bgLayer1,
+                    border: Border.all(color: customAppTheme.bgLayer3, width: 1),
+
+                    borderRadius: BorderRadius.all(Radius.circular(MySize.size8!))),
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        Text(
+                          "Kategori Status Tiket",
+                          style: AppTheme.getTextStyle(themeData.textTheme.bodyText2,
+                              color: themeData.colorScheme.onBackground, fontWeight: 600),
+                        )
+                      ],
+                    ),
+                    Container(
+                      margin: Spacing.top(12),
+                      child: Row(
+                        children: [
+                          Container(
+                              width: MySize.size38,
+                              height: MySize.size38,
+                              decoration: BoxDecoration(
+                                  color: themeData.colorScheme.primary.withAlpha(32),
+                                  borderRadius:
+                                  BorderRadius.all(Radius.circular(MySize.size8!))),
+                              child: Center(
+                                child: Text(
+                                  '${ticketsOpen?.length ?? 0}',
+                                  style: AppTheme.getTextStyle(
+                                      themeData.textTheme.bodyText2,
+                                      color: themeData.colorScheme.primary,
+                                      fontWeight: 800),
+                                ),
+                              )),
+                          Expanded(
+                            child: Container(
+                              margin: Spacing.left(16),
+                              child: Text(
+                                "Open",
+                                style: AppTheme.getTextStyle(
+                                    themeData.textTheme.bodyText2,
+                                    fontWeight: 600,
+                                    color: themeData.colorScheme.onBackground
+                                        .withAlpha(220)),
+                              ),
+                            ),
+                          ),
+                          Container(
+                            child: Icon(
+                              MdiIcons.chevronRight,
+                              size: MySize.size20,
+                              color: themeData.colorScheme.onBackground.withAlpha(200),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    //-------------------------------
+                    Container(
+                      margin: Spacing.top(12),
+                      child: Row(
+                        children: [
+                          Container(
+                              width: MySize.size38,
+                              height: MySize.size38,
+                              decoration: BoxDecoration(
+                                  color: themeData.colorScheme.primary.withAlpha(32),
+                                  borderRadius:
+                                  BorderRadius.all(Radius.circular(MySize.size8!))),
+                              child: Center(
+                                child: Text(
+                                    '${ticketsSubmitted?.length ?? 0}',
+                                  style: AppTheme.getTextStyle(
+                                      themeData.textTheme.bodyText2,
+                                      color: themeData.colorScheme.primary,
+                                      fontWeight: 800),
+                                ),
+                              )),
+                          Expanded(
+                            child: Container(
+                              margin: Spacing.left(16),
+                              child: Text(
+                                "Submitted",
+                                style: AppTheme.getTextStyle(
+                                    themeData.textTheme.bodyText2,
+                                    fontWeight: 600,
+                                    color: themeData.colorScheme.onBackground
+                                        .withAlpha(220)),
+                              ),
+                            ),
+                          ),
+                          Container(
+                            child: Icon(
+                              MdiIcons.chevronRight,
+                              size: MySize.size20,
+                              color: themeData.colorScheme.onBackground.withAlpha(200),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    //-------------------------------
+                    Container(
+                      margin: Spacing.top(12),
+                      child: Row(
+                        children: [
+                          Container(
+                              width: MySize.size38,
+                              height: MySize.size38,
+                              decoration: BoxDecoration(
+                                  color: themeData.colorScheme.primary.withAlpha(32),
+                                  borderRadius:
+                                  BorderRadius.all(Radius.circular(MySize.size8!))),
+                              child: Center(
+                                child: Text(
+                                  '${ticketsReview?.length ?? 0}',
+                                  style: AppTheme.getTextStyle(
+                                      themeData.textTheme.bodyText2,
+                                      color: themeData.colorScheme.primary,
+                                      fontWeight: 800),
+                                ),
+                              )),
+                          Expanded(
+                            child: Container(
+                              margin: Spacing.left(16),
+                              child: Text(
+                                "Needs Review",
+                                style: AppTheme.getTextStyle(
+                                    themeData.textTheme.bodyText2,
+                                    fontWeight: 600,
+                                    color: themeData.colorScheme.onBackground
+                                        .withAlpha(220)),
+                              ),
+                            ),
+                          ),
+                          Container(
+                            child: Icon(
+                              MdiIcons.chevronRight,
+                              size: MySize.size20,
+                              color: themeData.colorScheme.onBackground.withAlpha(200),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    //-------------------------------
+                    Container(
+                      margin: Spacing.top(12),
+                      child: Row(
+                        children: [
+                          Container(
+                              width: MySize.size38,
+                              height: MySize.size38,
+                              decoration: BoxDecoration(
+                                  color: themeData.colorScheme.primary.withAlpha(32),
+                                  borderRadius:
+                                  BorderRadius.all(Radius.circular(MySize.size8!))),
+                              child: Center(
+                                child: Text(
+                                  '${ticketsPending?.length ?? 0}',
+                                  style: AppTheme.getTextStyle(
+                                      themeData.textTheme.bodyText2,
+                                      color: themeData.colorScheme.primary,
+                                      fontWeight: 800),
+                                ),
+                              )),
+                          Expanded(
+                            child: Container(
+                              margin: Spacing.left(16),
+                              child: Text(
+                                "Pending",
+                                style: AppTheme.getTextStyle(
+                                    themeData.textTheme.bodyText2,
+                                    fontWeight: 600,
+                                    color: themeData.colorScheme.onBackground
+                                        .withAlpha(220)),
+                              ),
+                            ),
+                          ),
+                          Container(
+                            child: Icon(
+                              MdiIcons.chevronRight,
+                              size: MySize.size20,
+                              color: themeData.colorScheme.onBackground.withAlpha(200),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    //-------------------------------
+                    Container(
+                      margin: Spacing.top(12),
+                      child: Row(
+                        children: [
+                          Container(
+                              width: MySize.size38,
+                              height: MySize.size38,
+                              decoration: BoxDecoration(
+                                  color: themeData.colorScheme.primary.withAlpha(32),
+                                  borderRadius:
+                                  BorderRadius.all(Radius.circular(MySize.size8!))),
+                              child: Center(
+                                child: Text(
+                                  '${ticketsCustTest?.length ?? 0}',
+                                  style: AppTheme.getTextStyle(
+                                      themeData.textTheme.bodyText2,
+                                      color: themeData.colorScheme.primary,
+                                      fontWeight: 800),
+                                ),
+                              )),
+                          Expanded(
+                            child: Container(
+                              margin: Spacing.left(16),
+                              child: Text(
+                                "Customer Testing",
+                                style: AppTheme.getTextStyle(
+                                    themeData.textTheme.bodyText2,
+                                    fontWeight: 600,
+                                    color: themeData.colorScheme.onBackground
+                                        .withAlpha(220)),
+                              ),
+                            ),
+                          ),
+                          Container(
+                            child: Icon(
+                              MdiIcons.chevronRight,
+                              size: MySize.size20,
+                              color: themeData.colorScheme.onBackground.withAlpha(200),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    //-------------------------------
+                    Container(
+                      margin: Spacing.top(12),
+                      child: Row(
+                        children: [
+                          Container(
+                              width: MySize.size38,
+                              height: MySize.size38,
+                              decoration: BoxDecoration(
+                                  color: themeData.colorScheme.primary.withAlpha(32),
+                                  borderRadius:
+                                  BorderRadius.all(Radius.circular(MySize.size8!))),
+                              child: Center(
+                                child: Text(
+                                  '${ticketsLS?.length ?? 0}',
+                                  style: AppTheme.getTextStyle(
+                                      themeData.textTheme.bodyText2,
+                                      color: themeData.colorScheme.primary,
+                                      fontWeight: 800),
+                                ),
+                              )),
+                          Expanded(
+                            child: Container(
+                              margin: Spacing.left(16),
+                              child: Text(
+                                "LS Action",
+                                style: AppTheme.getTextStyle(
+                                    themeData.textTheme.bodyText2,
+                                    fontWeight: 600,
+                                    color: themeData.colorScheme.onBackground
+                                        .withAlpha(220)),
+                              ),
+                            ),
+                          ),
+                          Container(
+                            child: Icon(
+                              MdiIcons.chevronRight,
+                              size: MySize.size20,
+                              color: themeData.colorScheme.onBackground.withAlpha(200),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    //-------------------------------
+                    Container(
+                      margin: Spacing.top(12),
+                      child: Row(
+                        children: [
+                          Container(
+                              width: MySize.size38,
+                              height: MySize.size38,
+                              decoration: BoxDecoration(
+                                  color: themeData.colorScheme.primary.withAlpha(32),
+                                  borderRadius:
+                                  BorderRadius.all(Radius.circular(MySize.size8!))),
+                              child: Center(
+                                child: Text(
+                                  '${ticketsResolved?.length ?? 0}',
+                                  style: AppTheme.getTextStyle(
+                                      themeData.textTheme.bodyText2,
+                                      color: themeData.colorScheme.primary,
+                                      fontWeight: 800),
+                                ),
+                              )),
+                          Expanded(
+                            child: Container(
+                              margin: Spacing.left(16),
+                              child: Text(
+                                "Resolved",
+                                style: AppTheme.getTextStyle(
+                                    themeData.textTheme.bodyText2,
+                                    fontWeight: 600,
+                                    color: themeData.colorScheme.onBackground
+                                        .withAlpha(220)),
+                              ),
+                            ),
+                          ),
+                          Container(
+                            child: Icon(
+                              MdiIcons.chevronRight,
+                              size: MySize.size20,
+                              color: themeData.colorScheme.onBackground.withAlpha(200),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    //-------------------------------
+                    Container(
+                      margin: Spacing.top(12),
+                      child: Row(
+                        children: [
+                          Container(
+                              width: MySize.size38,
+                              height: MySize.size38,
+                              decoration: BoxDecoration(
+                                  color: themeData.colorScheme.primary.withAlpha(32),
+                                  borderRadius:
+                                  BorderRadius.all(Radius.circular(MySize.size8!))),
+                              child: Center(
+                                child: Text(
+                                  '${ticketsReopen?.length ?? 0}',
+                                  style: AppTheme.getTextStyle(
+                                      themeData.textTheme.bodyText2,
+                                      color: themeData.colorScheme.primary,
+                                      fontWeight: 800),
+                                ),
+                              )),
+                          Expanded(
+                            child: Container(
+                              margin: Spacing.left(16),
+                              child: Text(
+                                "Reopened",
+                                style: AppTheme.getTextStyle(
+                                    themeData.textTheme.bodyText2,
+                                    fontWeight: 600,
+                                    color: themeData.colorScheme.onBackground
+                                        .withAlpha(220)),
+                              ),
+                            ),
+                          ),
+                          Container(
+                            child: Icon(
+                              MdiIcons.chevronRight,
+                              size: MySize.size20,
+                              color: themeData.colorScheme.onBackground.withAlpha(200),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    //-------------------------------
+                    Container(
+                      margin: Spacing.top(12),
+                      child: Row(
+                        children: [
+                          Container(
+                              width: MySize.size38,
+                              height: MySize.size38,
+                              decoration: BoxDecoration(
+                                  color: themeData.colorScheme.primary.withAlpha(32),
+                                  borderRadius:
+                                  BorderRadius.all(Radius.circular(MySize.size8!))),
+                              child: Center(
+                                child: Text(
+                                  '${ticketsClosed?.length ?? 0}',
+                                  style: AppTheme.getTextStyle(
+                                      themeData.textTheme.bodyText2,
+                                      color: themeData.colorScheme.primary,
+                                      fontWeight: 800),
+                                ),
+                              )),
+                          Expanded(
+                            child: Container(
+                              margin: Spacing.left(16),
+                              child: Text(
+                                "Closed",
+                                style: AppTheme.getTextStyle(
+                                    themeData.textTheme.bodyText2,
+                                    fontWeight: 600,
+                                    color: themeData.colorScheme.onBackground
+                                        .withAlpha(220)),
+                              ),
+                            ),
+                          ),
+                          Container(
+                            child: Icon(
+                              MdiIcons.chevronRight,
+                              size: MySize.size20,
+                              color: themeData.colorScheme.onBackground.withAlpha(200),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    //-------------------------------
+                    Container(
+                      margin: Spacing.top(12),
+                      child: Row(
+                        children: [
+                          Container(
+                              width: MySize.size38,
+                              height: MySize.size38,
+                              decoration: BoxDecoration(
+                                  color: themeData.colorScheme.primary.withAlpha(32),
+                                  borderRadius:
+                                  BorderRadius.all(Radius.circular(MySize.size8!))),
+                              child: Center(
+                                child: Text(
+                                  '${ticketsArchive?.length ?? 0}',
+                                  style: AppTheme.getTextStyle(
+                                      themeData.textTheme.bodyText2,
+                                      color: themeData.colorScheme.primary,
+                                      fontWeight: 800),
+                                ),
+                              )),
+                          Expanded(
+                            child: Container(
+                              margin: Spacing.left(16),
+                              child: Text(
+                                "Archived",
+                                style: AppTheme.getTextStyle(
+                                    themeData.textTheme.bodyText2,
+                                    fontWeight: 600,
+                                    color: themeData.colorScheme.onBackground
+                                        .withAlpha(220)),
+                              ),
+                            ),
+                          ),
+                          Container(
+                            child: Icon(
+                              MdiIcons.chevronRight,
+                              size: MySize.size20,
+                              color: themeData.colorScheme.onBackground.withAlpha(200),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    //-------------------------------
+                    Container(
+                      margin: Spacing.top(12),
+                      child: Row(
+                        children: [
+                          Container(
+                              width: MySize.size38,
+                              height: MySize.size38,
+                              decoration: BoxDecoration(
+                                  color: themeData.colorScheme.primary.withAlpha(32),
+                                  borderRadius:
+                                  BorderRadius.all(Radius.circular(MySize.size8!))),
+                              child: Center(
+                                child: Text(
+                                  '${ticketsTodo?.length ?? 0}',
+                                  style: AppTheme.getTextStyle(
+                                      themeData.textTheme.bodyText2,
+                                      color: themeData.colorScheme.primary,
+                                      fontWeight: 800),
+                                ),
+                              )),
+                          Expanded(
+                            child: Container(
+                              margin: Spacing.left(16),
+                              child: Text(
+                                "To Do",
+                                style: AppTheme.getTextStyle(
+                                    themeData.textTheme.bodyText2,
+                                    fontWeight: 600,
+                                    color: themeData.colorScheme.onBackground
+                                        .withAlpha(220)),
+                              ),
+                            ),
+                          ),
+                          Container(
+                            child: Icon(
+                              MdiIcons.chevronRight,
+                              size: MySize.size20,
+                              color: themeData.colorScheme.onBackground.withAlpha(200),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    //-------------------------------
+                    Container(
+                      margin: Spacing.top(12),
+                      child: Row(
+                        children: [
+                          Container(
+                              width: MySize.size38,
+                              height: MySize.size38,
+                              decoration: BoxDecoration(
+                                  color: themeData.colorScheme.primary.withAlpha(32),
+                                  borderRadius:
+                                  BorderRadius.all(Radius.circular(MySize.size8!))),
+                              child: Center(
+                                child: Text(
+                                  '${ticketsDone?.length ?? 0}',
+                                  style: AppTheme.getTextStyle(
+                                      themeData.textTheme.bodyText2,
+                                      color: themeData.colorScheme.primary,
+                                      fontWeight: 800),
+                                ),
+                              )),
+                          Expanded(
+                            child: Container(
+                              margin: Spacing.left(16),
+                              child: Text(
+                                "Done",
+                                style: AppTheme.getTextStyle(
+                                    themeData.textTheme.bodyText2,
+                                    fontWeight: 600,
+                                    color: themeData.colorScheme.onBackground
+                                        .withAlpha(220)),
+                              ),
+                            ),
+                          ),
+                          Container(
+                            child: Icon(
+                              MdiIcons.chevronRight,
+                              size: MySize.size20,
+                              color: themeData.colorScheme.onBackground.withAlpha(200),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              )   ;
+          };
+        },
+
+    ) ;
+  }
+
+
+  /*Widget build(BuildContext context) {
     themeData = Theme.of(context);
         customAppTheme = AppTheme.getCustomAppTheme(1);
         return MaterialApp(
@@ -248,7 +1066,7 @@ class _EventCreateScreenState extends State<EventCreateScreen> {
                       ],
                     ))));
 
-  }
+  }*/
 
   Widget locationWidget() {
     return Container(
@@ -375,7 +1193,7 @@ class _EventCreateScreenState extends State<EventCreateScreen> {
     );
   }
 
-  Widget inviteWidget() {
+  /*Widget inviteWidget() {
     return Container(
       margin: Spacing.fromLTRB(24, 24, 24, 0),
       padding: Spacing.all(16),
@@ -408,7 +1226,7 @@ class _EventCreateScreenState extends State<EventCreateScreen> {
                             BorderRadius.all(Radius.circular(MySize.size8!))),
                     child: Center(
                       child: Text(
-                        "48",
+                        ticketsOpen!.length.toString(),
                         style: AppTheme.getTextStyle(
                             themeData.textTheme.bodyText2,
                             color: themeData.colorScheme.primary,
@@ -924,8 +1742,8 @@ class _EventCreateScreenState extends State<EventCreateScreen> {
           ),
         ],
       ),
-    );
-  }
+    )  ;
+  }*/
 
   Widget singleFriend({required String image, required String name, required bool isSelected}) {
     return Container(
@@ -967,4 +1785,6 @@ class _EventCreateScreenState extends State<EventCreateScreen> {
       ),
     );
   }
+
+
 }
