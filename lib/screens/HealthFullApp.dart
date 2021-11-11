@@ -161,7 +161,7 @@ class _HealthFullAppState extends State<HealthFullApp>
             body: TabBarView(
               controller: _tabController,
               children: <Widget>[
-                EventCreateScreen(),
+                EventCreateScreen(user: widget.user, rootContext: context),
                 HealthHomeScreen(user: widget.user, rootContext: context),
 
               ],

@@ -6,6 +6,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutx/widgets/text/text.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:mobile_ticketing/model/Issue.dart';
+import 'package:mobile_ticketing/model/User.dart';
 import 'package:mobile_ticketing/screens/HealthActivityScreen.dart';
 import 'package:mobile_ticketing/services/api_service.dart';
 import 'package:mobile_ticketing/utils/SizeConfig.dart';
@@ -16,6 +17,10 @@ import 'grocery_notification_dialog.dart';
 import 'medicare_chat_screen.dart';
 
 class EventCreateScreen extends StatefulWidget {
+  EventCreateScreen({Key? key, required this.rootContext, required this.user}) : super(key: key);
+
+  final User? user;
+  final BuildContext rootContext;
   @override
   _EventCreateScreenState createState() => _EventCreateScreenState();
 }
@@ -178,7 +183,7 @@ class _EventCreateScreenState extends State<EventCreateScreen> {
                                         CrossAxisAlignment.start,
                                         children: [
                                           Text(
-                                            "Becky Parra",
+                                            widget.user!.user_name,
                                             style: AppTheme.getTextStyle(
                                                 themeData.textTheme.bodyText2,
                                                 color: themeData
@@ -186,7 +191,7 @@ class _EventCreateScreenState extends State<EventCreateScreen> {
                                                 fontWeight: 600),
                                           ),
                                           Text(
-                                            "Email at gmail.com",
+                                            widget.user!.user_email,
                                             style: AppTheme.getTextStyle(
                                                 themeData.textTheme.caption,
                                                 color:
