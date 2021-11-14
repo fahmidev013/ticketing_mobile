@@ -604,7 +604,7 @@ class _EventSingleEventScreenState extends State<EventSingleEventScreen> {
 
                             onPressed: () {},
                             child: Text(
-                              "Buy Tickets - \$39",
+                              "Hubungi Teknisi Terkait",
                               style: AppTheme.getTextStyle(
                                   themeData.textTheme.bodyText2,
                                   fontWeight: 600,
