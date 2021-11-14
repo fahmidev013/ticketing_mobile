@@ -8,6 +8,7 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 import 'package:mobile_ticketing/model/Issue.dart';
 import 'package:mobile_ticketing/model/User.dart';
 import 'package:mobile_ticketing/screens/HealthActivityScreen.dart';
+import 'package:mobile_ticketing/screens/loginPage.dart';
 import 'package:mobile_ticketing/services/api_service.dart';
 import 'package:mobile_ticketing/utils/SizeConfig.dart';
 import 'package:provider/provider.dart';
@@ -41,7 +42,7 @@ class _EventCreateScreenState extends State<EventCreateScreen> {
   bool _switch = true;
 
   Future<List<Issue>> _getIssueData() async {
-    tickets = await api.getIssues();
+    tickets = await api.getIssues(widget.user!.user_id);
     return tickets;
   }
 
@@ -57,6 +58,134 @@ class _EventCreateScreenState extends State<EventCreateScreen> {
 
     flutterLocalNotificationsPlugin.initialize(initSetttings,
         onSelectNotification: onSelectNotification);
+  }
+
+  void _showBottomSheet(context) {
+    showModalBottomSheet(
+        context: context,
+        builder: (BuildContext buildContext) {
+          return Container(
+            color: Colors.transparent,
+            child: Container(
+              decoration: new BoxDecoration(
+                  color: themeData.backgroundColor,
+                  borderRadius: new BorderRadius.only(
+                      topLeft: Radius.circular(MySize.size16!),
+                      topRight: Radius.circular(MySize.size16!))),
+              child: Padding(
+                padding: EdgeInsets.all(MySize.size16!),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Container(
+                      padding: EdgeInsets.only(
+                          top: MySize.size8!, left: MySize.size8!),
+                      child: Row(
+                        children: <Widget>[
+                          Container(
+                            width: MySize.size40,
+                            height: MySize.size40,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              image: new DecorationImage(
+                                  image: AssetImage(
+                                      './assets/images/avatar-4.jpg'),
+                                  fit: BoxFit.fill),
+                            ),
+                          ),
+                          Expanded(
+                            child: Padding(
+                              padding: EdgeInsets.only(left: MySize.size16!),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Text(
+                                    widget.user!.user_name,
+                                    style: themeData.textTheme.subtitle1!.merge(
+                                        TextStyle(
+                                            color: themeData
+                                                .colorScheme.onBackground,
+                                            letterSpacing: 0.3,
+                                            fontWeight: FontWeight.w600)),
+                                  ),
+                                  Row(
+                                    children: <Widget>[
+                                      Text(
+                                        widget.user!.user_email,
+                                        style: themeData.textTheme.bodyText2!
+                                            .merge(TextStyle(
+                                            color: themeData
+                                                .colorScheme.onBackground,
+                                            letterSpacing: 0.3)),
+                                      ),
+                                      Icon(
+                                        MdiIcons.chevronDown,
+                                        size: 16,
+                                        color:
+                                        themeData.colorScheme.onBackground,
+                                      )
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    Divider(
+                      color: themeData.dividerColor,
+                    ),
+                    ListTile(
+                      dense: true,
+                      leading: Icon(MdiIcons.bellRingOutline,
+                          color: themeData.colorScheme.onBackground
+                              .withAlpha(220)),
+                      title: Text(
+                        "Activity",
+                        style: themeData.textTheme.bodyText1!.merge(TextStyle(
+                            color: themeData.colorScheme.onBackground,
+                            letterSpacing: 0.3,
+                            fontWeight: FontWeight.w500)),
+                      ),
+                    ),
+                    ListTile(
+                      dense: true,
+                      leading: Icon(MdiIcons.cogOutline,
+                          color: themeData.colorScheme.onBackground
+                              .withAlpha(220)),
+                      title: Text(
+                        "Settings",
+                        style: themeData.textTheme.bodyText1!.merge(TextStyle(
+                            color: themeData.colorScheme.onBackground,
+                            letterSpacing: 0.3,
+                            fontWeight: FontWeight.w500)),
+                      ),
+                    ),
+                    ListTile(
+                      onTap: () async {
+                        await api.logout();
+                        Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
+                            LoginScreen()), (Route<dynamic> route) => false);
+                      },
+                      dense: true,
+                      leading: Icon(MdiIcons.helpCircleOutline,
+                          color: themeData.colorScheme.onBackground
+                              .withAlpha(220)),
+                      title: Text(
+                        "Logout",
+                        style: themeData.textTheme.bodyText1!.merge(TextStyle(
+                            color: themeData.colorScheme.onBackground,
+                            letterSpacing: 0.3,
+                            fontWeight: FontWeight.w500)),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          );
+        });
   }
 
 
@@ -165,16 +294,22 @@ class _EventCreateScreenState extends State<EventCreateScreen> {
                                     children: [
                                       Column(
                                         children: [
-                                          ClipRRect(
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(MySize.size8!)),
-                                            child: Image(
-                                              image: AssetImage(
-                                                  './assets/images/avatar-4.jpg'),
-                                              width: MySize.size44,
-                                              height: MySize.size44,
+                                          InkWell(
+                                            onTap: () {
+                                              _showBottomSheet(context);
+                                            },
+                                            child: ClipRRect(
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(MySize.size8!)),
+                                              child: Image(
+                                                image: AssetImage(
+                                                    './assets/images/avatar-4.jpg'),
+                                                width: MySize.size44,
+                                                height: MySize.size44,
+                                              ),
                                             ),
-                                          ),
+                                          )
+
                                         ],
                                       ),
                                       SizedBox(width: 16),

@@ -40,7 +40,7 @@ class _EventSingleEventScreenState extends State<EventSingleEventScreen> {
                         Image(
                           image: AssetImage(
                               './assets/logo/logo.png'),
-                          fit: BoxFit.cover,
+                          fit: BoxFit.fill,
                           width: MySize.safeWidth,
                           height: MySize.getScaledSizeHeight(240),
                         ),

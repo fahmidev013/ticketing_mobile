@@ -23,7 +23,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final ApiService api = ApiService();
   late bool loginSuccess;
-  bool? _passwordVisible = false, _check = false;
+  bool? _passwordVisible = true, _check = false;
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   late ThemeData themeData;
@@ -121,8 +121,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                         Icon(MdiIcons.lockOutline),
                                         suffixIcon: IconButton(
                                           icon: Icon(_passwordVisible!
-                                              ? MdiIcons.eyeOutline
-                                              : MdiIcons.eyeOffOutline),
+                                              ? MdiIcons.eyeOffOutline
+                                              : MdiIcons.eyeOutline),
                                           onPressed: () {
                                             setState(() {
                                               _passwordVisible =

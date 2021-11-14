@@ -11,8 +11,8 @@ class ApiService {
   final String apiUrl = "http://192.168.0.109:8080/api/v1";
   SharedPreferences? prefs;
 
-  Future<List<Issue>> getIssues() async {
-    Response res = await get(Uri.parse(apiUrl +  '/issue?userid=28' ) );
+  Future<List<Issue>> getIssues(int id) async {
+    Response res = await get(Uri.parse(apiUrl +  '/issue?userid=$id' ) );
 
     if (res.statusCode == 200) {
       List<dynamic> body = jsonDecode(res.body);
@@ -46,6 +46,12 @@ class ApiService {
     } else {
       return null;
     }
+  }
+
+  Future<bool?>logout() async {
+      prefs = await SharedPreferences.getInstance();
+      prefs!.clear();
+      return true;
   }
 
   /*Future<Cases> getCaseById(String id) async {
