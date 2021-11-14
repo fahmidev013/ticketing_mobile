@@ -10,6 +10,7 @@ import 'package:flutx/widgets/text/text.dart';
 import 'package:flutx/widgets/text_field/text_field.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:mobile_ticketing/model/Issue.dart';
+import 'package:mobile_ticketing/screens/EventSingleEventScreen.dart';
 import 'package:mobile_ticketing/utils/SizeConfig.dart';
 
 import '../../AppTheme.dart';
@@ -41,7 +42,10 @@ class _MediCareChatScreenState extends State<MediCareChatScreen> {
   Widget _buildSingleChat(Issue chat){
   return FxCard(
     onTap: (){
+
       print('Ke detail page ${chat.issue_id}' );
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => EventSingleEventScreen(issue: chat,title: chat.issue_id.toString())));
     },
     margin: FxSpacing.bottom(16),
     paddingAll: 16,
@@ -75,15 +79,17 @@ class _MediCareChatScreenState extends State<MediCareChatScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               FxText.b2(
-                chat.issue_status,
+                'Ticket #${chat.issue_id}: ${chat.issue_labels}',
                 fontWeight: 600,
+                fontSize: 12,
               ),
               FxSpacing.height(4),
               FxText.caption(
-                chat.issue_close_date,
+                chat.issue_title,
                 xMuted: false,
                 muted: !true,
                 fontWeight: true ? 400 : 600,
+                fontSize: 10,
               ),
             ],
           ),
@@ -93,16 +99,16 @@ class _MediCareChatScreenState extends State<MediCareChatScreen> {
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             FxText.overline(
-              chat.issue_close_date,
+              chat.issue_register_date,
               color: FxAppTheme.theme.colorScheme.onBackground,
               xMuted: true,
             ),
 
             false?FxSpacing.height(16):FxContainer.rounded(
               paddingAll: 6,
-              color: AppTheme.customTheme.medicarePrimary,
+              color: chat.issue_priority == 'Major' ? Color(0xffFF0000) : const Color(0xffFFA500),
               child: FxText.overline(
-                chat.issue_title,
+                '',
                 color: AppTheme.customTheme.medicareOnPrimary,
               ),
             ),
@@ -149,7 +155,7 @@ class _MediCareChatScreenState extends State<MediCareChatScreen> {
         children: [
           FxTextField(
             textFieldStyle: FxTextFieldStyle.outlined,
-            labelText: 'Search, e.g. Dr',
+            labelText: 'Cari..',
             focusedBorderColor: AppTheme.customTheme.medicarePrimary,
             cursorColor: AppTheme.customTheme.medicarePrimary,
             labelStyle: FxTextStyle.caption(
