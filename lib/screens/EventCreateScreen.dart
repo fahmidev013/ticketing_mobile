@@ -473,13 +473,13 @@ class _EventCreateScreenState extends State<EventCreateScreen> {
                         ],
                       ),
                     ),
-                    Container(
+                    /*Container(
                       color: customAppTheme.bgLayer1,
                       padding: Spacing.fromLTRB(24, 16, 24, 16),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          /*RichText(
+                          RichText(
                             text: TextSpan(children: <TextSpan>[
                               TextSpan(
                                   text: "\$99",
@@ -498,7 +498,7 @@ class _EventCreateScreenState extends State<EventCreateScreen> {
                                     color: themeData
                                         .colorScheme.onBackground,)),
                             ]),
-                          ),*/
+                          ),
                           Container(
                             padding: Spacing.fromLTRB(8, 8, 8, 8),
                             decoration: BoxDecoration(
@@ -538,7 +538,7 @@ class _EventCreateScreenState extends State<EventCreateScreen> {
                           )
                         ],
                       ),
-                    )
+                    )*/
                   ],
                 ))));
   }
@@ -611,16 +611,17 @@ class _EventCreateScreenState extends State<EventCreateScreen> {
                         )
                       ],
                     ),
-                    InkWell(
-                      onTap: () {
-                        print("Container clicked");
-                        Navigator.push(
-                            context, MaterialPageRoute(builder: (context) => MediCareChatScreen(issue: ticketsOpen, title: 'OPEN TICKET',)));
-                      }, // Handle your callback
-                      child: Ink(
-                        color: Colors.red,
-                        child: Container(
-                          margin: Spacing.top(12),
+
+                    Container(
+                      margin: Spacing.top(12),
+                      child: Material(
+                        child: InkWell(
+                          splashColor: customAppTheme.shimmerHighlightColor,
+                          onTap: () {
+                            print("Container clicked");
+                            // Navigator.push(
+                            //     context, MaterialPageRoute(builder: (context) => MediCareChatScreen(issue: ticketsOpen, title: 'OPEN TICKET',)));
+                          }, // Handle your callback
                           child: Row(
                             children: [
                               Container(
@@ -661,415 +662,419 @@ class _EventCreateScreenState extends State<EventCreateScreen> {
                               )
                             ],
                           ),
-
-
                         ),
                       ),
                     ),
+
+
                     //-------------------------------
-                    InkWell(
-                      onTap: () {
-                        print("Container clicked");
-                        Navigator.push(
-                            context, MaterialPageRoute(builder: (context) => MediCareChatScreen(issue: ticketsSubmitted, title: 'SUBMIT TICKET',)));
-                      }, // Handle your callback
-                      child: Ink(
-                        color: Colors.red,
-                        child: Container(
-                          margin: Spacing.top(12),
-                          child: Row(
-                            children: [
-                              Container(
-                                  width: MySize.size38,
-                                  height: MySize.size38,
-                                  decoration: BoxDecoration(
-                                      color: themeData.colorScheme.primary.withAlpha(32),
-                                      borderRadius:
-                                      BorderRadius.all(Radius.circular(MySize.size8!))),
-                                  child: Center(
+                        Container(
+                        margin: Spacing.top(12),
+          child: Material(
+                        child: InkWell(
+          splashColor: customAppTheme.shimmerHighlightColor,
+                          onTap: () {
+                            print("Container clicked");
+                            Navigator.push(
+                                context, MaterialPageRoute(builder: (context) => MediCareChatScreen(issue: ticketsSubmitted, title: 'SUBMIT TICKET',)));
+                          }, // Handle your callback
+                          child:  Row(
+                              children: [
+                                Container(
+                                    width: MySize.size38,
+                                    height: MySize.size38,
+                                    decoration: BoxDecoration(
+                                        color: themeData.colorScheme.primary.withAlpha(32),
+                                        borderRadius:
+                                        BorderRadius.all(Radius.circular(MySize.size8!))),
+                                    child: Center(
+                                      child: Text(
+                                        '${ticketsSubmitted?.length ?? 0}',
+                                        style: AppTheme.getTextStyle(
+                                            themeData.textTheme.bodyText2,
+                                            color: themeData.colorScheme.primary,
+                                            fontWeight: 800),
+                                      ),
+                                    )),
+                                Expanded(
+                                  child: Container(
+                                    margin: Spacing.left(16),
                                     child: Text(
-                                      '${ticketsSubmitted?.length ?? 0}',
+                                      "Submitted",
                                       style: AppTheme.getTextStyle(
                                           themeData.textTheme.bodyText2,
-                                          color: themeData.colorScheme.primary,
-                                          fontWeight: 800),
+                                          fontWeight: 600,
+                                          color: themeData.colorScheme.onBackground
+                                              .withAlpha(220)),
                                     ),
-                                  )),
-                              Expanded(
-                                child: Container(
-                                  margin: Spacing.left(16),
-                                  child: Text(
-                                    "Submitted",
-                                    style: AppTheme.getTextStyle(
-                                        themeData.textTheme.bodyText2,
-                                        fontWeight: 600,
-                                        color: themeData.colorScheme.onBackground
-                                            .withAlpha(220)),
                                   ),
                                 ),
-                              ),
-                              Container(
-                                child: Icon(
-                                  MdiIcons.chevronRight,
-                                  size: MySize.size20,
-                                  color: themeData.colorScheme.onBackground.withAlpha(200),
-                                ),
-                              )
-                            ],
-                          ),
+                                Container(
+                                  child: Icon(
+                                    MdiIcons.chevronRight,
+                                    size: MySize.size20,
+                                    color: themeData.colorScheme.onBackground.withAlpha(200),
+                                  ),
+                                )
+                              ],
+                            ),
 
 
+
+                        )),
                         ),
-                      ),
-                    ),
+
                     //-------------------------------
-                    InkWell(
-                      onTap: () {
-                        print("Container clicked");
-                        Navigator.push(
-                            context, MaterialPageRoute(builder: (context) => MediCareChatScreen(issue: ticketsReview, title: 'REVIEW TICKET',)));
-                      }, // Handle your callback
-                      child: Ink(
-                        color: Colors.red,
-                        child: Container(
-                          margin: Spacing.top(12),
+
+          Container(
+          margin: Spacing.top(12),
+          child: Material(
+                        child: InkWell(
+                          splashColor: customAppTheme.shimmerHighlightColor,
+                          onTap: () {
+                            print("Container clicked");
+                            Navigator.push(
+                                context, MaterialPageRoute(builder: (context) => MediCareChatScreen(issue: ticketsReview, title: 'REVIEW TICKET',)));
+                          }, // Handle your callback
                           child: Row(
-                            children: [
-                              Container(
-                                  width: MySize.size38,
-                                  height: MySize.size38,
-                                  decoration: BoxDecoration(
-                                      color: themeData.colorScheme.primary.withAlpha(32),
-                                      borderRadius:
-                                      BorderRadius.all(Radius.circular(MySize.size8!))),
-                                  child: Center(
+                              children: [
+                                Container(
+                                    width: MySize.size38,
+                                    height: MySize.size38,
+                                    decoration: BoxDecoration(
+                                        color: themeData.colorScheme.primary.withAlpha(32),
+                                        borderRadius:
+                                        BorderRadius.all(Radius.circular(MySize.size8!))),
+                                    child: Center(
+                                      child: Text(
+                                        '${ticketsReview?.length ?? 0}',
+                                        style: AppTheme.getTextStyle(
+                                            themeData.textTheme.bodyText2,
+                                            color: themeData.colorScheme.primary,
+                                            fontWeight: 800),
+                                      ),
+                                    )),
+                                Expanded(
+                                  child: Container(
+                                    margin: Spacing.left(16),
                                     child: Text(
-                                      '${ticketsReview?.length ?? 0}',
+                                      "Need Review",
                                       style: AppTheme.getTextStyle(
                                           themeData.textTheme.bodyText2,
-                                          color: themeData.colorScheme.primary,
-                                          fontWeight: 800),
+                                          fontWeight: 600,
+                                          color: themeData.colorScheme.onBackground
+                                              .withAlpha(220)),
                                     ),
-                                  )),
-                              Expanded(
-                                child: Container(
-                                  margin: Spacing.left(16),
-                                  child: Text(
-                                    "Need Review",
-                                    style: AppTheme.getTextStyle(
-                                        themeData.textTheme.bodyText2,
-                                        fontWeight: 600,
-                                        color: themeData.colorScheme.onBackground
-                                            .withAlpha(220)),
                                   ),
                                 ),
-                              ),
-                              Container(
-                                child: Icon(
-                                  MdiIcons.chevronRight,
-                                  size: MySize.size20,
-                                  color: themeData.colorScheme.onBackground.withAlpha(200),
-                                ),
-                              )
-                            ],
-                          ),
+                                Container(
+                                  child: Icon(
+                                    MdiIcons.chevronRight,
+                                    size: MySize.size20,
+                                    color: themeData.colorScheme.onBackground.withAlpha(200),
+                                  ),
+                                )
+                              ],
+                            ),
 
 
-                        ),
-                      ),
-                    ),
+
+                        )),
+          ),
+
                     //-------------------------------
-                    InkWell(
-                      onTap: () {
-                        print("Container clicked");
-                        Navigator.push(
-                            context, MaterialPageRoute(builder: (context) => MediCareChatScreen(issue: ticketsPending, title: 'PENDING TICKET',)));
-                      }, // Handle your callback
-                      child: Ink(
-                        color: Colors.red,
-                        child: Container(
-                          margin: Spacing.top(12),
+          Container(
+          margin: Spacing.top(12),
+          child: Material(
+                        child: InkWell(
+                          splashColor: customAppTheme.shimmerHighlightColor,
+                          onTap: () {
+                            print("Container clicked");
+                            Navigator.push(
+                                context, MaterialPageRoute(builder: (context) => MediCareChatScreen(issue: ticketsPending, title: 'PENDING TICKET',)));
+                          }, // Handle your callback
                           child: Row(
-                            children: [
-                              Container(
-                                  width: MySize.size38,
-                                  height: MySize.size38,
-                                  decoration: BoxDecoration(
-                                      color: themeData.colorScheme.primary.withAlpha(32),
-                                      borderRadius:
-                                      BorderRadius.all(Radius.circular(MySize.size8!))),
-                                  child: Center(
+                              children: [
+                                Container(
+                                    width: MySize.size38,
+                                    height: MySize.size38,
+                                    decoration: BoxDecoration(
+                                        color: themeData.colorScheme.primary.withAlpha(32),
+                                        borderRadius:
+                                        BorderRadius.all(Radius.circular(MySize.size8!))),
+                                    child: Center(
+                                      child: Text(
+                                        '${ticketsPending?.length ?? 0}',
+                                        style: AppTheme.getTextStyle(
+                                            themeData.textTheme.bodyText2,
+                                            color: themeData.colorScheme.primary,
+                                            fontWeight: 800),
+                                      ),
+                                    )),
+                                Expanded(
+                                  child: Container(
+                                    margin: Spacing.left(16),
                                     child: Text(
-                                      '${ticketsPending?.length ?? 0}',
+                                      "Pending",
                                       style: AppTheme.getTextStyle(
                                           themeData.textTheme.bodyText2,
-                                          color: themeData.colorScheme.primary,
-                                          fontWeight: 800),
+                                          fontWeight: 600,
+                                          color: themeData.colorScheme.onBackground
+                                              .withAlpha(220)),
                                     ),
-                                  )),
-                              Expanded(
-                                child: Container(
-                                  margin: Spacing.left(16),
-                                  child: Text(
-                                    "Pending",
-                                    style: AppTheme.getTextStyle(
-                                        themeData.textTheme.bodyText2,
-                                        fontWeight: 600,
-                                        color: themeData.colorScheme.onBackground
-                                            .withAlpha(220)),
                                   ),
                                 ),
-                              ),
-                              Container(
-                                child: Icon(
-                                  MdiIcons.chevronRight,
-                                  size: MySize.size20,
-                                  color: themeData.colorScheme.onBackground.withAlpha(200),
-                                ),
-                              )
-                            ],
-                          ),
+                                Container(
+                                  child: Icon(
+                                    MdiIcons.chevronRight,
+                                    size: MySize.size20,
+                                    color: themeData.colorScheme.onBackground.withAlpha(200),
+                                  ),
+                                )
+                              ],
+                            ),
 
 
-                        ),
-                      ),
-                    ),
+
+                        )),),
+
                     //-------------------------------
-                    InkWell(
-                      onTap: () {
-                        print("Container clicked");
-                        Navigator.push(
-                            context, MaterialPageRoute(builder: (context) => MediCareChatScreen(issue: ticketsCustTest, title: 'CUSTOMER TESTING TICKET',)));
-                      }, // Handle your callback
-                      child: Ink(
-                        color: Colors.red,
-                        child: Container(
-                          margin: Spacing.top(12),
+          Container(
+          margin: Spacing.top(12),
+          child: Material(
+                        child: InkWell(
+                          splashColor: customAppTheme.shimmerHighlightColor,
+                          onTap: () {
+                            print("Container clicked");
+                            Navigator.push(
+                                context, MaterialPageRoute(builder: (context) => MediCareChatScreen(issue: ticketsCustTest, title: 'CUSTOMER TESTING TICKET',)));
+                          }, // Handle your callback
                           child: Row(
-                            children: [
-                              Container(
-                                  width: MySize.size38,
-                                  height: MySize.size38,
-                                  decoration: BoxDecoration(
-                                      color: themeData.colorScheme.primary.withAlpha(32),
-                                      borderRadius:
-                                      BorderRadius.all(Radius.circular(MySize.size8!))),
-                                  child: Center(
+                              children: [
+                                Container(
+                                    width: MySize.size38,
+                                    height: MySize.size38,
+                                    decoration: BoxDecoration(
+                                        color: themeData.colorScheme.primary.withAlpha(32),
+                                        borderRadius:
+                                        BorderRadius.all(Radius.circular(MySize.size8!))),
+                                    child: Center(
+                                      child: Text(
+                                        '${ticketsCustTest?.length ?? 0}',
+                                        style: AppTheme.getTextStyle(
+                                            themeData.textTheme.bodyText2,
+                                            color: themeData.colorScheme.primary,
+                                            fontWeight: 800),
+                                      ),
+                                    )),
+                                Expanded(
+                                  child: Container(
+                                    margin: Spacing.left(16),
                                     child: Text(
-                                      '${ticketsCustTest?.length ?? 0}',
+                                      "Customer Testing",
                                       style: AppTheme.getTextStyle(
                                           themeData.textTheme.bodyText2,
-                                          color: themeData.colorScheme.primary,
-                                          fontWeight: 800),
+                                          fontWeight: 600,
+                                          color: themeData.colorScheme.onBackground
+                                              .withAlpha(220)),
                                     ),
-                                  )),
-                              Expanded(
-                                child: Container(
-                                  margin: Spacing.left(16),
-                                  child: Text(
-                                    "Customer Testing",
-                                    style: AppTheme.getTextStyle(
-                                        themeData.textTheme.bodyText2,
-                                        fontWeight: 600,
-                                        color: themeData.colorScheme.onBackground
-                                            .withAlpha(220)),
                                   ),
                                 ),
-                              ),
-                              Container(
-                                child: Icon(
-                                  MdiIcons.chevronRight,
-                                  size: MySize.size20,
-                                  color: themeData.colorScheme.onBackground.withAlpha(200),
-                                ),
-                              )
-                            ],
-                          ),
+                                Container(
+                                  child: Icon(
+                                    MdiIcons.chevronRight,
+                                    size: MySize.size20,
+                                    color: themeData.colorScheme.onBackground.withAlpha(200),
+                                  ),
+                                )
+                              ],
+                            ),
 
 
-                        ),
-                      ),
-                    ),
+
+                        )),),
+
                     //-------------------------------
-                    InkWell(
-                      onTap: () {
-                        print("Container clicked");
-                        Navigator.push(
-                            context, MaterialPageRoute(builder: (context) => MediCareChatScreen(issue: ticketsLS, title: 'LS ACTION TICKET',)));
-                      }, // Handle your callback
-                      child: Ink(
-                        color: Colors.red,
-                        child: Container(
-                          margin: Spacing.top(12),
+          Container(
+          margin: Spacing.top(12),
+          child: Material(
+                        child: InkWell(
+                          splashColor: customAppTheme.shimmerHighlightColor,
+                          onTap: () {
+                            print("Container clicked");
+                            Navigator.push(
+                                context, MaterialPageRoute(builder: (context) => MediCareChatScreen(issue: ticketsLS, title: 'LS ACTION TICKET',)));
+                          }, // Handle your callback
                           child: Row(
-                            children: [
-                              Container(
-                                  width: MySize.size38,
-                                  height: MySize.size38,
-                                  decoration: BoxDecoration(
-                                      color: themeData.colorScheme.primary.withAlpha(32),
-                                      borderRadius:
-                                      BorderRadius.all(Radius.circular(MySize.size8!))),
-                                  child: Center(
+                              children: [
+                                Container(
+                                    width: MySize.size38,
+                                    height: MySize.size38,
+                                    decoration: BoxDecoration(
+                                        color: themeData.colorScheme.primary.withAlpha(32),
+                                        borderRadius:
+                                        BorderRadius.all(Radius.circular(MySize.size8!))),
+                                    child: Center(
+                                      child: Text(
+                                        '${ticketsLS?.length ?? 0}',
+                                        style: AppTheme.getTextStyle(
+                                            themeData.textTheme.bodyText2,
+                                            color: themeData.colorScheme.primary,
+                                            fontWeight: 800),
+                                      ),
+                                    )),
+                                Expanded(
+                                  child: Container(
+                                    margin: Spacing.left(16),
                                     child: Text(
-                                      '${ticketsLS?.length ?? 0}',
+                                      "LS Action",
                                       style: AppTheme.getTextStyle(
                                           themeData.textTheme.bodyText2,
-                                          color: themeData.colorScheme.primary,
-                                          fontWeight: 800),
+                                          fontWeight: 600,
+                                          color: themeData.colorScheme.onBackground
+                                              .withAlpha(220)),
                                     ),
-                                  )),
-                              Expanded(
-                                child: Container(
-                                  margin: Spacing.left(16),
-                                  child: Text(
-                                    "LS Action",
-                                    style: AppTheme.getTextStyle(
-                                        themeData.textTheme.bodyText2,
-                                        fontWeight: 600,
-                                        color: themeData.colorScheme.onBackground
-                                            .withAlpha(220)),
                                   ),
                                 ),
-                              ),
-                              Container(
-                                child: Icon(
-                                  MdiIcons.chevronRight,
-                                  size: MySize.size20,
-                                  color: themeData.colorScheme.onBackground.withAlpha(200),
-                                ),
-                              )
-                            ],
-                          ),
+                                Container(
+                                  child: Icon(
+                                    MdiIcons.chevronRight,
+                                    size: MySize.size20,
+                                    color: themeData.colorScheme.onBackground.withAlpha(200),
+                                  ),
+                                )
+                              ],
+                            ),
 
 
-                        ),
-                      ),
-                    ),
+
+                        )),),
+
                     //-------------------------------
-                    InkWell(
-                      onTap: () {
-                        print("Container clicked");
-                        Navigator.push(
-                            context, MaterialPageRoute(builder: (context) => MediCareChatScreen(issue: ticketsResolved, title: 'RESOLVED TICKET',)));
-                      }, // Handle your callback
-                      child: Ink(
-                        color: Colors.red,
-                        child: Container(
-                          margin: Spacing.top(12),
+          Container(
+          margin: Spacing.top(12),
+          child: Material(
+                        child: InkWell(
+                          splashColor: customAppTheme.shimmerHighlightColor,
+                          onTap: () {
+                            print("Container clicked");
+                            Navigator.push(
+                                context, MaterialPageRoute(builder: (context) => MediCareChatScreen(issue: ticketsResolved, title: 'RESOLVED TICKET',)));
+                          }, // Handle your callback
                           child: Row(
-                            children: [
-                              Container(
-                                  width: MySize.size38,
-                                  height: MySize.size38,
-                                  decoration: BoxDecoration(
-                                      color: themeData.colorScheme.primary.withAlpha(32),
-                                      borderRadius:
-                                      BorderRadius.all(Radius.circular(MySize.size8!))),
-                                  child: Center(
+                              children: [
+                                Container(
+                                    width: MySize.size38,
+                                    height: MySize.size38,
+                                    decoration: BoxDecoration(
+                                        color: themeData.colorScheme.primary.withAlpha(32),
+                                        borderRadius:
+                                        BorderRadius.all(Radius.circular(MySize.size8!))),
+                                    child: Center(
+                                      child: Text(
+                                        '${ticketsResolved?.length ?? 0}',
+                                        style: AppTheme.getTextStyle(
+                                            themeData.textTheme.bodyText2,
+                                            color: themeData.colorScheme.primary,
+                                            fontWeight: 800),
+                                      ),
+                                    )),
+                                Expanded(
+                                  child: Container(
+                                    margin: Spacing.left(16),
                                     child: Text(
-                                      '${ticketsResolved?.length ?? 0}',
+                                      "Resolved",
                                       style: AppTheme.getTextStyle(
                                           themeData.textTheme.bodyText2,
-                                          color: themeData.colorScheme.primary,
-                                          fontWeight: 800),
+                                          fontWeight: 600,
+                                          color: themeData.colorScheme.onBackground
+                                              .withAlpha(220)),
                                     ),
-                                  )),
-                              Expanded(
-                                child: Container(
-                                  margin: Spacing.left(16),
-                                  child: Text(
-                                    "Resolved",
-                                    style: AppTheme.getTextStyle(
-                                        themeData.textTheme.bodyText2,
-                                        fontWeight: 600,
-                                        color: themeData.colorScheme.onBackground
-                                            .withAlpha(220)),
                                   ),
                                 ),
-                              ),
-                              Container(
-                                child: Icon(
-                                  MdiIcons.chevronRight,
-                                  size: MySize.size20,
-                                  color: themeData.colorScheme.onBackground.withAlpha(200),
-                                ),
-                              )
-                            ],
-                          ),
+                                Container(
+                                  child: Icon(
+                                    MdiIcons.chevronRight,
+                                    size: MySize.size20,
+                                    color: themeData.colorScheme.onBackground.withAlpha(200),
+                                  ),
+                                )
+                              ],
+                            ),
 
 
-                        ),
-                      ),
-                    ),
+
+                        )),),
+
                     //-------------------------------
-                    InkWell(
-                      onTap: () {
-                        print("Container clicked");
-                        Navigator.push(
-                            context, MaterialPageRoute(builder: (context) => MediCareChatScreen(issue: ticketsReopen, title: 'REOPEN TICKET',)));
-                      }, // Handle your callback
-                      child: Ink(
-                        color: Colors.red,
-                        child: Container(
-                          margin: Spacing.top(12),
+          Container(
+          margin: Spacing.top(12),
+          child: Material(
+                        child: InkWell(
+                          splashColor: customAppTheme.shimmerHighlightColor,
+                          onTap: () {
+                            print("Container clicked");
+                            Navigator.push(
+                                context, MaterialPageRoute(builder: (context) => MediCareChatScreen(issue: ticketsReopen, title: 'REOPEN TICKET',)));
+                          }, // Handle your callback
                           child: Row(
-                            children: [
-                              Container(
-                                  width: MySize.size38,
-                                  height: MySize.size38,
-                                  decoration: BoxDecoration(
-                                      color: themeData.colorScheme.primary.withAlpha(32),
-                                      borderRadius:
-                                      BorderRadius.all(Radius.circular(MySize.size8!))),
-                                  child: Center(
+                              children: [
+                                Container(
+                                    width: MySize.size38,
+                                    height: MySize.size38,
+                                    decoration: BoxDecoration(
+                                        color: themeData.colorScheme.primary.withAlpha(32),
+                                        borderRadius:
+                                        BorderRadius.all(Radius.circular(MySize.size8!))),
+                                    child: Center(
+                                      child: Text(
+                                        '${ticketsReopen?.length ?? 0}',
+                                        style: AppTheme.getTextStyle(
+                                            themeData.textTheme.bodyText2,
+                                            color: themeData.colorScheme.primary,
+                                            fontWeight: 800),
+                                      ),
+                                    )),
+                                Expanded(
+                                  child: Container(
+                                    margin: Spacing.left(16),
                                     child: Text(
-                                      '${ticketsReopen?.length ?? 0}',
+                                      "Reopened",
                                       style: AppTheme.getTextStyle(
                                           themeData.textTheme.bodyText2,
-                                          color: themeData.colorScheme.primary,
-                                          fontWeight: 800),
+                                          fontWeight: 600,
+                                          color: themeData.colorScheme.onBackground
+                                              .withAlpha(220)),
                                     ),
-                                  )),
-                              Expanded(
-                                child: Container(
-                                  margin: Spacing.left(16),
-                                  child: Text(
-                                    "Reopened",
-                                    style: AppTheme.getTextStyle(
-                                        themeData.textTheme.bodyText2,
-                                        fontWeight: 600,
-                                        color: themeData.colorScheme.onBackground
-                                            .withAlpha(220)),
                                   ),
                                 ),
-                              ),
-                              Container(
-                                child: Icon(
-                                  MdiIcons.chevronRight,
-                                  size: MySize.size20,
-                                  color: themeData.colorScheme.onBackground.withAlpha(200),
-                                ),
-                              )
-                            ],
-                          ),
+                                Container(
+                                  child: Icon(
+                                    MdiIcons.chevronRight,
+                                    size: MySize.size20,
+                                    color: themeData.colorScheme.onBackground.withAlpha(200),
+                                  ),
+                                )
+                              ],
+                            ),
 
 
-                        ),
-                      ),
-                    ),
 
-                    InkWell(
-                      onTap: () {
-                        print("Container clicked");
-                        Navigator.push(
-                            context, MaterialPageRoute(builder: (context) => MediCareChatScreen(issue: ticketsClosed, title: 'CLOSED TICKET',)));
-                      }, // Handle your callback
-                      child: Ink(
-                          color: Colors.red,
-                          child: Container(
-                            margin: Spacing.top(12),
-                            child: Row(
+                        )),),
+
+
+
+          Container(
+          margin: Spacing.top(12),
+          child: Material(
+                        child: InkWell(
+                          splashColor: customAppTheme.shimmerHighlightColor,
+                          onTap: () {
+                            print("Container clicked");
+                            Navigator.push(
+                                context, MaterialPageRoute(builder: (context) => MediCareChatScreen(issue: ticketsClosed, title: 'CLOSED TICKET',)));
+                          }, // Handle your callback
+                          child: Row(
                               children: [
                                 Container(
                                     width: MySize.size38,
@@ -1111,182 +1116,182 @@ class _EventCreateScreenState extends State<EventCreateScreen> {
                             ),
 
 
-                          ),
-                      ),
-                    ),
+
+                        )),),
+
+
 
 
 
                     //-------------------------------
 
                     //-------------------------------
-                    InkWell(
-                      onTap: () {
-                        print("Container clicked");
-                        Navigator.push(
-                            context, MaterialPageRoute(builder: (context) => MediCareChatScreen(issue: ticketsArchive, title: 'ARCHIEVED TICKET',)));
-                      }, // Handle your callback
-                      child: Ink(
-                        color: Colors.red,
-                        child: Container(
-                          margin: Spacing.top(12),
+          Container(
+          margin: Spacing.top(12),
+          child: Material(
+                        child: InkWell(
+                          splashColor: customAppTheme.shimmerHighlightColor,
+                          onTap: () {
+                            print("Container clicked");
+                            Navigator.push(
+                                context, MaterialPageRoute(builder: (context) => MediCareChatScreen(issue: ticketsArchive, title: 'ARCHIEVED TICKET',)));
+                          }, // Handle your callback
                           child: Row(
-                            children: [
-                              Container(
-                                  width: MySize.size38,
-                                  height: MySize.size38,
-                                  decoration: BoxDecoration(
-                                      color: themeData.colorScheme.primary.withAlpha(32),
-                                      borderRadius:
-                                      BorderRadius.all(Radius.circular(MySize.size8!))),
-                                  child: Center(
+                              children: [
+                                Container(
+                                    width: MySize.size38,
+                                    height: MySize.size38,
+                                    decoration: BoxDecoration(
+                                        color: themeData.colorScheme.primary.withAlpha(32),
+                                        borderRadius:
+                                        BorderRadius.all(Radius.circular(MySize.size8!))),
+                                    child: Center(
+                                      child: Text(
+                                        '${ticketsArchive?.length ?? 0}',
+                                        style: AppTheme.getTextStyle(
+                                            themeData.textTheme.bodyText2,
+                                            color: themeData.colorScheme.primary,
+                                            fontWeight: 800),
+                                      ),
+                                    )),
+                                Expanded(
+                                  child: Container(
+                                    margin: Spacing.left(16),
                                     child: Text(
-                                      '${ticketsArchive?.length ?? 0}',
+                                      "Archieved",
                                       style: AppTheme.getTextStyle(
                                           themeData.textTheme.bodyText2,
-                                          color: themeData.colorScheme.primary,
-                                          fontWeight: 800),
+                                          fontWeight: 600,
+                                          color: themeData.colorScheme.onBackground
+                                              .withAlpha(220)),
                                     ),
-                                  )),
-                              Expanded(
-                                child: Container(
-                                  margin: Spacing.left(16),
-                                  child: Text(
-                                    "Archieved",
-                                    style: AppTheme.getTextStyle(
-                                        themeData.textTheme.bodyText2,
-                                        fontWeight: 600,
-                                        color: themeData.colorScheme.onBackground
-                                            .withAlpha(220)),
                                   ),
                                 ),
-                              ),
-                              Container(
-                                child: Icon(
-                                  MdiIcons.chevronRight,
-                                  size: MySize.size20,
-                                  color: themeData.colorScheme.onBackground.withAlpha(200),
-                                ),
-                              )
-                            ],
-                          ),
+                                Container(
+                                  child: Icon(
+                                    MdiIcons.chevronRight,
+                                    size: MySize.size20,
+                                    color: themeData.colorScheme.onBackground.withAlpha(200),
+                                  ),
+                                )
+                              ],
+                            ),
 
 
-                        ),
-                      ),
-                    ),
+                        )),),
+
                     //-------------------------------
-                    InkWell(
-                      onTap: () {
-                        print("Container clicked");
-                        Navigator.push(
-                            context, MaterialPageRoute(builder: (context) => MediCareChatScreen(issue: ticketsTodo, title: 'TODO TICKET',)));
-                      }, // Handle your callback
-                      child: Ink(
-                        color: Colors.red,
-                        child: Container(
-                          margin: Spacing.top(12),
+          Container(
+          margin: Spacing.top(12),
+          child: Material(
+                        child: InkWell(
+                          splashColor: customAppTheme.shimmerHighlightColor,
+                          onTap: () {
+                            print("Container clicked");
+                            Navigator.push(
+                                context, MaterialPageRoute(builder: (context) => MediCareChatScreen(issue: ticketsTodo, title: 'TODO TICKET',)));
+                          }, // Handle your callback
                           child: Row(
-                            children: [
-                              Container(
-                                  width: MySize.size38,
-                                  height: MySize.size38,
-                                  decoration: BoxDecoration(
-                                      color: themeData.colorScheme.primary.withAlpha(32),
-                                      borderRadius:
-                                      BorderRadius.all(Radius.circular(MySize.size8!))),
-                                  child: Center(
+                              children: [
+                                Container(
+                                    width: MySize.size38,
+                                    height: MySize.size38,
+                                    decoration: BoxDecoration(
+                                        color: themeData.colorScheme.primary.withAlpha(32),
+                                        borderRadius:
+                                        BorderRadius.all(Radius.circular(MySize.size8!))),
+                                    child: Center(
+                                      child: Text(
+                                        '${ticketsTodo?.length ?? 0}',
+                                        style: AppTheme.getTextStyle(
+                                            themeData.textTheme.bodyText2,
+                                            color: themeData.colorScheme.primary,
+                                            fontWeight: 800),
+                                      ),
+                                    )),
+                                Expanded(
+                                  child: Container(
+                                    margin: Spacing.left(16),
                                     child: Text(
-                                      '${ticketsTodo?.length ?? 0}',
+                                      "To Do",
                                       style: AppTheme.getTextStyle(
                                           themeData.textTheme.bodyText2,
-                                          color: themeData.colorScheme.primary,
-                                          fontWeight: 800),
+                                          fontWeight: 600,
+                                          color: themeData.colorScheme.onBackground
+                                              .withAlpha(220)),
                                     ),
-                                  )),
-                              Expanded(
-                                child: Container(
-                                  margin: Spacing.left(16),
-                                  child: Text(
-                                    "To Do",
-                                    style: AppTheme.getTextStyle(
-                                        themeData.textTheme.bodyText2,
-                                        fontWeight: 600,
-                                        color: themeData.colorScheme.onBackground
-                                            .withAlpha(220)),
                                   ),
                                 ),
-                              ),
-                              Container(
-                                child: Icon(
-                                  MdiIcons.chevronRight,
-                                  size: MySize.size20,
-                                  color: themeData.colorScheme.onBackground.withAlpha(200),
-                                ),
-                              )
-                            ],
-                          ),
+                                Container(
+                                  child: Icon(
+                                    MdiIcons.chevronRight,
+                                    size: MySize.size20,
+                                    color: themeData.colorScheme.onBackground.withAlpha(200),
+                                  ),
+                                )
+                              ],
+                            ),
 
 
-                        ),
-                      ),
-                    ),
+
+                        )),),
+
                     //-------------------------------
-                    InkWell(
-                      onTap: () {
-                        print("Container clicked");
-                        Navigator.push(
-                            context, MaterialPageRoute(builder: (context) => MediCareChatScreen(issue: ticketsDone, title: 'DONE TICKETS',)));
-                      }, // Handle your callback
-                      child: Ink(
-                        color: Colors.red,
-                        child: Container(
-                          margin: Spacing.top(12),
+          Container(
+          margin: Spacing.top(12),
+          child: Material(
+                        child: InkWell(
+                          splashColor: customAppTheme.shimmerHighlightColor,
+                          onTap: () {
+                            print("Container clicked");
+                            Navigator.push(
+                                context, MaterialPageRoute(builder: (context) => MediCareChatScreen(issue: ticketsDone, title: 'DONE TICKETS',)));
+                          }, // Handle your callback
                           child: Row(
-                            children: [
-                              Container(
-                                  width: MySize.size38,
-                                  height: MySize.size38,
-                                  decoration: BoxDecoration(
-                                      color: themeData.colorScheme.primary.withAlpha(32),
-                                      borderRadius:
-                                      BorderRadius.all(Radius.circular(MySize.size8!))),
-                                  child: Center(
+                              children: [
+                                Container(
+                                    width: MySize.size38,
+                                    height: MySize.size38,
+                                    decoration: BoxDecoration(
+                                        color: themeData.colorScheme.primary.withAlpha(32),
+                                        borderRadius:
+                                        BorderRadius.all(Radius.circular(MySize.size8!))),
+                                    child: Center(
+                                      child: Text(
+                                        '${ticketsDone?.length ?? 0}',
+                                        style: AppTheme.getTextStyle(
+                                            themeData.textTheme.bodyText2,
+                                            color: themeData.colorScheme.primary,
+                                            fontWeight: 800),
+                                      ),
+                                    )),
+                                Expanded(
+                                  child: Container(
+                                    margin: Spacing.left(16),
                                     child: Text(
-                                      '${ticketsDone?.length ?? 0}',
+                                      "Done",
                                       style: AppTheme.getTextStyle(
                                           themeData.textTheme.bodyText2,
-                                          color: themeData.colorScheme.primary,
-                                          fontWeight: 800),
+                                          fontWeight: 600,
+                                          color: themeData.colorScheme.onBackground
+                                              .withAlpha(220)),
                                     ),
-                                  )),
-                              Expanded(
-                                child: Container(
-                                  margin: Spacing.left(16),
-                                  child: Text(
-                                    "Done",
-                                    style: AppTheme.getTextStyle(
-                                        themeData.textTheme.bodyText2,
-                                        fontWeight: 600,
-                                        color: themeData.colorScheme.onBackground
-                                            .withAlpha(220)),
                                   ),
                                 ),
-                              ),
-                              Container(
-                                child: Icon(
-                                  MdiIcons.chevronRight,
-                                  size: MySize.size20,
-                                  color: themeData.colorScheme.onBackground.withAlpha(200),
-                                ),
-                              )
-                            ],
-                          ),
+                                Container(
+                                  child: Icon(
+                                    MdiIcons.chevronRight,
+                                    size: MySize.size20,
+                                    color: themeData.colorScheme.onBackground.withAlpha(200),
+                                  ),
+                                )
+                              ],
+                            ),
 
 
-                        ),
-                      ),
-                    ),
+
+                        )),),
+
                   ],
                 ),
               )   ;
