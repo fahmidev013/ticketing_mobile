@@ -8,16 +8,37 @@ import 'package:mobile_ticketing/model/User.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ApiService {
-  final String apiUrl = "http://192.168.0.109:8080/api/v1";
+  final String apiUrl = "http://192.168.0.109:8080/v1";
+  // final String apiUrl = "https://manifest.ditfrek.postel.go.id/api/v1";
   SharedPreferences? prefs;
+
 
   Future<List<Issue>> getIssues(int id) async {
     Response res = await get(Uri.parse(apiUrl +  '/issue?userid=$id' ) );
-
+    List<String> listNo = [];
     if (res.statusCode == 200) {
       List<dynamic> body = jsonDecode(res.body);
-      List<Issue> issues = body.map((dynamic item) => Issue.fromJson(item)).toList();
-      return issues;
+      List<Issue> issueList = body.map((dynamic item) => Issue.fromJson(item)).toList();
+      issueList.forEach((item) => {
+        listNo.add(item.issue_id.toString())
+      });
+      prefs = await SharedPreferences.getInstance();
+      if (prefs!.getStringList('issues') != null) {
+        List<String>? listOld = prefs!.getStringList('issues');
+        List<int> intIssueNoList = listOld!.map((i) => int.parse(i)).toList();
+        if (intIssueNoList.length != 0){
+          int lastNum = intIssueNoList.first;
+          if (intIssueNoList.first != lastNum){
+            listNo.clear();
+            issueList.forEach((item) {
+              if (item.issue_id > lastNum) listNo.add(item.issue_id.toString());
+            });
+          }
+        }
+      }
+      prefs!.setStringList('issues', listNo );
+
+      return issueList;
     } else {
       throw "Failed to load Issue list";
     }
@@ -52,6 +73,13 @@ class ApiService {
       prefs = await SharedPreferences.getInstance();
       prefs!.clear();
       return true;
+  }
+
+  Future<List<int>> getNotif() async {
+    prefs = await SharedPreferences.getInstance();
+    List<String>? listOld = prefs!.getStringList('issues');
+    List<int> intIssueNoList = listOld!.map((i) => int.parse(i)).toList();
+    return intIssueNoList;
   }
 
   /*Future<Cases> getCaseById(String id) async {

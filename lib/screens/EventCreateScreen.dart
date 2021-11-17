@@ -31,6 +31,7 @@ class _EventCreateScreenState extends State<EventCreateScreen> {
   late CustomAppTheme customAppTheme;
   final ApiService api = ApiService();
   late List<Issue> tickets;
+  int? notifCount = 0;
   bool isDone = false;
 
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
@@ -46,10 +47,17 @@ class _EventCreateScreenState extends State<EventCreateScreen> {
     return tickets;
   }
 
+  Future<List<int>> _getNotifikasi() async {
+    List<int> count = await api.getNotif();
+    notifCount = count.length;
+    return count;
+  }
+
 
   @override
   void initState() {
     super.initState();
+    _getNotifikasi();
     var initializationSettingsAndroid =
     AndroidInitializationSettings('mipmap/ic_launcher');
     var initializationSettingsIOs = IOSInitializationSettings();
@@ -89,7 +97,7 @@ class _EventCreateScreenState extends State<EventCreateScreen> {
                               shape: BoxShape.circle,
                               image: new DecorationImage(
                                   image: AssetImage(
-                                      './assets/images/avatar-4.jpg'),
+                                      './assets/images/avatar.jpg'),
                                   fit: BoxFit.fill),
                             ),
                           ),
@@ -303,7 +311,7 @@ class _EventCreateScreenState extends State<EventCreateScreen> {
                                                   Radius.circular(MySize.size8!)),
                                               child: Image(
                                                 image: AssetImage(
-                                                    './assets/images/avatar-4.jpg'),
+                                                    './assets/images/avatar.jpg'),
                                                 width: MySize.size44,
                                                 height: MySize.size44,
                                               ),
@@ -367,18 +375,18 @@ class _EventCreateScreenState extends State<EventCreateScreen> {
                                                   top: 0,
                                                   child: Container(
                                                     padding: Spacing.zero,
-                                                    height: 14,
-                                                    width: 14,
+                                                    height: 16,
+                                                    width: 16,
                                                     decoration: BoxDecoration(
                                                         color: AppTheme.customTheme.groceryPrimary,
                                                         borderRadius:
                                                         BorderRadius.all(Radius.circular(40))),
                                                     child: Center(
                                                       child: FxText.overline(
-                                                        "2",
+                                                        notifCount.toString(),
                                                         color: AppTheme.customTheme.groceryOnPrimary,
-                                                        fontSize: 9,
-                                                        fontWeight: 500,
+                                                        fontSize: 8,
+                                                        fontWeight: 300,
                                                       ),
                                                     ),
                                                   ),
@@ -618,9 +626,8 @@ class _EventCreateScreenState extends State<EventCreateScreen> {
                         child: InkWell(
                           splashColor: customAppTheme.shimmerHighlightColor,
                           onTap: () {
-                            print("Container clicked");
-                            // Navigator.push(
-                            //     context, MaterialPageRoute(builder: (context) => MediCareChatScreen(issue: ticketsOpen, title: 'OPEN TICKET',)));
+                            Navigator.push(
+                                context, MaterialPageRoute(builder: (context) => MediCareChatScreen(issue: ticketsOpen, title: 'OPEN TICKET',)));
                           }, // Handle your callback
                           child: Row(
                             children: [

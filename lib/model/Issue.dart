@@ -1,5 +1,6 @@
 
 class Issue {
+  final int index;
   final int issue_id;
   final int issue_user_id;
   final String issue_status;
@@ -17,6 +18,7 @@ class Issue {
   final String issue_environment;
 
   Issue({
+    required this.index,
     required this.issue_id,
     required this.issue_user_id,
     required this.issue_status,
@@ -36,8 +38,9 @@ class Issue {
 
   factory Issue.fromJson(Map<String, dynamic> json) {
     return Issue(
-      issue_id: json['issue_id'] == null ? '' : json['issue_id'],
-      issue_user_id: json['issue_user_id'] == null ? '' : json['issue_user_id'],
+      index: json['index'] == null ? 0 : json['index'],
+      issue_id: json['issue_id'] == null ? 0 : json['issue_id'],
+      issue_user_id: json['issue_user_id'] == null ? 0 : json['issue_user_id'],
       issue_status: json['issue_status']== null ? '' : json['issue_status'],
       issue_category: json['issue_category']== null ? '' : json['issue_category'],
       issue_priority: json['issue_priority']== null ? '' : json['issue_priority'],
@@ -56,6 +59,7 @@ class Issue {
 
   Map<String, dynamic> toJson() {
     return {
+      "index": this.index,
       "issue_id": this.issue_id,
       "issue_user_id": this.issue_user_id,
       "issue_status": this.issue_status,
