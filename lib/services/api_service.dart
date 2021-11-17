@@ -28,7 +28,7 @@ class ApiService {
         List<int> intIssueNoList = listOld!.map((i) => int.parse(i)).toList();
         if (intIssueNoList.length != 0){
           int lastNum = intIssueNoList.first;
-          if (intIssueNoList.first != lastNum){
+          if (listNo.first != lastNum){
             listNo.clear();
             issueList.forEach((item) {
               if (item.issue_id > lastNum) listNo.add(item.issue_id.toString());

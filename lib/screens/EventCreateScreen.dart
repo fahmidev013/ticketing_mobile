@@ -50,7 +50,7 @@ class _EventCreateScreenState extends State<EventCreateScreen> {
     return tickets;
   }
 
-  Future<List<int>> _getNotifikasi() async {
+  Future<void> _getNotifikasi() async {
     List<int> count = await api.getNotif();
     if (count.first != countOldId){
       newComingNotif = true;
@@ -60,7 +60,6 @@ class _EventCreateScreenState extends State<EventCreateScreen> {
     } else {
       newComingNotif = false;
     }
-    return count;
   }
 
 
@@ -286,9 +285,19 @@ class _EventCreateScreenState extends State<EventCreateScreen> {
         payload: 'Welcome to the Local Notification demo ');
   }
 
+  void rebuildAllChildren(BuildContext context) {
+    void rebuild(Element el) {
+      el.markNeedsBuild();
+      el.visitChildren(rebuild);
+    }
+    (context as Element).visitChildren(rebuild);
+  }
+
   Widget build(BuildContext context) {
+
     themeData = Theme.of(context);
     customAppTheme = AppTheme.getCustomAppTheme(1);
+    rebuildAllChildren(context);
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: AppTheme.getThemeFromThemeMode(1),
@@ -366,19 +375,20 @@ class _EventCreateScreenState extends State<EventCreateScreen> {
                                             onTap: () async {
                                               notifClick = true;
                                               notifCount = 0;
-                                              await showNotification();
-                                              /*Navigator.of(context).push(new MaterialPageRoute<Null>(
+
+                                              // await showNotification();
+                                              Navigator.of(context).push(new MaterialPageRoute<Null>(
                                                   builder: (BuildContext context) {
                                                     return NotificationDialog();
                                                   },
-                                                  fullscreenDialog: true));*/
+                                                  fullscreenDialog: true));
                                             },
                                             child: Stack(
                                               clipBehavior: Clip.none,
                                               children: <Widget>[
                                                 Icon(
                                                   FeatherIcons.bell,
-                                                  size: 26,
+                                                  size: 30,
                                                   color: AppTheme.theme.colorScheme.onBackground
                                                       .withAlpha(200),
                                                 ),
@@ -387,8 +397,8 @@ class _EventCreateScreenState extends State<EventCreateScreen> {
                                                   top: 0,
                                                   child: Container(
                                                     padding: Spacing.zero,
-                                                    height: 16,
-                                                    width: 16,
+                                                    height: 18,
+                                                    width: 18,
                                                     decoration: BoxDecoration(
                                                         color: themeData.colorScheme.primary,
                                                         borderRadius:
@@ -398,7 +408,7 @@ class _EventCreateScreenState extends State<EventCreateScreen> {
                                                         notifCount.toString(),
                                                         color: AppTheme.customTheme.groceryOnPrimary,
                                                         fontSize: 8,
-                                                        fontWeight: 300,
+                                                        fontWeight: 700,
                                                       ),
                                                     ),
                                                   ),
@@ -412,9 +422,20 @@ class _EventCreateScreenState extends State<EventCreateScreen> {
                               ],
                             ),
                           ),
+                          SizedBox(
+                            height: MySize.size14,
+                          ),
                           Container(
                             margin: Spacing.fromLTRB(24, 8, 24, 0),
-                            child: TextFormField(
+                            child: Text('Mobile Helpdesk Ticket',
+                              style: AppTheme.getTextStyle(
+                                  themeData.textTheme.headline5,
+                                  color:
+                                  themeData.colorScheme.onBackground,
+                                  letterSpacing: -0.4,
+                                  fontWeight: 800),
+                            )
+                            /*TextFormField(
                               style: AppTheme.getTextStyle(
                                   themeData.textTheme.headline5,
                                   color: themeData.colorScheme.onBackground,
@@ -438,11 +459,22 @@ class _EventCreateScreenState extends State<EventCreateScreen> {
 
                               textCapitalization:
                               TextCapitalization.sentences,
-                            ),
+                            ),*/
+                          ),
+                          SizedBox(
+                            height: MySize.size14,
                           ),
                           Container(
                             margin: Spacing.fromLTRB(24, 0, 24, 0),
-                            child: TextFormField(
+                            child: Text('Trouble ticket mobile application is a supporting system that developed by Directorat Pengendalian SDPPI that have a function for compiles all trouble tickets to make it easier for SIMS infrastructure users to view and track the ticket status by notifications that can be access from anywhere.',
+                            style: AppTheme.getTextStyle(
+                                themeData.textTheme.bodyText2,
+                                color: themeData.colorScheme.onBackground,
+                                fontWeight: 600,
+                                letterSpacing: 0,
+                                muted: true),
+                            )
+                            /*TextFormField(
                               style: AppTheme.getTextStyle(
                                   themeData.textTheme.bodyText2,
                                   color: themeData.colorScheme.onBackground,
@@ -485,7 +517,7 @@ class _EventCreateScreenState extends State<EventCreateScreen> {
                               autofocus: false,
                               textCapitalization:
                               TextCapitalization.sentences,
-                            ),
+                            ),*/
                           ),
                           // locationWidget(),
                           // eventTypeWidget(),

@@ -53,7 +53,7 @@ class _NotificationDialogState extends State<NotificationDialog> {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: <Widget>[
                   FxText.b1(
-                    "Offers",
+                    "Open",
                     fontWeight: 600,
                   ),
                   FxContainer.rounded(
@@ -118,7 +118,7 @@ class _NotificationDialogState extends State<NotificationDialog> {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: <Widget>[
                 FxText.b1(
-                  "Orders",
+                  "Closed",
                   fontWeight: 600,
                 ),
                 FxContainer.rounded(
@@ -161,40 +161,17 @@ class _NotificationDialogState extends State<NotificationDialog> {
                     color: AppTheme.customTheme.groceryPrimary,
                     fontWeight: 600,
                     letterSpacing: 0.2),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.of(context).push(new MaterialPageRoute<Null>(
+                      builder: (BuildContext context) {
+                        return NotificationDialog();
+                      },
+                      fullscreenDialog: true));
+                },
               ),
             ),
             FxSpacing.height(24),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: <Widget>[
-                FxText.b1(
-                  "Security",
-                  fontWeight: 600,
-                ),
-                FxContainer.rounded(
-                  margin: Spacing.left(8),
-                  width: 18,
-                  paddingAll: 0,
-                  height: 18,
-                  color: AppTheme.customTheme.groceryPrimary.withAlpha(40),
-                  child: Center(
-                      child: FxText.overline(
-                    "1",
-                    fontWeight: 600,
-                    color: AppTheme.customTheme.groceryPrimary,
-                  )),
-                )
-              ],
-            ),
-            FxSpacing.height(24),
-            singleNotification(
-                image: './assets/grocery/profile.png',
-                text: FxText.button("Your account password has been changed",
-                    color: AppTheme.theme.colorScheme.onBackground,
-                    fontWeight: 500,
-                    letterSpacing: 0),
-                time: "2 days ago"),
+
           ],
         ),
       ),

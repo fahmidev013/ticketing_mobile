@@ -178,18 +178,18 @@ class _HealthNewActivityScreenState extends State<HealthNewActivityScreen> {
                     ButtonBar(
                       alignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        ElevatedButton(
-                          child: Icon(Icons.arrow_back),
-                          onPressed: () {
-                            // webViewController?.goBack();
-                          },
-                        ),
-                        ElevatedButton(
-                          child: Icon(Icons.arrow_forward),
-                          onPressed: () {
-                            // webViewController?.goForward();
-                          },
-                        ),
+                        // ElevatedButton(
+                        //   child: Icon(Icons.arrow_back),
+                        //   onPressed: () {
+                        //     // webViewController?.goBack();
+                        //   },
+                        // ),
+                        // ElevatedButton(
+                        //   child: Icon(Icons.arrow_forward),
+                        //   onPressed: () {
+                        //     // webViewController?.goForward();
+                        //   },
+                        // ),
                         ElevatedButton(
                           child: Icon(Icons.refresh),
                           onPressed: () {
