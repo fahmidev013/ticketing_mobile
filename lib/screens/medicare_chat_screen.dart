@@ -59,10 +59,10 @@ class _MediCareChatScreenState extends State<MediCareChatScreen> {
               child: Image(
                 height: 54,
                 width: 54,
-                image: AssetImage('assets/images/avatar-2.jpg'),
+                image: AssetImage('assets/logo/logo.png'),
               ),
             ),
-            Positioned(
+            /*Positioned(
               right: 4,
               bottom: 2,
               child: FxContainer.rounded(
@@ -70,7 +70,7 @@ class _MediCareChatScreenState extends State<MediCareChatScreen> {
                 child: Container(),
                 color: AppTheme.customTheme.groceryPrimary,
               ),
-            )
+            )*/
           ],
         ),
         FxSpacing.width(16),

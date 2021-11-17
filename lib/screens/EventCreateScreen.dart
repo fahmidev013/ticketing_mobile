@@ -32,7 +32,10 @@ class _EventCreateScreenState extends State<EventCreateScreen> {
   final ApiService api = ApiService();
   late List<Issue> tickets;
   int? notifCount = 0;
+  int? countOldId = 0;
+  bool newComingNotif = false;
   bool isDone = false;
+  bool notifClick = false;
 
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
   FlutterLocalNotificationsPlugin();
@@ -49,7 +52,14 @@ class _EventCreateScreenState extends State<EventCreateScreen> {
 
   Future<List<int>> _getNotifikasi() async {
     List<int> count = await api.getNotif();
-    notifCount = count.length;
+    if (count.first != countOldId){
+      newComingNotif = true;
+      countOldId = count.first;
+      notifCount = count.length;
+      notifClick = false;
+    } else {
+      newComingNotif = false;
+    }
     return count;
   }
 
@@ -97,7 +107,7 @@ class _EventCreateScreenState extends State<EventCreateScreen> {
                               shape: BoxShape.circle,
                               image: new DecorationImage(
                                   image: AssetImage(
-                                      './assets/images/avatar.jpg'),
+                                      './assets/logo/logo.png'),
                                   fit: BoxFit.fill),
                             ),
                           ),
@@ -144,7 +154,7 @@ class _EventCreateScreenState extends State<EventCreateScreen> {
                     Divider(
                       color: themeData.dividerColor,
                     ),
-                    ListTile(
+                    /*ListTile(
                       dense: true,
                       leading: Icon(MdiIcons.bellRingOutline,
                           color: themeData.colorScheme.onBackground
@@ -169,7 +179,7 @@ class _EventCreateScreenState extends State<EventCreateScreen> {
                             letterSpacing: 0.3,
                             fontWeight: FontWeight.w500)),
                       ),
-                    ),
+                    ),*/
                     ListTile(
                       onTap: () async {
                         await api.logout();
@@ -177,7 +187,7 @@ class _EventCreateScreenState extends State<EventCreateScreen> {
                             LoginScreen()), (Route<dynamic> route) => false);
                       },
                       dense: true,
-                      leading: Icon(MdiIcons.helpCircleOutline,
+                      leading: Icon(MdiIcons.logout,
                           color: themeData.colorScheme.onBackground
                               .withAlpha(220)),
                       title: Text(
@@ -311,7 +321,7 @@ class _EventCreateScreenState extends State<EventCreateScreen> {
                                                   Radius.circular(MySize.size8!)),
                                               child: Image(
                                                 image: AssetImage(
-                                                    './assets/images/avatar.jpg'),
+                                                    './assets/logo/app_logo.jpeg'),
                                                 width: MySize.size44,
                                                 height: MySize.size44,
                                               ),
@@ -338,7 +348,7 @@ class _EventCreateScreenState extends State<EventCreateScreen> {
                                             style: AppTheme.getTextStyle(
                                                 themeData.textTheme.caption,
                                                 color:
-                                                customAppTheme.colorSuccess,
+                                                themeData.colorScheme.primary,
                                                 fontWeight: 500),
                                           ),
                                         ],
@@ -354,6 +364,8 @@ class _EventCreateScreenState extends State<EventCreateScreen> {
                                         children: [
                                           InkWell(
                                             onTap: () async {
+                                              notifClick = true;
+                                              notifCount = 0;
                                               await showNotification();
                                               /*Navigator.of(context).push(new MaterialPageRoute<Null>(
                                                   builder: (BuildContext context) {
@@ -378,7 +390,7 @@ class _EventCreateScreenState extends State<EventCreateScreen> {
                                                     height: 16,
                                                     width: 16,
                                                     decoration: BoxDecoration(
-                                                        color: AppTheme.customTheme.groceryPrimary,
+                                                        color: themeData.colorScheme.primary,
                                                         borderRadius:
                                                         BorderRadius.all(Radius.circular(40))),
                                                     child: Center(
@@ -438,7 +450,7 @@ class _EventCreateScreenState extends State<EventCreateScreen> {
                                   letterSpacing: 0,
                                   muted: true),
                               decoration: InputDecoration(
-                                hintText: "Aplikasi untuk lorem ipsume Aplikasi untuk lorem ipsume Aplikasi untuk lorem ipsume Aplikasi untuk lorem ipsume Aplikasi untuk lorem ipsume Aplikasi untuk lorem ipsume",
+                                hintText: "Trouble ticket mobile application is a supporting system that developed by Directorat Pengendalian SDPPI that have a function for compiles all trouble tickets to make it easier for SIMS infrastructure users to view and track the ticket status by notifications that can be access from anywhere.",
                                 hintStyle: AppTheme.getTextStyle(
                                     themeData.textTheme.bodyText2,
                                     color:
@@ -673,7 +685,170 @@ class _EventCreateScreenState extends State<EventCreateScreen> {
                       ),
                     ),
 
+                    Container(
+                      margin: Spacing.top(12),
+                      child: Material(
+                          child: InkWell(
+                            splashColor: customAppTheme.shimmerHighlightColor,
+                            onTap: () {
+                              print("Container clicked");
+                              Navigator.push(
+                                  context, MaterialPageRoute(builder: (context) => MediCareChatScreen(issue: ticketsPending, title: 'PENDING TICKET',)));
+                            }, // Handle your callback
+                            child: Row(
+                              children: [
+                                Container(
+                                    width: MySize.size38,
+                                    height: MySize.size38,
+                                    decoration: BoxDecoration(
+                                        color: themeData.colorScheme.primary.withAlpha(32),
+                                        borderRadius:
+                                        BorderRadius.all(Radius.circular(MySize.size8!))),
+                                    child: Center(
+                                      child: Text(
+                                        '${ticketsPending?.length ?? 0}',
+                                        style: AppTheme.getTextStyle(
+                                            themeData.textTheme.bodyText2,
+                                            color: themeData.colorScheme.primary,
+                                            fontWeight: 800),
+                                      ),
+                                    )),
+                                Expanded(
+                                  child: Container(
+                                    margin: Spacing.left(16),
+                                    child: Text(
+                                      "Pending",
+                                      style: AppTheme.getTextStyle(
+                                          themeData.textTheme.bodyText2,
+                                          fontWeight: 600,
+                                          color: themeData.colorScheme.onBackground
+                                              .withAlpha(220)),
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  child: Icon(
+                                    MdiIcons.chevronRight,
+                                    size: MySize.size20,
+                                    color: themeData.colorScheme.onBackground.withAlpha(200),
+                                  ),
+                                )
+                              ],
+                            ),
 
+
+
+                          )),),
+
+                    Container(
+                      margin: Spacing.top(12),
+                      child: Material(
+                          child: InkWell(
+                            splashColor: customAppTheme.shimmerHighlightColor,
+                            onTap: () {
+                              print("Container clicked");
+                              Navigator.push(
+                                  context, MaterialPageRoute(builder: (context) => MediCareChatScreen(issue: ticketsLS, title: 'LS ACTION TICKET',)));
+                            }, // Handle your callback
+                            child: Row(
+                              children: [
+                                Container(
+                                    width: MySize.size38,
+                                    height: MySize.size38,
+                                    decoration: BoxDecoration(
+                                        color: themeData.colorScheme.primary.withAlpha(32),
+                                        borderRadius:
+                                        BorderRadius.all(Radius.circular(MySize.size8!))),
+                                    child: Center(
+                                      child: Text(
+                                        '${ticketsLS?.length ?? 0}',
+                                        style: AppTheme.getTextStyle(
+                                            themeData.textTheme.bodyText2,
+                                            color: themeData.colorScheme.primary,
+                                            fontWeight: 800),
+                                      ),
+                                    )),
+                                Expanded(
+                                  child: Container(
+                                    margin: Spacing.left(16),
+                                    child: Text(
+                                      "LS Action",
+                                      style: AppTheme.getTextStyle(
+                                          themeData.textTheme.bodyText2,
+                                          fontWeight: 600,
+                                          color: themeData.colorScheme.onBackground
+                                              .withAlpha(220)),
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  child: Icon(
+                                    MdiIcons.chevronRight,
+                                    size: MySize.size20,
+                                    color: themeData.colorScheme.onBackground.withAlpha(200),
+                                  ),
+                                )
+                              ],
+                            ),
+
+
+
+                          )),),
+
+                    Container(
+                      margin: Spacing.top(12),
+                      child: Material(
+                          child: InkWell(
+                            splashColor: customAppTheme.shimmerHighlightColor,
+                            onTap: () {
+                              print("Container clicked");
+                              Navigator.push(
+                                  context, MaterialPageRoute(builder: (context) => MediCareChatScreen(issue: ticketsClosed, title: 'CLOSED TICKET',)));
+                            }, // Handle your callback
+                            child: Row(
+                              children: [
+                                Container(
+                                    width: MySize.size38,
+                                    height: MySize.size38,
+                                    decoration: BoxDecoration(
+                                        color: themeData.colorScheme.primary.withAlpha(32),
+                                        borderRadius:
+                                        BorderRadius.all(Radius.circular(MySize.size8!))),
+                                    child: Center(
+                                      child: Text(
+                                        '${ticketsClosed?.length ?? 0}',
+                                        style: AppTheme.getTextStyle(
+                                            themeData.textTheme.bodyText2,
+                                            color: themeData.colorScheme.primary,
+                                            fontWeight: 800),
+                                      ),
+                                    )),
+                                Expanded(
+                                  child: Container(
+                                    margin: Spacing.left(16),
+                                    child: Text(
+                                      "Closed",
+                                      style: AppTheme.getTextStyle(
+                                          themeData.textTheme.bodyText2,
+                                          fontWeight: 600,
+                                          color: themeData.colorScheme.onBackground
+                                              .withAlpha(220)),
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  child: Icon(
+                                    MdiIcons.chevronRight,
+                                    size: MySize.size20,
+                                    color: themeData.colorScheme.onBackground.withAlpha(200),
+                                  ),
+                                )
+                              ],
+                            ),
+
+
+
+                          )),),
                     //-------------------------------
                         Container(
                         margin: Spacing.top(12),
@@ -790,60 +965,7 @@ class _EventCreateScreenState extends State<EventCreateScreen> {
           ),
 
                     //-------------------------------
-          Container(
-          margin: Spacing.top(12),
-          child: Material(
-                        child: InkWell(
-                          splashColor: customAppTheme.shimmerHighlightColor,
-                          onTap: () {
-                            print("Container clicked");
-                            Navigator.push(
-                                context, MaterialPageRoute(builder: (context) => MediCareChatScreen(issue: ticketsPending, title: 'PENDING TICKET',)));
-                          }, // Handle your callback
-                          child: Row(
-                              children: [
-                                Container(
-                                    width: MySize.size38,
-                                    height: MySize.size38,
-                                    decoration: BoxDecoration(
-                                        color: themeData.colorScheme.primary.withAlpha(32),
-                                        borderRadius:
-                                        BorderRadius.all(Radius.circular(MySize.size8!))),
-                                    child: Center(
-                                      child: Text(
-                                        '${ticketsPending?.length ?? 0}',
-                                        style: AppTheme.getTextStyle(
-                                            themeData.textTheme.bodyText2,
-                                            color: themeData.colorScheme.primary,
-                                            fontWeight: 800),
-                                      ),
-                                    )),
-                                Expanded(
-                                  child: Container(
-                                    margin: Spacing.left(16),
-                                    child: Text(
-                                      "Pending",
-                                      style: AppTheme.getTextStyle(
-                                          themeData.textTheme.bodyText2,
-                                          fontWeight: 600,
-                                          color: themeData.colorScheme.onBackground
-                                              .withAlpha(220)),
-                                    ),
-                                  ),
-                                ),
-                                Container(
-                                  child: Icon(
-                                    MdiIcons.chevronRight,
-                                    size: MySize.size20,
-                                    color: themeData.colorScheme.onBackground.withAlpha(200),
-                                  ),
-                                )
-                              ],
-                            ),
 
-
-
-                        )),),
 
                     //-------------------------------
           Container(
@@ -902,60 +1024,7 @@ class _EventCreateScreenState extends State<EventCreateScreen> {
                         )),),
 
                     //-------------------------------
-          Container(
-          margin: Spacing.top(12),
-          child: Material(
-                        child: InkWell(
-                          splashColor: customAppTheme.shimmerHighlightColor,
-                          onTap: () {
-                            print("Container clicked");
-                            Navigator.push(
-                                context, MaterialPageRoute(builder: (context) => MediCareChatScreen(issue: ticketsLS, title: 'LS ACTION TICKET',)));
-                          }, // Handle your callback
-                          child: Row(
-                              children: [
-                                Container(
-                                    width: MySize.size38,
-                                    height: MySize.size38,
-                                    decoration: BoxDecoration(
-                                        color: themeData.colorScheme.primary.withAlpha(32),
-                                        borderRadius:
-                                        BorderRadius.all(Radius.circular(MySize.size8!))),
-                                    child: Center(
-                                      child: Text(
-                                        '${ticketsLS?.length ?? 0}',
-                                        style: AppTheme.getTextStyle(
-                                            themeData.textTheme.bodyText2,
-                                            color: themeData.colorScheme.primary,
-                                            fontWeight: 800),
-                                      ),
-                                    )),
-                                Expanded(
-                                  child: Container(
-                                    margin: Spacing.left(16),
-                                    child: Text(
-                                      "LS Action",
-                                      style: AppTheme.getTextStyle(
-                                          themeData.textTheme.bodyText2,
-                                          fontWeight: 600,
-                                          color: themeData.colorScheme.onBackground
-                                              .withAlpha(220)),
-                                    ),
-                                  ),
-                                ),
-                                Container(
-                                  child: Icon(
-                                    MdiIcons.chevronRight,
-                                    size: MySize.size20,
-                                    color: themeData.colorScheme.onBackground.withAlpha(200),
-                                  ),
-                                )
-                              ],
-                            ),
 
-
-
-                        )),),
 
                     //-------------------------------
           Container(
@@ -1071,60 +1140,7 @@ class _EventCreateScreenState extends State<EventCreateScreen> {
 
 
 
-          Container(
-          margin: Spacing.top(12),
-          child: Material(
-                        child: InkWell(
-                          splashColor: customAppTheme.shimmerHighlightColor,
-                          onTap: () {
-                            print("Container clicked");
-                            Navigator.push(
-                                context, MaterialPageRoute(builder: (context) => MediCareChatScreen(issue: ticketsClosed, title: 'CLOSED TICKET',)));
-                          }, // Handle your callback
-                          child: Row(
-                              children: [
-                                Container(
-                                    width: MySize.size38,
-                                    height: MySize.size38,
-                                    decoration: BoxDecoration(
-                                        color: themeData.colorScheme.primary.withAlpha(32),
-                                        borderRadius:
-                                        BorderRadius.all(Radius.circular(MySize.size8!))),
-                                    child: Center(
-                                      child: Text(
-                                        '${ticketsClosed?.length ?? 0}',
-                                        style: AppTheme.getTextStyle(
-                                            themeData.textTheme.bodyText2,
-                                            color: themeData.colorScheme.primary,
-                                            fontWeight: 800),
-                                      ),
-                                    )),
-                                Expanded(
-                                  child: Container(
-                                    margin: Spacing.left(16),
-                                    child: Text(
-                                      "Closed",
-                                      style: AppTheme.getTextStyle(
-                                          themeData.textTheme.bodyText2,
-                                          fontWeight: 600,
-                                          color: themeData.colorScheme.onBackground
-                                              .withAlpha(220)),
-                                    ),
-                                  ),
-                                ),
-                                Container(
-                                  child: Icon(
-                                    MdiIcons.chevronRight,
-                                    size: MySize.size20,
-                                    color: themeData.colorScheme.onBackground.withAlpha(200),
-                                  ),
-                                )
-                              ],
-                            ),
 
-
-
-                        )),),
 
 
 

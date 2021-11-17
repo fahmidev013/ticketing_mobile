@@ -39,8 +39,8 @@ class _EventSingleEventScreenState extends State<EventSingleEventScreen> {
                       children: [
                         Image(
                           image: AssetImage(
-                              './assets/logo/logo.png'),
-                          fit: BoxFit.fill,
+                              './assets/logo/app_logo.jpeg'),
+                          fit: BoxFit.contain,
                           width: MySize.safeWidth,
                           height: MySize.getScaledSizeHeight(240),
                         ),
@@ -71,7 +71,7 @@ class _EventSingleEventScreenState extends State<EventSingleEventScreen> {
                                         size: MySize.size20),
                                   ),
                                 ),
-                                Container(
+                                /*Container(
                                   padding: Spacing.all(8),
                                   decoration: BoxDecoration(
                                     color: customAppTheme.bgLayer1,
@@ -85,7 +85,7 @@ class _EventSingleEventScreenState extends State<EventSingleEventScreen> {
                                       color: themeData.colorScheme.onBackground
                                           .withAlpha(220),
                                       size: MySize.size20),
-                                ),
+                                ),*/
                               ],
                             ),
                           ),
@@ -142,7 +142,7 @@ class _EventSingleEventScreenState extends State<EventSingleEventScreen> {
                                         borderRadius: BorderRadius.all(
                                             Radius.circular(MySize.size8!))),
                                     child: Icon(
-                                      MdiIcons.calendar,
+                                      MdiIcons.ticket,
                                       size: MySize.size18,
                                       color: themeData.colorScheme.primary,
                                     ),
@@ -192,7 +192,7 @@ class _EventSingleEventScreenState extends State<EventSingleEventScreen> {
                                           borderRadius: BorderRadius.all(
                                               Radius.circular(MySize.size8!))),
                                       child: Icon(
-                                        MdiIcons.mapMarkerOutline,
+                                        MdiIcons.calendar,
                                         size: MySize.size18,
                                         color: themeData.colorScheme.primary,
                                       ),
@@ -243,7 +243,7 @@ class _EventSingleEventScreenState extends State<EventSingleEventScreen> {
                                           borderRadius: BorderRadius.all(
                                               Radius.circular(MySize.size8!))),
                                       child: Icon(
-                                        MdiIcons.mapMarkerOutline,
+                                        MdiIcons.account,
                                         size: MySize.size18,
                                         color: themeData.colorScheme.primary,
                                       ),
@@ -294,7 +294,7 @@ class _EventSingleEventScreenState extends State<EventSingleEventScreen> {
                                           borderRadius: BorderRadius.all(
                                               Radius.circular(MySize.size8!))),
                                       child: Icon(
-                                        MdiIcons.tagOutline,
+                                        MdiIcons.listStatus,
                                         size: MySize.size18,
                                         color: themeData.colorScheme.primary,
                                       ),
@@ -346,7 +346,7 @@ class _EventSingleEventScreenState extends State<EventSingleEventScreen> {
                                           borderRadius: BorderRadius.all(
                                               Radius.circular(MySize.size8!))),
                                       child: Icon(
-                                        MdiIcons.mapMarkerOutline,
+                                        MdiIcons.listStatus,
                                         size: MySize.size18,
                                         color: themeData.colorScheme.primary,
                                       ),
@@ -397,7 +397,7 @@ class _EventSingleEventScreenState extends State<EventSingleEventScreen> {
                                           borderRadius: BorderRadius.all(
                                               Radius.circular(MySize.size8!))),
                                       child: Icon(
-                                        MdiIcons.tagOutline,
+                                        MdiIcons.calendar,
                                         size: MySize.size18,
                                         color: themeData.colorScheme.primary,
                                       ),
@@ -449,7 +449,7 @@ class _EventSingleEventScreenState extends State<EventSingleEventScreen> {
                                           borderRadius: BorderRadius.all(
                                               Radius.circular(MySize.size8!))),
                                       child: Icon(
-                                        MdiIcons.tagOutline,
+                                        MdiIcons.timeline,
                                         size: MySize.size18,
                                         color: themeData.colorScheme.primary,
                                       ),
@@ -501,7 +501,7 @@ class _EventSingleEventScreenState extends State<EventSingleEventScreen> {
                                           borderRadius: BorderRadius.all(
                                               Radius.circular(MySize.size8!))),
                                       child: Icon(
-                                        MdiIcons.tagOutline,
+                                        MdiIcons.application,
                                         size: MySize.size18,
                                         color: themeData.colorScheme.primary,
                                       ),
@@ -602,9 +602,11 @@ class _EventSingleEventScreenState extends State<EventSingleEventScreen> {
                           margin: Spacing.fromLTRB(24, 16, 24,0),
                           child: ElevatedButton(
 
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
                             child: Text(
-                              "Hubungi Teknisi Terkait",
+                              "Kembali",
                               style: AppTheme.getTextStyle(
                                   themeData.textTheme.bodyText2,
                                   fontWeight: 600,

@@ -41,7 +41,7 @@ class _SplashScreenPageState extends State<SplashScreenPage>{
   @override
   initState()  {
 
-    Future.delayed(Duration(seconds: 3), () async {
+    Future.delayed(Duration(seconds: 1), () async {
       await _getLogin();
         isLogin == 1 ? 
         Navigator.of(context)
@@ -66,7 +66,7 @@ class _SplashScreenPageState extends State<SplashScreenPage>{
         children: <Widget>[
           Center(
             child: Image.asset(
-              'assets/logo/logo.png',
+              'assets/logo/app_logo.jpeg',
               height: MediaQuery.of(context).size.height,
               width: MediaQuery.of(context).size.width / 2,
             ),

@@ -47,19 +47,32 @@ class _LoginScreenState extends State<LoginScreen> {
       home: Scaffold(
           body: Stack(
             children: <Widget>[
-              ClipPath(
+              /*ClipPath(
                   clipper: _MyCustomClipper(context),
                   child: Container(
                     alignment: Alignment.center,
                     color: themeData.colorScheme.background,
-                  )),
+                  )),*/
               Positioned(
                 left: 30,
                 right: 30,
-                top: MediaQuery.of(context).size.height * 0.2,
+                top: MediaQuery.of(context).size.height * 0.05,
                 child: ListView(
                   shrinkWrap: true,
                   children: <Widget>[
+                    Container(
+                      width: MySize.size100,
+                      height: MySize.size140,
+                      margin: EdgeInsets.only(
+                          top: 0, bottom: 30),
+                      decoration: BoxDecoration(
+                        shape: BoxShape.rectangle,
+                        image: new DecorationImage(
+                            image: AssetImage(
+                                './assets/logo/app_logo.jpeg'),
+                            fit: BoxFit.fill),
+                      ),
+                    ),
                     Card(
                       child: Container(
                         padding: EdgeInsets.only(
@@ -138,7 +151,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     margin:
                                     EdgeInsets.only(top: 16),
                                     alignment: Alignment.centerRight,
-                                    child: Text("Forgot Password?",
+                                    child: Text("Lupa Password?",
                                         style: AppTheme.getTextStyle(
                                             themeData.textTheme.bodyText2,
                                             fontWeight: 500)),
@@ -196,10 +209,10 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     GestureDetector(
                       onTap: () {
-                        Navigator.pushReplacement(
+/*                        Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => LoginScreen()));
+                                builder: (context) => LoginScreen()));*/
                       },
                       child: Container(
                         margin: EdgeInsets.only(top: 16),
@@ -207,12 +220,12 @@ class _LoginScreenState extends State<LoginScreen> {
                           child: RichText(
                             text: TextSpan(children: <TextSpan>[
                               TextSpan(
-                                  text: "Don't have an Account? ",
+                                  text: "Belum memiliki akun? ",
                                   style: AppTheme.getTextStyle(
                                       themeData.textTheme.bodyText2,
                                       fontWeight: 500)),
                               TextSpan(
-                                  text: " Register",
+                                  text: " Daftar",
                                   style: AppTheme.getTextStyle(
                                       themeData.textTheme.bodyText2,
                                       fontWeight: 600,
