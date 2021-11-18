@@ -4,8 +4,7 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mobile_ticketing/dashboard.dart';
-import 'package:mobile_ticketing/login.dart';
+
 import 'package:mobile_ticketing/screens/HealthFullApp.dart';
 import 'package:mobile_ticketing/screens/loginPage.dart';
 import 'package:mobile_ticketing/utils/SizeConfig.dart';

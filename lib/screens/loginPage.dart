@@ -22,7 +22,7 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final ApiService api = ApiService();
-  late bool loginSuccess;
+  bool loginSuccess = false;
   bool? _passwordVisible = true, _check = false;
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();

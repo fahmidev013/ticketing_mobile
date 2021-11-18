@@ -1,24 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutx/themes/app_theme.dart';
-import 'package:flutx/themes/app_theme_notifier.dart';
-import 'package:flutx/utils/spacing.dart';
-import 'package:flutx/widgets/text/text.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:mobile_ticketing/dashboard.dart';
-import 'package:mobile_ticketing/intro.dart';
-import 'package:mobile_ticketing/screens/HealthFullApp.dart';
-import 'package:mobile_ticketing/screens/HealthHomeScreen.dart';
-import 'package:mobile_ticketing/screens/SelectThemeDialog.dart';
+
 import 'package:mobile_ticketing/splash.dart';
 import 'package:mobile_ticketing/utils/SizeConfig.dart';
-import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:sizer/sizer.dart';
-import 'package:url_launcher/url_launcher.dart';
-
-import 'AppTheme.dart';
-import 'AppThemeNotifier.dart';
 
 int? isviewed;
 Future<void> firstTimeVisit() async {

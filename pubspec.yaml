@@ -89,35 +89,6 @@ flutter:
       #Profiles
       - assets/images/
 
-
-      #Shopping
-      - assets/images/shopping/
-      - assets/images/shopping/product/
-      - assets/images/shopping/offer/
-      - assets/images/shopping/vector/
-      - assets/images/shopping/camera/
-
-      #Brand
-      - assets/brand/
-
-      #Hotel
-      - assets/images/hotel/
-
-      #Places
-      - assets/images/place/
-
-      #Music
-      - assets/images/music/
-
-      #Food
-      - assets/food/
-
-      #estate
-      - assets/estate/
-
-      #Course
-      - assets/images/course/
-
       #Chat
       - assets/images/chat/
 
@@ -139,19 +110,10 @@ flutter:
       - assets/images/customapps/medicare/
 
 
-
-      #Illustration
-      - assets/illustration/food/
-      - assets/illustration/shopping/
-      - assets/illustration/hotel/
-      - assets/illustration/music/
-
-
       #Icons
       - assets/icons/
 
-      #Other
-      - assets/other/
+
 
       #Designs
       - assets/design/

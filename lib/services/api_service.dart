@@ -13,30 +13,40 @@ class ApiService {
   SharedPreferences? prefs;
 
 
+  Future<int> getListNewNoString() async {
+    prefs = await SharedPreferences.getInstance();
+    List<String>? liststr = [];
+    if (prefs != null && prefs!.getStringList('issues') != null) liststr = prefs!.getStringList('issues');
+    return liststr!.length;
+  }
+
+
+
   Future<List<Issue>> getIssues(int id) async {
     Response res = await get(Uri.parse(apiUrl +  '/issue?userid=$id' ) );
-    List<String> listNo = [];
     if (res.statusCode == 200) {
       List<dynamic> body = jsonDecode(res.body);
       List<Issue> issueList = body.map((dynamic item) => Issue.fromJson(item)).toList();
+      List<String> newlistNoString = [];
+      newlistNoString.clear();
       issueList.forEach((item) => {
-        listNo.add(item.issue_id.toString())
+        newlistNoString.add(item.issue_id.toString())
       });
       prefs = await SharedPreferences.getInstance();
       if (prefs!.getStringList('issues') != null) {
-        List<String>? listOld = prefs!.getStringList('issues');
-        List<int> intIssueNoList = listOld!.map((i) => int.parse(i)).toList();
-        if (intIssueNoList.length != 0){
-          int lastNum = intIssueNoList.first;
-          if (listNo.first != lastNum){
-            listNo.clear();
+        List<String>? listNoSavedOld  = prefs!.getStringList('issues');
+        // List<int> listNoSavedOldInt = listNoSavedOld!.map((i) => int.parse(i)).toList();
+        if (listNoSavedOld?.length != 0){
+          String lastNum = listNoSavedOld!.first;
+          if (newlistNoString.first != lastNum){
+            newlistNoString.clear();
             issueList.forEach((item) {
-              if (item.issue_id > lastNum) listNo.add(item.issue_id.toString());
+              if (item.issue_id > int.parse(lastNum)) newlistNoString.add(item.issue_id.toString());
             });
           }
         }
       }
-      prefs!.setStringList('issues', listNo );
+      prefs?.setStringList('issues', newlistNoString );
 
       return issueList;
     } else {
@@ -69,6 +79,35 @@ class ApiService {
     }
   }
 
+
+  Future<String> getNotifList(List<String>? strList) async {
+    String str = '';
+    strList?.forEach((element) {
+      str = str + ',' + element;
+    });
+    Response res = await post(
+      Uri.parse(apiUrl + '/component'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, String>{
+        'isuId': str
+      }),
+    );
+
+    if (res.statusCode == 201) {
+      print('Sukses');
+      /*Map<String, dynamic> decode_options = jsonDecode(res.body);
+      User userModel = User.fromJson(decode_options);
+      String user = jsonEncode(userModel);
+      prefs = await SharedPreferences.getInstance();
+      prefs!.setString('user', user);
+      prefs!.setInt('isLogin', 1);
+      return User.fromJson(decode_options);*/
+    }
+    return "OK";
+  }
+
   Future<bool?>logout() async {
       prefs = await SharedPreferences.getInstance();
       prefs!.clear();
@@ -77,9 +116,12 @@ class ApiService {
 
   Future<List<int>> getNotif() async {
     prefs = await SharedPreferences.getInstance();
-    List<String>? listOld = prefs!.getStringList('issues');
-    List<int> intIssueNoList = listOld!.map((i) => int.parse(i)).toList();
-    return intIssueNoList;
+    if (prefs!.getStringList('issues') != null){
+      List<String>? listOld = prefs!.getStringList('issues');
+      List<int> intIssueNoList = listOld!.map((i) => int.parse(i)).toList();
+      return intIssueNoList;
+    }
+    return [];
   }
 
   /*Future<Cases> getCaseById(String id) async {
