@@ -28,7 +28,7 @@ class _NotificationDialogState extends State<NotificationDialog> {
           backgroundColor: FxAppTheme.theme.scaffoldBackgroundColor,
           elevation: 0,
           automaticallyImplyLeading: false,
-          title: FxText.sh1("Notification", fontWeight: 600),
+          title: FxText.sh1("Notifikasi", fontWeight: 600),
           actions: <Widget>[
             Container(
               margin: Spacing.right(16),

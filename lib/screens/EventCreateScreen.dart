@@ -1,4 +1,5 @@
 
+import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
@@ -36,10 +37,11 @@ class _EventCreateScreenState extends State<EventCreateScreen> {
   final ApiService api = ApiService();
   late List<Issue> tickets;
   int? notifCount = 0;
+  bool _isRunning = true;
   int? countOldId = 0;
   bool newComingNotif = false;
   bool isDone = false;
-  Future<String>? testing;
+
 
 
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
@@ -48,6 +50,7 @@ class _EventCreateScreenState extends State<EventCreateScreen> {
 
   Future<List<Issue>> _getIssueData() async {
     tickets = await api.getIssues(widget.user!.user_id);
+    print("fetching jalan");
     return tickets;
   }
 
@@ -72,6 +75,15 @@ Future<void> getSharedPref() async {
   void initState() {
     super.initState();
     getSharedPref();
+    int hitung = 0;
+    Timer.periodic(Duration(seconds: 9), (Timer timer) {
+      if (!_isRunning) {
+        timer.cancel();
+      }
+      hitung++;
+      ScaffoldMessenger.of(context).showSnackBar( SnackBar(content: Text('Ambil data ke' + hitung.toString())));
+      _getIssueData();
+    });
     var initializationSettingsAndroid =
     AndroidInitializationSettings('mipmap/ic_launcher');
     var initializationSettingsIOs = IOSInitializationSettings();
@@ -352,13 +364,21 @@ Future<void> getSharedPref() async {
                                         crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                         children: [
-                                          Text(
-                                            widget.user!.user_name,
-                                            style: AppTheme.getTextStyle(
-                                                themeData.textTheme.bodyText2,
-                                                color: themeData
-                                                    .colorScheme.onBackground,
-                                                fontWeight: 600),
+                                          InkWell(
+                                            onTap:() {
+                                              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Proram bergenti')));
+                                              setState(() {
+                                                _isRunning = false;
+                                              });
+                                            } ,
+                                            child: Text(
+                                              widget.user!.user_name,
+                                              style: AppTheme.getTextStyle(
+                                                  themeData.textTheme.bodyText2,
+                                                  color: themeData
+                                                      .colorScheme.onBackground,
+                                                  fontWeight: 600),
+                                            ),
                                           ),
                                           Text(
                                             widget.user!.user_email,
