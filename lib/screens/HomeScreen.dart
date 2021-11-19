@@ -10,27 +10,26 @@ import 'package:flutx/widgets/text/text.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:mobile_ticketing/model/Issue.dart';
 import 'package:mobile_ticketing/model/User.dart';
-import 'package:mobile_ticketing/screens/HealthActivityScreen.dart';
-import 'package:mobile_ticketing/screens/loginPage.dart';
-import 'package:mobile_ticketing/services/api_service.dart';
+import 'package:mobile_ticketing/screens/LoginScreen.dart';
+import 'package:mobile_ticketing/services/ApiServices.dart';
 import 'package:mobile_ticketing/utils/SizeConfig.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../AppTheme.dart';
 import '../AppThemeNotifier.dart';
-import 'grocery_notification_dialog.dart';
-import 'medicare_chat_screen.dart';
+import 'NotificationScreen.dart';
+import 'ListIssueScreen.dart';
 
-class EventCreateScreen extends StatefulWidget {
-  EventCreateScreen({Key? key, required this.rootContext, required this.user}) : super(key: key);
+class HomeScreen extends StatefulWidget {
+  HomeScreen({Key? key, required this.rootContext, required this.user}) : super(key: key);
 
   final User? user;
   final BuildContext rootContext;
   @override
-  _EventCreateScreenState createState() => _EventCreateScreenState();
+  _HomeScreenState createState() => _HomeScreenState();
 }
 
-class _EventCreateScreenState extends State<EventCreateScreen> {
+class _HomeScreenState extends State<HomeScreen> {
   SharedPreferences? prefs;
   late ThemeData themeData;
   late CustomAppTheme customAppTheme;
@@ -229,7 +228,7 @@ Future<void> getSharedPref() async {
 
   Future onSelectNotification(String payload) {
     Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-      return HealthActivityScreen();
+      return NotificationScreen();
     }));
     throw Exception("Error on server");
   }
@@ -410,7 +409,7 @@ Future<void> getSharedPref() async {
                                               // await showNotification();
                                               Navigator.of(context).push(new MaterialPageRoute<Null>(
                                                   builder: (BuildContext context) {
-                                                    return NotificationDialog();
+                                                    return NotificationScreen();
                                                   },
                                                   fullscreenDialog: true));
                                             },
@@ -774,7 +773,7 @@ Future<void> getSharedPref() async {
                           splashColor: customAppTheme.shimmerHighlightColor,
                           onTap: () {
                             Navigator.push(
-                                context, MaterialPageRoute(builder: (context) => MediCareChatScreen(issue: ticketsOpen, title: 'OPEN TICKET',)));
+                                context, MaterialPageRoute(builder: (context) => ListIssueScreen(issue: ticketsOpen, title: 'OPEN TICKET',)));
                           }, // Handle your callback
                           child: Row(
                             children: [
@@ -828,7 +827,7 @@ Future<void> getSharedPref() async {
                             onTap: () {
                               print("Container clicked");
                               Navigator.push(
-                                  context, MaterialPageRoute(builder: (context) => MediCareChatScreen(issue: ticketsPending, title: 'PENDING TICKET',)));
+                                  context, MaterialPageRoute(builder: (context) => ListIssueScreen(issue: ticketsPending, title: 'PENDING TICKET',)));
                             }, // Handle your callback
                             child: Row(
                               children: [
@@ -883,7 +882,7 @@ Future<void> getSharedPref() async {
                             onTap: () {
                               print("Container clicked");
                               Navigator.push(
-                                  context, MaterialPageRoute(builder: (context) => MediCareChatScreen(issue: ticketsLS, title: 'LS ACTION TICKET',)));
+                                  context, MaterialPageRoute(builder: (context) => ListIssueScreen(issue: ticketsLS, title: 'LS ACTION TICKET',)));
                             }, // Handle your callback
                             child: Row(
                               children: [
@@ -938,7 +937,7 @@ Future<void> getSharedPref() async {
                             onTap: () {
                               print("Container clicked");
                               Navigator.push(
-                                  context, MaterialPageRoute(builder: (context) => MediCareChatScreen(issue: ticketsClosed, title: 'CLOSED TICKET',)));
+                                  context, MaterialPageRoute(builder: (context) => ListIssueScreen(issue: ticketsClosed, title: 'CLOSED TICKET',)));
                             }, // Handle your callback
                             child: Row(
                               children: [
@@ -993,7 +992,7 @@ Future<void> getSharedPref() async {
                           onTap: () {
                             print("Container clicked");
                             Navigator.push(
-                                context, MaterialPageRoute(builder: (context) => MediCareChatScreen(issue: ticketsSubmitted, title: 'SUBMIT TICKET',)));
+                                context, MaterialPageRoute(builder: (context) => ListIssueScreen(issue: ticketsSubmitted, title: 'SUBMIT TICKET',)));
                           }, // Handle your callback
                           child:  Row(
                               children: [
@@ -1051,7 +1050,7 @@ Future<void> getSharedPref() async {
                           onTap: () {
                             print("Container clicked");
                             Navigator.push(
-                                context, MaterialPageRoute(builder: (context) => MediCareChatScreen(issue: ticketsReview, title: 'REVIEW TICKET',)));
+                                context, MaterialPageRoute(builder: (context) => ListIssueScreen(issue: ticketsReview, title: 'REVIEW TICKET',)));
                           }, // Handle your callback
                           child: Row(
                               children: [
@@ -1111,7 +1110,7 @@ Future<void> getSharedPref() async {
                           onTap: () {
                             print("Container clicked");
                             Navigator.push(
-                                context, MaterialPageRoute(builder: (context) => MediCareChatScreen(issue: ticketsCustTest, title: 'CUSTOMER TESTING TICKET',)));
+                                context, MaterialPageRoute(builder: (context) => ListIssueScreen(issue: ticketsCustTest, title: 'CUSTOMER TESTING TICKET',)));
                           }, // Handle your callback
                           child: Row(
                               children: [
@@ -1170,7 +1169,7 @@ Future<void> getSharedPref() async {
                           onTap: () {
                             print("Container clicked");
                             Navigator.push(
-                                context, MaterialPageRoute(builder: (context) => MediCareChatScreen(issue: ticketsResolved, title: 'RESOLVED TICKET',)));
+                                context, MaterialPageRoute(builder: (context) => ListIssueScreen(issue: ticketsResolved, title: 'RESOLVED TICKET',)));
                           }, // Handle your callback
                           child: Row(
                               children: [
@@ -1226,7 +1225,7 @@ Future<void> getSharedPref() async {
                           onTap: () {
                             print("Container clicked");
                             Navigator.push(
-                                context, MaterialPageRoute(builder: (context) => MediCareChatScreen(issue: ticketsReopen, title: 'REOPEN TICKET',)));
+                                context, MaterialPageRoute(builder: (context) => ListIssueScreen(issue: ticketsReopen, title: 'REOPEN TICKET',)));
                           }, // Handle your callback
                           child: Row(
                               children: [
@@ -1292,7 +1291,7 @@ Future<void> getSharedPref() async {
                           onTap: () {
                             print("Container clicked");
                             Navigator.push(
-                                context, MaterialPageRoute(builder: (context) => MediCareChatScreen(issue: ticketsArchive, title: 'ARCHIEVED TICKET',)));
+                                context, MaterialPageRoute(builder: (context) => ListIssueScreen(issue: ticketsArchive, title: 'ARCHIEVED TICKET',)));
                           }, // Handle your callback
                           child: Row(
                               children: [
@@ -1347,7 +1346,7 @@ Future<void> getSharedPref() async {
                           onTap: () {
                             print("Container clicked");
                             Navigator.push(
-                                context, MaterialPageRoute(builder: (context) => MediCareChatScreen(issue: ticketsTodo, title: 'TODO TICKET',)));
+                                context, MaterialPageRoute(builder: (context) => ListIssueScreen(issue: ticketsTodo, title: 'TODO TICKET',)));
                           }, // Handle your callback
                           child: Row(
                               children: [
@@ -1403,7 +1402,7 @@ Future<void> getSharedPref() async {
                           onTap: () {
                             print("Container clicked");
                             Navigator.push(
-                                context, MaterialPageRoute(builder: (context) => MediCareChatScreen(issue: ticketsDone, title: 'DONE TICKETS',)));
+                                context, MaterialPageRoute(builder: (context) => ListIssueScreen(issue: ticketsDone, title: 'DONE TICKETS',)));
                           }, // Handle your callback
                           child: Row(
                               children: [

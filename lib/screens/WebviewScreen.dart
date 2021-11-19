@@ -14,13 +14,13 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../AppTheme.dart';
 import '../AppThemeNotifier.dart';
 
-class HealthNewActivityScreen extends StatefulWidget {
+class WebviewScreen extends StatefulWidget {
   @override
-  _HealthNewActivityScreenState createState() =>
-      _HealthNewActivityScreenState();
+  _WebviewScreenState createState() =>
+      _WebviewScreenState();
 }
 
-class _HealthNewActivityScreenState extends State<HealthNewActivityScreen> {
+class _WebviewScreenState extends State<WebviewScreen> {
   late ThemeData themeData;
   CustomAppTheme? customAppTheme;
 

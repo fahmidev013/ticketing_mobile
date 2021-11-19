@@ -8,16 +8,16 @@ import 'package:provider/provider.dart';
 import '../../AppTheme.dart';
 import '../AppThemeNotifier.dart';
 
-class EventSingleEventScreen extends StatefulWidget {
-  const EventSingleEventScreen({Key? key, required this.issue, required this.title}) : super(key: key);
+class IssueDetailScreen extends StatefulWidget {
+  const IssueDetailScreen({Key? key, required this.issue, required this.title}) : super(key: key);
   final String title;
   final Issue issue;
 
   @override
-  _EventSingleEventScreenState createState() => _EventSingleEventScreenState();
+  _IssueDetailScreenState createState() => _IssueDetailScreenState();
 }
 
-class _EventSingleEventScreenState extends State<EventSingleEventScreen> {
+class _IssueDetailScreenState extends State<IssueDetailScreen> {
   late ThemeData themeData;
   late CustomAppTheme customAppTheme;
 

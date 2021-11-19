@@ -9,21 +9,21 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:mobile_ticketing/model/User.dart';
-import 'package:mobile_ticketing/screens/EventCreateScreen.dart';
-import 'package:mobile_ticketing/screens/HealthNewActivityScreen.dart';
+import 'package:mobile_ticketing/screens/HomeScreen.dart';
+import 'package:mobile_ticketing/screens/WebviewScreen.dart';
 
 import '../../AppTheme.dart';
 
-class HealthFullApp extends StatefulWidget {
-  HealthFullApp({Key? key, required this.user}) : super(key: key);
+class MainFullApp extends StatefulWidget {
+  MainFullApp({Key? key, required this.user}) : super(key: key);
 
   final User? user;
 
   @override
-  _HealthFullAppState createState() => _HealthFullAppState();
+  _MainFullAppState createState() => _MainFullAppState();
 }
 
-class _HealthFullAppState extends State<HealthFullApp>
+class _MainFullAppState extends State<MainFullApp>
     with SingleTickerProviderStateMixin {
   int _currentIndex = 0;
 
@@ -154,9 +154,9 @@ class _HealthFullAppState extends State<HealthFullApp>
             body: TabBarView(
               controller: _tabController,
               children: <Widget>[
-                EventCreateScreen(user: widget.user, rootContext: context),
+                HomeScreen(user: widget.user, rootContext: context),
                 // HealthHomeScreen(user: widget.user, rootContext: context),
-                HealthNewActivityScreen()
+                WebviewScreen()
 
               ],
             ),

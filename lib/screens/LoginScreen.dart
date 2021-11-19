@@ -8,8 +8,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:mobile_ticketing/model/User.dart';
-import 'package:mobile_ticketing/screens/HealthFullApp.dart';
-import 'package:mobile_ticketing/services/api_service.dart';
+import 'package:mobile_ticketing/screens/MainFullApp.dart';
+import 'package:mobile_ticketing/services/ApiServices.dart';
 import 'package:mobile_ticketing/utils/SizeConfig.dart';
 import 'package:provider/provider.dart';
 import '../../AppTheme.dart';
@@ -184,7 +184,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                           if (loginSuccess) {
                                             ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Login Berhasil!')));
                                             Navigator.of(context)
-                                                .pushReplacement(MaterialPageRoute(builder: (_) => HealthFullApp(user : user)));
+                                                .pushReplacement(MaterialPageRoute(builder: (_) => MainFullApp(user : user)));
 
                                           } else  {
                                             ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Username dan Password Salah!')));

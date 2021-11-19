@@ -5,8 +5,8 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'package:mobile_ticketing/screens/HealthFullApp.dart';
-import 'package:mobile_ticketing/screens/loginPage.dart';
+import 'package:mobile_ticketing/screens/MainFullApp.dart';
+import 'package:mobile_ticketing/screens/LoginScreen.dart';
 import 'package:mobile_ticketing/utils/SizeConfig.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
@@ -44,7 +44,7 @@ class _SplashScreenPageState extends State<SplashScreenPage>{
       await _getLogin();
         isLogin == 1 ? 
         Navigator.of(context)
-            .pushReplacement(MaterialPageRoute(builder: (_) => HealthFullApp(user: user,))) :
+            .pushReplacement(MaterialPageRoute(builder: (_) => MainFullApp(user: user,))) :
         Navigator.of(context)
             .pushReplacement(MaterialPageRoute(builder: (_) => LoginScreen()));
 

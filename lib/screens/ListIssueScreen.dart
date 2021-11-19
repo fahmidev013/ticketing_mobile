@@ -10,21 +10,21 @@ import 'package:flutx/widgets/text/text.dart';
 import 'package:flutx/widgets/text_field/text_field.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:mobile_ticketing/model/Issue.dart';
-import 'package:mobile_ticketing/screens/EventSingleEventScreen.dart';
+import 'package:mobile_ticketing/screens/IssueDetailScreen.dart';
 import 'package:mobile_ticketing/utils/SizeConfig.dart';
 
 import '../../AppTheme.dart';
-import 'grocery_notification_dialog.dart';
+import 'NotificationScreen.dart';
 
-class MediCareChatScreen extends StatefulWidget {
-  const MediCareChatScreen({Key? key, required this.issue, required this.title}) : super(key: key);
+class ListIssueScreen extends StatefulWidget {
+  const ListIssueScreen({Key? key, required this.issue, required this.title}) : super(key: key);
   final String title;
   final List<Issue>? issue;
   @override
-  _MediCareChatScreenState createState() => _MediCareChatScreenState();
+  _ListIssueScreenState createState() => _ListIssueScreenState();
 }
 
-class _MediCareChatScreenState extends State<MediCareChatScreen> {
+class _ListIssueScreenState extends State<ListIssueScreen> {
   // List<Issue> chatList=[];
 
   List<Widget> _buildChatList() {
@@ -45,7 +45,7 @@ class _MediCareChatScreenState extends State<MediCareChatScreen> {
 
       print('Ke detail page ${chat.issue_id}' );
       Navigator.push(
-          context, MaterialPageRoute(builder: (context) => EventSingleEventScreen(issue: chat,title: chat.issue_id.toString())));
+          context, MaterialPageRoute(builder: (context) => IssueDetailScreen(issue: chat,title: chat.issue_id.toString())));
     },
     margin: FxSpacing.bottom(16),
     paddingAll: 16,

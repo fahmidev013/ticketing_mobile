@@ -11,12 +11,12 @@ import 'package:mobile_ticketing/utils/SizeConfig.dart';
 
 import '../../AppTheme.dart';
 
-class NotificationDialog extends StatefulWidget {
+class NotificationScreen extends StatefulWidget {
   @override
-  _NotificationDialogState createState() => _NotificationDialogState();
+  _NotificationScreenState createState() => _NotificationScreenState();
 }
 
-class _NotificationDialogState extends State<NotificationDialog> {
+class _NotificationScreenState extends State<NotificationScreen> {
   @override
   Widget build(BuildContext context) {
     return Theme(
@@ -164,7 +164,7 @@ class _NotificationDialogState extends State<NotificationDialog> {
                 onPressed: () {
                   Navigator.of(context).push(new MaterialPageRoute<Null>(
                       builder: (BuildContext context) {
-                        return NotificationDialog();
+                        return NotificationScreen();
                       },
                       fullscreenDialog: true));
                 },
