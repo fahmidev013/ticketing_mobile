@@ -62,14 +62,14 @@ class _LoginScreenState extends State<LoginScreen> {
                   children: <Widget>[
                     Container(
                       width: MySize.size100,
-                      height: MySize.size140,
+                      height: MySize.size210,
                       margin: EdgeInsets.only(
-                          top: 0, bottom: 30),
+                          top: 0, bottom: 0),
                       decoration: BoxDecoration(
                         shape: BoxShape.rectangle,
                         image: new DecorationImage(
                             image: AssetImage(
-                                './assets/logo/app_logo.jpeg'),
+                                './assets/logo/app_logo.png'),
                             fit: BoxFit.fill),
                       ),
                     ),

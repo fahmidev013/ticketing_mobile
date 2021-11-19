@@ -39,7 +39,7 @@ class _IssueDetailScreenState extends State<IssueDetailScreen> {
                       children: [
                         Image(
                           image: AssetImage(
-                              './assets/logo/app_logo.jpeg'),
+                              './assets/logo/msg.jpeg'),
                           fit: BoxFit.contain,
                           width: MySize.safeWidth,
                           height: MySize.getScaledSizeHeight(240),

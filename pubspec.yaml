@@ -50,6 +50,7 @@ dependencies:
   image_picker: ^0.7.5
   flutter_local_notifications: ^1.4.4+1
   flutter_inappwebview:
+  flutter_launcher_icons:
 
 
 dev_dependencies:
@@ -89,25 +90,17 @@ flutter:
       #Profiles
       - assets/images/
 
-      #Chat
-      - assets/images/chat/
 
-      #Social
-      - assets/images/social/
-
-      #Other
-      - assets/images/all/
 
 
       ###################---------------------- Custom Apps -------------------------#################
 
-      ##Grocery
-      - assets/grocery/
+
 
       ##CustomApps
       - assets/images/customapps/cookify/
       - assets/images/customapps/grocery/
-      - assets/images/customapps/medicare/
+
 
 
       #Icons
@@ -144,5 +137,10 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+
+flutter_icons:
+  image_path: "assets/logo/kominfo.png"
+  android: true
+  ios: true
 
 

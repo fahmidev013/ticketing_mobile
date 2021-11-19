@@ -8,8 +8,8 @@ import 'package:mobile_ticketing/model/User.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ApiService {
-  final String apiUrl = "http://192.168.0.109:8080/v1";
-  // final String apiUrl = "https://manifest.ditfrek.postel.go.id/api/v1";
+  // final String apiUrl = "http://192.168.0.109:8080/v1";
+  final String apiUrl = "https://manifest.ditfrek.postel.go.id/api/v1";
   SharedPreferences? prefs;
 
 

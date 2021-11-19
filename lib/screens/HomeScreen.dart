@@ -74,15 +74,12 @@ Future<void> getSharedPref() async {
   void initState() {
     super.initState();
     getSharedPref();
-    /*int hitung = 0;
-    Timer.periodic(Duration(seconds: 9), (Timer timer) {
+    Timer.periodic(Duration(minutes: 3), (Timer timer) {
       if (!_isRunning) {
         timer.cancel();
       }
-      hitung++;
-      ScaffoldMessenger.of(context).showSnackBar( SnackBar(content: Text('Ambil data ke' + hitung.toString())));
       _getIssueData();
-    });*/
+    });
     var initializationSettingsAndroid =
     AndroidInitializationSettings('mipmap/ic_launcher');
     var initializationSettingsIOs = IOSInitializationSettings();
@@ -126,7 +123,7 @@ Future<void> getSharedPref() async {
                               shape: BoxShape.circle,
                               image: new DecorationImage(
                                   image: AssetImage(
-                                      './assets/logo/logo.png'),
+                                      './assets/logo/kominfo.png'),
                                   fit: BoxFit.fill),
                             ),
                           ),
@@ -351,7 +348,7 @@ Future<void> getSharedPref() async {
                                                   Radius.circular(MySize.size8!)),
                                               child: Image(
                                                 image: AssetImage(
-                                                    './assets/logo/app_logo.jpeg'),
+                                                    './assets/logo/kominfo.png'),
                                                 width: MySize.size44,
                                                 height: MySize.size44,
                                               ),
@@ -367,7 +364,6 @@ Future<void> getSharedPref() async {
                                         children: [
                                           InkWell(
                                             onTap:() {
-                                              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Proram bergenti')));
                                               setState(() {
                                                 _isRunning = false;
                                               });
