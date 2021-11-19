@@ -74,7 +74,7 @@ Future<void> getSharedPref() async {
   void initState() {
     super.initState();
     getSharedPref();
-    int hitung = 0;
+    /*int hitung = 0;
     Timer.periodic(Duration(seconds: 9), (Timer timer) {
       if (!_isRunning) {
         timer.cancel();
@@ -82,7 +82,7 @@ Future<void> getSharedPref() async {
       hitung++;
       ScaffoldMessenger.of(context).showSnackBar( SnackBar(content: Text('Ambil data ke' + hitung.toString())));
       _getIssueData();
-    });
+    });*/
     var initializationSettingsAndroid =
     AndroidInitializationSettings('mipmap/ic_launcher');
     var initializationSettingsIOs = IOSInitializationSettings();
@@ -227,8 +227,10 @@ Future<void> getSharedPref() async {
 
 
   Future onSelectNotification(String payload) {
+  List<String> list = [];
+  list.add(payload);
     Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-      return NotificationScreen();
+      return NotificationScreen(strList: list,);
     }));
     throw Exception("Error on server");
   }
@@ -406,10 +408,11 @@ Future<void> getSharedPref() async {
                                               setState(() {
                                                 notifCount = 0;
                                               });
+                                              List<String>? list = prefs!.getStringList('issues');
                                               // await showNotification();
                                               Navigator.of(context).push(new MaterialPageRoute<Null>(
                                                   builder: (BuildContext context) {
-                                                    return NotificationScreen();
+                                                    return NotificationScreen(strList: list,);
                                                   },
                                                   fullscreenDialog: true));
                                             },

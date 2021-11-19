@@ -80,13 +80,14 @@ class ApiService {
   }
 
 
-  Future<String> getNotifList(List<String>? strList) async {
+  Future<List<Issue>> getNotifList(List<String>? strList) async {
     String str = '';
     strList?.forEach((element) {
-      str = str + ',' + element;
+      str = str + element + ',';
     });
+    str = str.substring(0, str.length - 1);
     Response res = await post(
-      Uri.parse(apiUrl + '/component'),
+      Uri.parse(apiUrl + '/notif'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -94,18 +95,13 @@ class ApiService {
         'isuId': str
       }),
     );
-
-    if (res.statusCode == 201) {
+    List<Issue> issueList = [];
+    if (res.statusCode == 200) {
+      List<dynamic> body = jsonDecode(res.body);
+      issueList = body.map((dynamic item) => Issue.fromJson(item)).toList();
       print('Sukses');
-      /*Map<String, dynamic> decode_options = jsonDecode(res.body);
-      User userModel = User.fromJson(decode_options);
-      String user = jsonEncode(userModel);
-      prefs = await SharedPreferences.getInstance();
-      prefs!.setString('user', user);
-      prefs!.setInt('isLogin', 1);
-      return User.fromJson(decode_options);*/
     }
-    return "OK";
+    return issueList;
   }
 
   Future<bool?>logout() async {
