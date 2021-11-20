@@ -2,8 +2,10 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutx/widgets/text/text.dart';
@@ -12,6 +14,7 @@ import 'package:mobile_ticketing/model/Issue.dart';
 import 'package:mobile_ticketing/model/User.dart';
 import 'package:mobile_ticketing/screens/LoginScreen.dart';
 import 'package:mobile_ticketing/services/ApiServices.dart';
+import 'package:mobile_ticketing/services/ConnectionStatus.dart';
 import 'package:mobile_ticketing/utils/SizeConfig.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -30,10 +33,14 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final Connectivity _connectivity = Connectivity();
+  late StreamSubscription<ConnectivityResult> _connectivitySubscription;
+
   SharedPreferences? prefs;
   late ThemeData themeData;
   late CustomAppTheme customAppTheme;
   final ApiService api = ApiService();
+  bool isOffline = true;
   late List<Issue> tickets;
   int? notifCount = 0;
   bool _isRunning = true;
@@ -42,6 +49,37 @@ class _HomeScreenState extends State<HomeScreen> {
   bool isDone = false;
 
 
+  Future<void> initConnectivity() async {
+    late ConnectivityResult result;
+    // Platform messages may fail, so we use a try/catch PlatformException.
+    try {
+      result = await _connectivity.checkConnectivity();
+    } on PlatformException catch (e) {
+      print('Couldn\'t check connectivity status' + e.toString());
+      return;
+    }
+
+    // If the widget was removed from the tree while the asynchronous platform
+    // message was in flight, we want to discard the reply rather than calling
+    // setState to update our non-existent appearance.
+    if (!mounted) {
+      return Future.value(null);
+    }
+
+    return _updateConnectionStatus(result);
+  }
+
+  Future<void> _updateConnectionStatus(ConnectivityResult result) async {
+    if (result != ConnectivityResult.none) {
+      setState(() {
+        isOffline = false;
+      });
+    } else {
+      setState(() {
+        isOffline = true;
+      });
+    }
+  }
 
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
   FlutterLocalNotificationsPlugin();
@@ -73,6 +111,11 @@ Future<void> getSharedPref() async {
   @override
   void initState() {
     super.initState();
+    initConnectivity();
+
+    _connectivitySubscription =
+        _connectivity.onConnectivityChanged.listen(_updateConnectionStatus);
+
     getSharedPref();
     Timer.periodic(Duration(minutes: 3), (Timer timer) {
       if (!_isRunning) {
@@ -93,6 +136,12 @@ Future<void> getSharedPref() async {
 
   }
 
+
+  @override
+  void dispose() {
+    _connectivitySubscription.cancel();
+    super.dispose();
+  }
 
   void _showBottomSheet(context) {
     showModalBottomSheet(
@@ -325,10 +374,28 @@ Future<void> getSharedPref() async {
                 color: customAppTheme.bgLayer2,
                 child: Column(
                   children: [
+
                     Expanded(
                       child: ListView(
                         padding: Spacing.vertical(16),
                         children: [
+                          (!isOffline) ? Container() : Container(
+                            padding: EdgeInsets.fromLTRB(0, 8, 0, 8),
+                            color: Colors.yellow,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Column(
+                                  children: [
+                                    Text(
+                                        'Anda tidak terhubung dengan internet'
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ) ,
+                          ),
+
                           Container(
                             margin: Spacing.fromLTRB(24, 24, 24, 0),
                             child: Row(

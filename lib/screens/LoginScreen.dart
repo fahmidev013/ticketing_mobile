@@ -4,8 +4,12 @@
 * */
 
 
+import 'dart:async';
+
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:mobile_ticketing/model/User.dart';
 import 'package:mobile_ticketing/screens/MainFullApp.dart';
@@ -21,12 +25,15 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final Connectivity _connectivity = Connectivity();
+  late StreamSubscription<ConnectivityResult> _connectivitySubscription;
   final ApiService api = ApiService();
   bool loginSuccess = false;
   bool? _passwordVisible = true, _check = false;
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   late ThemeData themeData;
+  bool isOffline = true;
 
   Future clickLogin(TextEditingController login, TextEditingController password) {
     Future<User?> futureUser = api.login(login, password);
@@ -38,6 +45,55 @@ class _LoginScreenState extends State<LoginScreen> {
     return futureUser;
   }
 
+  Future<void> initConnectivity() async {
+    late ConnectivityResult result;
+    // Platform messages may fail, so we use a try/catch PlatformException.
+    try {
+      result = await _connectivity.checkConnectivity();
+    } on PlatformException catch (e) {
+      print('Couldn\'t check connectivity status' + e.toString());
+      return;
+    }
+
+    // If the widget was removed from the tree while the asynchronous platform
+    // message was in flight, we want to discard the reply rather than calling
+    // setState to update our non-existent appearance.
+    if (!mounted) {
+      return Future.value(null);
+    }
+
+    return _updateConnectionStatus(result);
+  }
+
+  Future<void> _updateConnectionStatus(ConnectivityResult result) async {
+    if (result != ConnectivityResult.none) {
+      setState(() {
+        isOffline = false;
+      });
+    } else {
+      setState(() {
+        isOffline = true;
+      });
+    }
+  }
+
+
+  @override
+  void initState() {
+    super.initState();
+    initConnectivity();
+
+    _connectivitySubscription =
+        _connectivity.onConnectivityChanged.listen(_updateConnectionStatus);
+  }
+
+
+  @override
+  void dispose() {
+    _connectivitySubscription.cancel();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     themeData = Theme.of(context);
@@ -47,12 +103,34 @@ class _LoginScreenState extends State<LoginScreen> {
       home: Scaffold(
           body: Stack(
             children: <Widget>[
+
               /*ClipPath(
                   clipper: _MyCustomClipper(context),
                   child: Container(
                     alignment: Alignment.center,
                     color: themeData.colorScheme.background,
                   )),*/
+             Column(
+               children: [
+                 (!isOffline) ? Container() : Container(
+                   margin: EdgeInsets.fromLTRB(0, 16, 0, 0),
+                   padding: EdgeInsets.fromLTRB(0, 4, 0, 4),
+                   color: Colors.yellow,
+                   child: Row(
+                     mainAxisAlignment: MainAxisAlignment.center,
+                     children: [
+                       Column(
+                         children: [
+                           Text(
+                               'Anda tidak terhubung dengan internet'
+                           ),
+                         ],
+                       ),
+                     ],
+                   ) ,
+                 ),
+               ],
+             ),
               Positioned(
                 left: 30,
                 right: 30,
@@ -60,6 +138,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: ListView(
                   shrinkWrap: true,
                   children: <Widget>[
+
                     Container(
                       width: MySize.size100,
                       height: MySize.size210,
@@ -235,7 +314,12 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         ),
                       ),
-                    )
+                    ),
+                    Container(
+                      margin: EdgeInsets.fromLTRB(0, 20, 0, 0),
+                      alignment: Alignment.center,
+                      child: Text("Release v1.0"),
+                    ),
                   ],
                 ),
               ),
